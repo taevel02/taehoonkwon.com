@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Link, HeadFC, PageProps, withPrefix } from 'gatsby'
+import { HeadFC, PageProps } from 'gatsby'
 import Layout from '../components/layout'
 import Title from '../components/title'
 import Content from '../components/content'
