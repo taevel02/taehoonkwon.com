@@ -43,7 +43,7 @@ const Layout: React.FC<PageProps> = ({ children }) => {
         </article>
       </section>
       <footer>
-        <div className="max-w-3xl mx-auto mt-24">
+        <div className="max-w-3xl mx-auto py-12">
           <span className="block text-center text-sm font-light">
             &copy; 2023 Taehoon Kwon / Inspired by{' '}
             <Link
