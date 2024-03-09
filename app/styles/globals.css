@@ -92,8 +92,10 @@ a,
 span,
 div {
   font-family: "Pretendard";
+  font-weight: 300;
 }
 
 article:not(pre) {
-  font-family: "Pretendard";
+  font-family: "Arita Buri";
+  font-weight: 300;
 }

@@ -1,24 +1,22 @@
-import type { MetaFunction } from "@remix-run/node";
-import { Link } from "@remix-run/react";
+import { type MetaFunction } from "@remix-run/node";
+import blogConfig from "blog.config";
+import { generateMeta } from "~/utils/meta/generate-meta";
+import { pathJoin } from "~/utils/path";
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+  return generateMeta({
+    title: [blogConfig.seo.title],
+    description: blogConfig.seo.description,
+    image: pathJoin(blogConfig.site, blogConfig.image.main),
+  });
 };
 
 export default function Index() {
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h6 className="">
-        권태훈
-        <br />
-        權泰勳
-      </h6>
-      <Link to="/archives" className="text-xl text-blue-600 underline">
-        Archives
-      </Link>
+    <div className="">
+      <h6 className="text-2xl font-medium">권태훈 (Taehoon Kwon, 權泰勳)</h6>
+      {/* <Contact /> */}
+      {/* <Hero /> */}
     </div>
   );
 }
