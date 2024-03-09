@@ -57,7 +57,7 @@ export default function App() {
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="container max-w-3xl">
+    <div className="container max-w-4xl overflow-auto">
       <GlobalNavigationBar />
       {children}
       <Footer />

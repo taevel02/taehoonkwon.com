@@ -2,10 +2,10 @@ export default {
   origin: "taehoonkwon.com",
   site: "https://taehoonkwon.com",
   author: {
-    displayName: "Taehoon Kwon",
+    displayName: "권태훈",
   },
   seo: {
-    title: "taehoonkwon.com",
+    title: "Taehoon Kwon",
     name: "taehoonkwon.com",
     description: "",
   },
@@ -16,5 +16,10 @@ export default {
   ga: {
     id: "", // G-XXXXXXXXXX
   },
-  bio: ``,
+  hero: `
+    Coming soon...
+  `,
+  bio: `
+    Coming soon...
+  `,
 };
