@@ -23,7 +23,6 @@ export default function ArchivesPage() {
 
   return (
     <div className="">
-      <p className="text-wrap">Coming soon...</p>
       <ul>
         {archives.map((post, index) => (
           <li key={index}>
