@@ -10,6 +10,7 @@ import {
   isRouteErrorResponse,
   useRouteError,
 } from "@remix-run/react";
+import { Analytics } from "@vercel/analytics/react";
 
 import { GlobalNavigationBar } from "./components/GlobalNavigationBar";
 import { Footer } from "./components/Footer";
@@ -50,6 +51,7 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
+        <Analytics />
       </body>
     </html>
   );
