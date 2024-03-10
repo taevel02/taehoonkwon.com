@@ -1,4 +1,4 @@
-import { type MetaFunction } from "@remix-run/node";
+import { MetaFunction } from "@remix-run/node";
 import blogConfig from "blog.config";
 import { generateMeta } from "~/utils/meta/generate-meta";
 import { pathJoin } from "~/utils/path";
