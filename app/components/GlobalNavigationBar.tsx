@@ -3,7 +3,7 @@ import { NavLink } from "@remix-run/react";
 export function GlobalNavigationBar() {
   return (
     <nav className="mt-6 mb-16">
-      <ul className="inline-flex items-center gap-12 p-0 list-none leading-10">
+      <ul className="inline-flex items-center gap-8 p-0 list-none leading-10">
         <GNBLink to="/">About</GNBLink>
         <GNBLink to="/bio">Bio</GNBLink>
         <GNBLink to="/archives">Archives</GNBLink>
