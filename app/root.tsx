@@ -23,7 +23,7 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
   {
     rel: "stylesheet",
-    href: "https://cdn.jsdelivr.net/gh/taevel02/typeface-arita/arita.min.css",
+    href: "https://cdn.jsdelivr.net/npm/@fontsource/nanum-myeongjo/index.min.css",
   },
   {
     rel: "stylesheet",
@@ -59,7 +59,7 @@ export default function App() {
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="container max-w-4xl overflow-auto">
+    <div className="container max-w-screen-md overflow-auto">
       <GlobalNavigationBar />
       {children}
       <Footer />
