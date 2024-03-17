@@ -1,9 +1,11 @@
 node_modules
 
 /.cache
+.vscode
 /build
 /public/build
 .env
+.generated
 
 .yarn/*
 !.yarn/cache

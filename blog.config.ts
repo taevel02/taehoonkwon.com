@@ -1,13 +1,15 @@
 export default {
   origin: "taehoonkwon.com",
   site: "https://taehoonkwon.com",
-  author: {
-    displayName: "권태훈",
-  },
+  author: "권태훈",
   seo: {
     title: "Taehoon Kwon",
     name: "taehoonkwon.com",
     description: "",
+  },
+  archives: {
+    contentDirectory: "articles",
+    generatedDirectory: ".generated",
   },
   image: {
     main: "/main-image.jpg", // public

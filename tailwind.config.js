@@ -11,6 +11,10 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+    fontFamily: {
+      sans: ["Pretendard", "sans-serif"],
+      serif: ["Nanum Myeongjo", "serif"],
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
