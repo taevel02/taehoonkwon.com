@@ -1,6 +1,5 @@
 article {
   margin: 2.5rem 0;
-  color: #333;
 }
 
 article > p {
@@ -14,7 +13,7 @@ article > p {
 
 article > p > a {
   font-family: "Nanum Myeongjo", serif;
-  color: #00c6be !important;
+  color: hsl(var(--primary)) !important;
 }
 
 article > p > strong {
@@ -79,13 +78,13 @@ article > h6 {
 article > blockquote {
   margin: 3em 0;
   padding: 0 0.8em;
-  border-left: 2px solid #acacac;
+  border-left: 2px solid hsl(var(--border));
 
   font-size: 11pt;
   font-weight: 100;
   letter-spacing: 0.8px;
   line-height: 22pt;
-  color: #666;
+  color: hsl(var(--secondary-foreground));
 }
 
 article > blockquote > p {
@@ -93,11 +92,11 @@ article > blockquote > p {
 }
 
 article > blockquote > p > a {
-  color: #00c6be !important;
+  color: hsl(var(--primary)) !important;
 }
 
 article > hr {
   margin-top: 3em;
   border: none;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid hsl(var(--border));
 }

@@ -49,12 +49,14 @@ export default function ArchivePage() {
       <div className="mb-20">
         <div className="flex flex-row items-center gap-2">
           <Badge variant="outline">{category}</Badge>
-          {subtitle && <h2 className="text-xs text-gray-500">{subtitle}</h2>}
+          {subtitle && (
+            <h2 className="text-xs text-muted-foreground">{subtitle}</h2>
+          )}
         </div>
         <h1 className="block text-4xl leading-relaxed font-medium font-serif mt-2 text-wrap">
           {title}
         </h1>
-        <span className="block text-right text-sm text-gray-500 font-thin">
+        <span className="block text-right text-sm text-muted-foreground">
           {formatDate(lastUpdatedAt)}
         </span>
       </div>

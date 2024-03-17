@@ -39,7 +39,7 @@ export default function ArchivesPage() {
                 </p>
                 <p className="text-xl group-hover:underline">{title}</p>
                 <p className="mb-4 text-sm font-light">{subtitle}</p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   {formatDate(lastUpdatedAt)}
                 </p>
               </Link>
