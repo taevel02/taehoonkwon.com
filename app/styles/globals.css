@@ -75,27 +75,23 @@
   }
 }
 
-html {
-  scrollbar-gutter: stable;
-}
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ul,
-li,
-a,
-span,
-div {
-  font-family: "Pretendard";
-  font-weight: 300;
-}
-
-article:not(pre) {
-  font-family: "Arita Buri";
-  font-weight: 300;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  li,
+  a,
+  span,
+  div {
+    font-family: "Pretendard", system-ui, sans-serif;
+  }
 }
