@@ -17,6 +17,11 @@ article > p > a {
   color: #00c6be !important;
 }
 
+article > p > strong {
+  font-family: "Pretendard", system-ui, sans-serif;
+  font-weight: 500;
+}
+
 article > h1 {
   margin: 1.5em 0;
 
