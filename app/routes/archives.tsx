@@ -34,12 +34,12 @@ export default function ArchivesPage() {
               className="group block py-4 border-b-[0.1em] first:pt-0 last:pb-0 last:border-0"
             >
               <Link to={`/archives/${id}`} prefetch="intent">
-                <p className="mb-2 text-sm text-blue-300 underline">
+                <p className="mb-2 text-sm text-primary underline">
                   {category}
                 </p>
                 <p className="text-xl group-hover:underline">{title}</p>
                 <p className="mb-4 text-sm font-light">{subtitle}</p>
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-gray-500">
                   {formatDate(lastUpdatedAt)}
                 </p>
               </Link>
