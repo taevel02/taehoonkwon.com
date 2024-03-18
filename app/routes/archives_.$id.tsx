@@ -13,7 +13,7 @@ import { articleAPI } from "~/api/article";
 import { Badge } from "~/components/ui/Badge";
 
 import { generateMeta } from "~/utils/meta/generate-meta";
-import { formatDate } from "~/utils/formatDate";
+import { formatDate } from "~/utils/format-date";
 import invariant from "~/utils/invariant";
 
 import "~/styles/article.css";

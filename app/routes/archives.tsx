@@ -5,7 +5,7 @@ import blogConfig from "blog.config";
 
 import { articleAPI } from "~/api/article";
 
-import { formatDate } from "~/utils/formatDate";
+import { formatDate } from "~/utils/format-date";
 import { generateMeta } from "~/utils/meta/generate-meta";
 import { pathJoin } from "~/utils/path";
 
