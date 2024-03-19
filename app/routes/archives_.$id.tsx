@@ -6,16 +6,15 @@ import {
 } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
-import blogConfig from "blog.config";
-
 import { articleAPI } from "~/api/article";
 
 import { Badge } from "~/components/ui/Badge";
 
-import { generateMeta } from "~/utils/meta/generate-meta";
+import { generateMeta } from "~/utils/generate-meta";
 import { formatDate } from "~/utils/format-date";
 import invariant from "~/utils/invariant";
 
+import blogConfig from "blog.config";
 import "~/styles/article.css";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {

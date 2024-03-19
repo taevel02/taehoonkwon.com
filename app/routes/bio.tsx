@@ -1,7 +1,9 @@
 import { MetaFunction } from "@remix-run/node";
-import blogConfig from "blog.config";
-import { generateMeta } from "~/utils/meta/generate-meta";
+
+import { generateMeta } from "~/utils/generate-meta";
 import { pathJoin } from "~/utils/path";
+
+import blogConfig from "blog.config";
 
 export const meta: MetaFunction = () => {
   return generateMeta({

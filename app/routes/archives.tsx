@@ -1,13 +1,13 @@
 import { MetaFunction, json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 
-import blogConfig from "blog.config";
-
 import { articleAPI } from "~/api/article";
 
 import { formatDate } from "~/utils/format-date";
-import { generateMeta } from "~/utils/meta/generate-meta";
+import { generateMeta } from "~/utils/generate-meta";
 import { pathJoin } from "~/utils/path";
+
+import blogConfig from "blog.config";
 
 export const meta: MetaFunction = () => {
   return generateMeta({
