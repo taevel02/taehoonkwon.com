@@ -12,7 +12,6 @@ export default {
     generatedDirectory: ".generated",
   },
   image: {
-    main: "/main-image.jpg", // public
     extensions: ["**/*.png", "**/*.jpg", "**/*.jpeg"],
   },
   ga: {

@@ -5,7 +5,6 @@ import { articleAPI } from "~/api/article";
 
 import { formatDate } from "~/utils/format-date";
 import { generateMeta } from "~/utils/generate-meta";
-import { pathJoin } from "~/utils/path";
 
 import blogConfig from "blog.config";
 
@@ -13,7 +12,6 @@ export const meta: MetaFunction = () => {
   return generateMeta({
     title: ["ARCHIVES", blogConfig.seo.title],
     description: blogConfig.seo.description,
-    image: pathJoin(blogConfig.site, blogConfig.image.main),
   });
 };
 

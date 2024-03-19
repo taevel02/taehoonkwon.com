@@ -24,7 +24,6 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return generateMeta({
     title: [title, blogConfig.seo.title],
     description: blogConfig.seo.description,
-    image: blogConfig.image.main,
   });
 };
 

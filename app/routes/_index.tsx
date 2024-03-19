@@ -1,7 +1,6 @@
 import { MetaFunction } from "@remix-run/node";
 
 import { generateMeta } from "~/utils/generate-meta";
-import { pathJoin } from "~/utils/path";
 
 import blogConfig from "blog.config";
 
@@ -9,7 +8,6 @@ export const meta: MetaFunction = () => {
   return generateMeta({
     title: ["ABOUT", blogConfig.seo.title],
     description: blogConfig.seo.description,
-    image: pathJoin(blogConfig.site, blogConfig.image.main),
   });
 };
 
