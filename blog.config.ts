@@ -19,7 +19,7 @@ export default {
   },
   hero: ``,
   bio: `
-    제 <a href="https://taehoon.craft.me/cv">이력서</a>를 확인할 수 있습니다.<br /><br />
+    제 <a href="https://abit.ly/taehoon-cv">이력서</a>를 확인할 수 있습니다.<br /><br />
 
     2018년부터 웹 개발에 전념하면서 주로 프론트엔드를 담당하고 있습니다. 2022년 여름부터 2023년 봄까지는 PLAV에서 일하면서 React, 함수형 반응형 프로그래밍 등의 기술을 사용하여 중고명품 거래를 위한 커뮤니티 플랫폼을 개발했습니다.<br /><br />
 
