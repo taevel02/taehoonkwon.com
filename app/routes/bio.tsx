@@ -15,7 +15,10 @@ export default function BioPage() {
   return (
     <div className="">
       <h1 className="text-3xl font-medium mb-6">Bio</h1>
-      <p className="text-wrap">{blogConfig.bio}</p>
+      <p
+        className="text-wrap [&>a]:text-primary"
+        dangerouslySetInnerHTML={{ __html: blogConfig.bio }}
+      />
     </div>
   );
 }

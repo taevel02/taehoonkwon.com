@@ -18,7 +18,10 @@ export default function Index() {
         권태훈 (Taehoon Kwon, 權泰勳)
       </h1>
       {/* <Contact /> */}
-      <p className="text-wrap">{blogConfig.hero}</p>
+      <p
+        className="text-wrap"
+        dangerouslySetInnerHTML={{ __html: blogConfig.hero }}
+      />
     </div>
   );
 }
