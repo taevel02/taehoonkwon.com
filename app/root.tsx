@@ -17,6 +17,7 @@ import {
   useTheme,
 } from "remix-themes";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/remix";
 
 import { GlobalNavigationBar } from "./components/GlobalNavigationBar";
 import { Footer } from "./components/Footer";
@@ -83,6 +84,7 @@ export function App() {
         <Scripts />
         <LiveReload />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
