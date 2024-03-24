@@ -5,7 +5,7 @@ import { generateSitemap } from "~/utils/generate-sitemap";
 
 import blogConfig from "blog.config";
 
-const routes = ["bio", "archives"];
+const routes = ["archives"];
 
 export const loader: LoaderFunction = async () => {
   const articles = await articleAPI.getArticles();

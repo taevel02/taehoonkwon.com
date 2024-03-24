@@ -1,6 +1,13 @@
 export function generateSitemap(urls: string[]): string {
   const urlsAsXml = urls
-    .map((url) => `<url><loc>${url}</loc></url>`)
+    .map(
+      (url) => `
+        <url>
+          <loc>${url}</loc>
+          <priority>0.8</priority>
+        </url>
+      `
+    )
     .join("\n");
 
   return `
