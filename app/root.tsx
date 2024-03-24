@@ -26,9 +26,11 @@ import { themeSessionResolver } from "./sessions.server";
 
 import styles from "./styles/globals.css";
 
+import { GoogleAnalyticsScripts } from "./utils/google-analytics";
 import cn from "./utils/cn";
 
 import "./styles/reset.css";
+import blogConfig from "blog.config";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -44,6 +46,16 @@ export const links: LinksFunction = () => [
   {
     rel: "icon",
     href: "/favicon.ico",
+  },
+  {
+    rel: "sitemap",
+    type: "application/xml",
+    href: "/sitemap.xml",
+  },
+  {
+    rel: "alternate",
+    type: "application/rss+xml",
+    href: "/rss.xml",
   },
 ];
 
@@ -75,6 +87,7 @@ export function App() {
         <Meta />
         <PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
         <Links />
+        <GoogleAnalyticsScripts id={blogConfig.ga.id} />
       </head>
       <body>
         <Layout>

@@ -15,7 +15,7 @@ export default {
     extensions: ["**/*.png", "**/*.jpg", "**/*.jpeg"],
   },
   ga: {
-    id: "", // G-XXXXXXXXXX
+    id: "G-GHV52J2X34", // G-XXXXXXXXXX
   },
   about: `
     저는 프론트엔드 엔지니어입니다.<br />도시에서는 전시를, 자연에서는 스쿠버다이빙과 스키를 즐깁니다.<br /><br />
