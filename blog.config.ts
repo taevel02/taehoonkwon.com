@@ -22,6 +22,6 @@ export default {
 
     제가 2019년부터 지금까지 읽은 책을 <a href="https://abit.ly/taehoon-bookshelf">여기</a>서 확인할 수 있습니다.<br /><br />
 
-    이 블로그를 <a href="https://taehoonkwon.com/rss.xml">RSS 피드</a>를 통해 구독할 수 있습니다.
+    이 블로그는 <a href="https://taehoonkwon.com/rss.xml">RSS 피드</a>를 지원합니다.
   `,
 };
