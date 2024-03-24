@@ -20,8 +20,8 @@ export default function Index() {
       </h1>
       <Contact />
       <p
-        className="text-wrap"
-        dangerouslySetInnerHTML={{ __html: blogConfig.hero }}
+        className="text-wrap mt-8 [&>a]:text-primary"
+        dangerouslySetInnerHTML={{ __html: blogConfig.about }}
       />
     </div>
   );
