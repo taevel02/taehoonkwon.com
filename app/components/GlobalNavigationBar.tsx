@@ -9,7 +9,6 @@ export function GlobalNavigationBar() {
     <nav className="flex flex-row justify-between mt-8 mb-16">
       <ul className="inline-flex items-center gap-8 p-0 list-none leading-10 max-[320px]:gap-2">
         <GNBLink to="/">About</GNBLink>
-        <GNBLink to="/bio">Bio</GNBLink>
         <GNBLink to="/archives">Archives</GNBLink>
       </ul>
       <ModeToggle />

@@ -17,6 +17,5 @@ export default {
   ga: {
     id: "", // G-XXXXXXXXXX
   },
-  hero: ``,
-  bio: ``,
+  about: ``,
 };
