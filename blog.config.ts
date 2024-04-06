@@ -18,10 +18,9 @@ export default {
     id: "G-GHV52J2X34", // G-XXXXXXXXXX
   },
   about: `
-    저는 프론트엔드 엔지니어입니다.<br />도시에서는 전시를, 자연에서는 스쿠버다이빙과 스키를 즐깁니다.<br /><br />
+    소프트웨어 엔지니어입니다.<br />
+    도시에서는 전시를, 자연에서는 스쿠버다이빙과 스키를 즐깁니다.<br /><br />
 
-    제가 2019년부터 지금까지 읽은 책을 <a href="https://abit.ly/taehoon-bookshelf">여기</a>서 확인할 수 있습니다.<br /><br />
-
-    이 블로그는 <a href="https://taehoonkwon.com/rss.xml">RSS 피드</a>를 지원합니다.
+    저의 <a href="https://abit.ly/taehoon-bookshelf">서재</a>를 둘러보세요.
   `,
 };
