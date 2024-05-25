@@ -1,4 +1,4 @@
-import { Github, Mail } from "lucide-react";
+import { Instagram, Mail } from "lucide-react";
 
 export default function ContactList() {
   return (
@@ -8,8 +8,8 @@ export default function ContactList() {
         <a href="mailto:taevel02@gmail.com">taevel02@gmail.com</a>
       </div>
       <div className="flex items-center gap-2">
-        <Github size={16} />
-        <a href="https://github.com/taevel02">taevel02</a>
+        <Instagram size={16} />
+        <a href="https://www.instagram.com/taevel02/">taevel02</a>
       </div>
     </div>
   );
