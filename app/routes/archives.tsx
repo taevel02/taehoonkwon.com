@@ -26,10 +26,12 @@ export default function ArchivesPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const filteredArticles = selectedCategory
-    ? articles.filter(article => article.category === selectedCategory)
+    ? articles.filter((article) => article.category === selectedCategory)
     : articles;
 
-  const categories = Array.from(new Set(articles.map(article => article.category)));
+  const categories = Array.from(
+    new Set(articles.map((article) => article.category))
+  );
 
   const handleCategoryChange = (category: string | null) => {
     setSelectedCategory(category);
@@ -48,7 +50,9 @@ export default function ArchivesPage() {
           <button
             key={category}
             onClick={() => handleCategoryChange(category)}
-            className={`mr-3 ${selectedCategory === category ? "text-primary" : ""}`}
+            className={`mr-3 ${
+              selectedCategory === category ? "text-primary" : ""
+            }`}
           >
             {category}
           </button>
