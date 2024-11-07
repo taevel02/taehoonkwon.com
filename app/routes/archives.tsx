@@ -1,5 +1,6 @@
 import { MetaFunction, json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
+import { useState } from "react";
 
 import { articleAPI } from "~/api/article";
 
@@ -22,10 +23,39 @@ export const loader = async () => {
 export default function ArchivesPage() {
   const articles = useLoaderData<typeof loader>();
 
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const filteredArticles = selectedCategory
+    ? articles.filter(article => article.category === selectedCategory)
+    : articles;
+
+  const categories = Array.from(new Set(articles.map(article => article.category)));
+
+  const handleCategoryChange = (category: string | null) => {
+    setSelectedCategory(category);
+  };
+
   return (
     <div>
+      <div className="mb-6">
+        <button
+          onClick={() => handleCategoryChange(null)}
+          className={`mr-3 ${selectedCategory === null ? "text-primary" : ""}`}
+        >
+          all
+        </button>
+        {categories.map((category) => (
+          <button
+            key={category}
+            onClick={() => handleCategoryChange(category)}
+            className={`mr-3 ${selectedCategory === category ? "text-primary" : ""}`}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
       <ul>
-        {articles.map(
+        {filteredArticles.map(
           ({ id, title, subtitle, lastUpdatedAt, category }, index) => (
             <li
               key={index}
