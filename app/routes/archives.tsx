@@ -1,6 +1,11 @@
 import { MetaFunction, json } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
-import { useState } from "react";
+import {
+  Link,
+  useLoaderData,
+  useNavigate,
+  useSearchParams,
+} from "@remix-run/react";
+import { useEffect, useState } from "react";
 
 import { articleAPI } from "~/api/article";
 
@@ -16,14 +21,19 @@ export const meta: MetaFunction = () => {
   });
 };
 
-export const loader = async () => {
+export async function loader() {
   return json(await articleAPI.getArticles());
-};
+}
 
 export default function ArchivesPage() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   const articles = useLoaderData<typeof loader>();
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    searchParams.get("category")
+  );
 
   const filteredArticles = selectedCategory
     ? articles.filter((article) => article.category === selectedCategory)
@@ -35,7 +45,15 @@ export default function ArchivesPage() {
 
   const handleCategoryChange = (category: string | null) => {
     setSelectedCategory(category);
+    navigate(category ? `?category=${category}` : "");
   };
+
+  useEffect(() => {
+    const category = searchParams.get("category");
+    if (category !== selectedCategory) {
+      setSelectedCategory(category);
+    }
+  }, [searchParams, selectedCategory]);
 
   return (
     <div>
@@ -58,7 +76,7 @@ export default function ArchivesPage() {
           </button>
         ))}
       </div>
-      <ul>
+      <ul className="transition-all duration-700 ease-in-out">
         {filteredArticles.map(
           ({ id, title, subtitle, lastUpdatedAt, category }, index) => (
             <li
