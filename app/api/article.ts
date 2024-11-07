@@ -8,7 +8,7 @@ const DIRNAME = path.resolve();
 const articlesDir = (file: string) =>
   path.join(DIRNAME, blogConfig.archives.generatedDirectory, file);
 
-async function getArticles(): Promise<Article[]> {
+async function getArticles(category?: string | null): Promise<Article[]> {
   const manifestFile = await fs.readJSON(articlesDir("/manifest.json"));
   const articles = JSON.parse(manifestFile.articles) as Article[];
 
@@ -17,6 +17,10 @@ async function getArticles(): Promise<Article[]> {
       new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime()
     );
   });
+
+  if (category) {
+    return sortedArticles.filter((article) => article.category === category);
+  }
 
   return sortedArticles;
 }

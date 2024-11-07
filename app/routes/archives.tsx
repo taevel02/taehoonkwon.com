@@ -1,4 +1,4 @@
-import { MetaFunction, json } from "@remix-run/node";
+import { LoaderFunctionArgs, MetaFunction, json } from "@remix-run/node";
 import {
   Link,
   useLoaderData,
@@ -21,8 +21,12 @@ export const meta: MetaFunction = () => {
   });
 };
 
-export async function loader() {
-  return json(await articleAPI.getArticles());
+const categories = ["retrospect", "essay"];
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  const url = new URL(request.url);
+  const category = url.searchParams.get("category");
+  return json(await articleAPI.getArticles(category));
 }
 
 export default function ArchivesPage() {
@@ -31,36 +35,18 @@ export default function ArchivesPage() {
 
   const articles = useLoaderData<typeof loader>();
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    searchParams.get("category")
-  );
-
-  const filteredArticles = selectedCategory
-    ? articles.filter((article) => article.category === selectedCategory)
-    : articles;
-
-  const categories = Array.from(
-    new Set(articles.map((article) => article.category))
-  );
-
   const handleCategoryChange = (category: string | null) => {
-    setSelectedCategory(category);
     navigate(category ? `?category=${category}` : "");
   };
-
-  useEffect(() => {
-    const category = searchParams.get("category");
-    if (category !== selectedCategory) {
-      setSelectedCategory(category);
-    }
-  }, [searchParams, selectedCategory]);
 
   return (
     <div>
       <div className="mb-6">
         <button
           onClick={() => handleCategoryChange(null)}
-          className={`mr-3 ${selectedCategory === null ? "text-primary" : ""}`}
+          className={`mr-3 ${
+            !searchParams.get("category") ? "text-primary" : ""
+          }`}
         >
           all
         </button>
@@ -69,15 +55,15 @@ export default function ArchivesPage() {
             key={category}
             onClick={() => handleCategoryChange(category)}
             className={`mr-3 ${
-              selectedCategory === category ? "text-primary" : ""
+              searchParams.get("category") === category ? "text-primary" : ""
             }`}
           >
             {category}
           </button>
         ))}
       </div>
-      <ul className="transition-all duration-700 ease-in-out">
-        {filteredArticles.map(
+      <ul>
+        {articles.map(
           ({ id, title, subtitle, lastUpdatedAt, category }, index) => (
             <li
               key={index}
