@@ -9,7 +9,7 @@ export default function ContactList() {
       </div>
       <div className="flex items-center gap-2">
         <RiInstagramLine size={16} />
-        <a href="https://www.instagram.com/taevel02/">taevel02</a>
+        <a href="https://www.instagram.com/taehoonkwon__/">taehoonkwon__</a>
       </div>
     </div>
   );
