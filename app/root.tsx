@@ -109,7 +109,9 @@ export function ErrorBoundary() {
       </head>
       <body>
         <Layout>
-          <h1>{parseError(error)}</h1>
+          <h1 className="font-medium mt-6 mb-6 text-[18pt]">
+            {parseError(error)}
+          </h1>
         </Layout>
         <Scripts />
       </body>
