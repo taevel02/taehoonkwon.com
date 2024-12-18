@@ -13,17 +13,23 @@ import { Badge } from "~/components/ui/Badge";
 import { generateMeta } from "~/utils/generate-meta";
 import { formatDate } from "~/utils/format-date";
 import invariant from "~/utils/invariant";
+import { pathJoin } from "~/utils/path";
 
 import blogConfig from "blog.config";
 import "~/styles/article.css";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  const { title } = data?.article ?? {};
+  const { id, title } = data?.article ?? {};
+  invariant(id !== undefined, "'id' is required");
   invariant(title !== undefined, "'title' is required");
 
   return generateMeta({
     title: [title, blogConfig.seo.title],
-    description: blogConfig.seo.description,
+    description:
+      data?.article.content.slice(0, 500) ?? blogConfig.seo.description,
+    author: blogConfig.author,
+    site: blogConfig.site,
+    url: pathJoin(blogConfig.site, "archives", id.toString()),
   });
 };
 

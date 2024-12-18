@@ -1,5 +1,4 @@
-import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import type { LinksFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -8,33 +7,26 @@ import {
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
-  useLoaderData,
   useRouteError,
 } from "@remix-run/react";
-import {
-  PreventFlashOnWrongTheme,
-  ThemeProvider,
-  useTheme,
-} from "remix-themes";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/remix";
 
 import { GlobalNavigationBar } from "./components/GlobalNavigationBar";
 import { Footer } from "./components/Footer";
 
-import { themeSessionResolver } from "./sessions.server";
-
-import styles from "./styles/globals.css";
-
 import { GoogleAnalyticsScripts } from "./utils/google-analytics";
-import cn from "./utils/cn";
 
-import "./styles/reset.css";
+import resetStyles from "./styles/reset.css";
+import globalStyles from "./styles/globals.css";
+import articleStyles from "./styles/article.css";
+
 import blogConfig from "blog.config";
 
 export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
-  { rel: "stylesheet", href: styles },
+  { rel: "stylesheet", href: resetStyles },
+  { rel: "stylesheet", href: globalStyles },
+  { rel: "stylesheet", href: articleStyles },
   {
     rel: "stylesheet",
     href: "https://cdn.jsdelivr.net/npm/@fontsource/nanum-myeongjo/index.min.css",
@@ -59,33 +51,14 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export async function loader({ request }: LoaderFunctionArgs) {
-  const { getTheme } = await themeSessionResolver(request);
-
-  return { theme: getTheme() };
-}
-
-export default function AppWithProviders() {
-  const data = useLoaderData<typeof loader>();
-
+export default function App() {
   return (
-    <ThemeProvider specifiedTheme={data.theme} themeAction="/action/set-theme">
-      <App />
-    </ThemeProvider>
-  );
-}
-
-export function App() {
-  const data = useLoaderData<typeof loader>();
-  const [theme] = useTheme();
-
-  return (
-    <html lang="ko" className={cn(theme)}>
+    <html lang="ko">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:site_name" content={blogConfig.seo.name}></meta>
         <Meta />
-        <PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
         <Links />
         <GoogleAnalyticsScripts id={blogConfig.ga.id} />
       </head>
@@ -115,6 +88,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
 export function ErrorBoundary() {
   const error = useRouteError();
+
   function parseError(error: unknown) {
     if (isRouteErrorResponse(error)) {
       return `${error.status} ${error.statusText}`;

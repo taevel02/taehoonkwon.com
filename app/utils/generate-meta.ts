@@ -6,6 +6,8 @@ interface generateMetaOptions {
   image?: string;
   author?: string;
   site?: string;
+  url?: string;
+  logo?: string;
 }
 
 const DELIMITER = " | ";
@@ -15,14 +17,18 @@ export function generateMeta({
   description,
   image = "",
   author = "",
+  url = "",
+  logo = "",
 }: generateMetaOptions): MetaDescriptor[] {
   return [
     { title: title.join(DELIMITER) },
-    { description },
     meta("description", description),
     og("type", "website"),
     og("title", title[0]),
+    og("description", description),
+    og("url", url),
     og("image", image),
+    og("logo", logo),
     twitter("title", title[0]),
     twitter("description", description),
     twitter("image", image),
