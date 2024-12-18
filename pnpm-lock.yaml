@@ -71,9 +71,6 @@ importers:
       remark-rehype:
         specifier: ^11.1.1
         version: 11.1.1
-      remix-themes:
-        specifier: ^1.5.1
-        version: 1.5.1(@remix-run/react@2.14.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.14.0(typescript@5.6.3))
       tailwind-merge:
         specifier: ^2.5.4
         version: 2.5.4
@@ -3175,12 +3172,6 @@ packages:
 
   remark-rehype@11.1.1:
     resolution: {integrity: sha512-g/osARvjkBXb6Wo0XvAeXQohVta8i84ACbenPpoSsxTOQH/Ae0/RGP4WZgnMH5pMLpsj4FG7OHmcIcXxpza8eQ==}
-
-  remix-themes@1.5.1:
-    resolution: {integrity: sha512-3/qo8pLjWdL5c6QORCzRp2KwT9izg294wCjL9grNPGhOaO/tkAkzf36imV7nkIhUc8U+7QGffiRl+Zg0prGfgA==}
-    peerDependencies:
-      '@remix-run/react': '>= 1'
-      '@remix-run/server-runtime': '>= 1'
 
   require-like@0.1.2:
     resolution: {integrity: sha512-oyrU88skkMtDdauHDuKVrgR+zuItqr6/c//FXzvmxRGMexSDc6hNvJInGW3LL46n+8b50RykrvwSUIIQH2LQ5A==}
@@ -7428,11 +7419,6 @@ snapshots:
       mdast-util-to-hast: 13.2.0
       unified: 11.0.5
       vfile: 6.0.3
-
-  remix-themes@1.5.1(@remix-run/react@2.14.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.14.0(typescript@5.6.3)):
-    dependencies:
-      '@remix-run/react': 2.14.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)
-      '@remix-run/server-runtime': 2.14.0(typescript@5.6.3)
 
   require-like@0.1.2: {}
 
