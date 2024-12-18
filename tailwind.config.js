@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ["./app/**/*.{ts,tsx}"],
-  prefix: "",
+  // prefix: "",
   theme: {
     container: {
       center: true,
