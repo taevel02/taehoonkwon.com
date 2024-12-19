@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./app/**/*.{ts,tsx}"],
-  // prefix: "",
+  prefix: "",
   theme: {
     container: {
       center: true,
@@ -71,5 +71,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: ["tailwindcss-animate"],
 };
