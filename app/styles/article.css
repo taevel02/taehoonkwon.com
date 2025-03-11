@@ -5,14 +5,14 @@ article {
 article > p {
   margin: 1.5em 0;
 
-  font-family: "Nanum Myeongjo", serif;
+  font-family: "MaruBuri";
   font-size: 11pt;
   letter-spacing: 0.8px;
   line-height: 22pt;
 }
 
 article > p > a {
-  font-family: "Nanum Myeongjo", serif;
+  font-family: "MaruBuri";
   color: hsl(var(--primary)) !important;
 }
 

@@ -29,7 +29,7 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: articleStyles },
   {
     rel: "stylesheet",
-    href: "https://cdn.jsdelivr.net/npm/@fontsource/nanum-myeongjo/index.min.css",
+    href: "https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css",
   },
   {
     rel: "stylesheet",
