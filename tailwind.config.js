@@ -12,7 +12,7 @@ export default {
     },
     fontFamily: {
       sans: ["Pretendard", "sans-serif"],
-      serif: ["Nanum Myeongjo", "serif"],
+      serif: ["MaruBuri"],
     },
     extend: {
       colors: {
