@@ -17,14 +17,12 @@ import { Footer } from "./components/Footer";
 
 import { GoogleAnalyticsScripts } from "./utils/google-analytics";
 
-import resetStyles from "./styles/reset.css";
 import globalStyles from "./styles/globals.css";
 import articleStyles from "./styles/article.css";
 
 import blogConfig from "blog.config";
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: resetStyles },
   { rel: "stylesheet", href: globalStyles },
   { rel: "stylesheet", href: articleStyles },
   {
@@ -33,7 +31,7 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css",
+    href: "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css",
   },
   {
     rel: "icon",
@@ -78,7 +76,7 @@ export default function App() {
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="container max-w-screen-md overflow-auto">
+    <div className="container max-w-(--breakpoint-md) overflow-auto">
       <GlobalNavigationBar />
       {children}
       <Footer />
