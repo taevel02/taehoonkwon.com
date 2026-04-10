@@ -5,22 +5,19 @@ article {
 article > p {
   margin: 1.5em 0;
 
-  font-family: "MaruBuri";
+  font-family: var(--font-serif);
   font-size: 11pt;
   letter-spacing: 0.8px;
   line-height: 22pt;
 }
 
 article > p > a {
-  font-family: "MaruBuri";
-  color: hsl(var(--primary)) !important;
+  font-family: var(--font-serif);
+  color: var(--primary) !important;
 }
 
 article > p > strong {
-  font-family: "Pretendard Variable", Pretendard, -apple-system,
-    BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
-    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-family: var(--font-sans);
   font-weight: 500;
 }
 
@@ -81,13 +78,13 @@ article > h6 {
 article > blockquote {
   margin: 3em 0;
   padding: 0 0.8em;
-  border-left: 2px solid hsl(var(--border));
+  border-left: 2px solid var(--border);
 
   font-size: 11pt;
   font-weight: 100;
   letter-spacing: 0.8px;
   line-height: 22pt;
-  color: hsl(var(--secondary-foreground));
+  color: var(--secondary-foreground);
 }
 
 article > blockquote > p {
@@ -95,11 +92,11 @@ article > blockquote > p {
 }
 
 article > blockquote > p > a {
-  color: hsl(var(--primary)) !important;
+  color: var(--primary) !important;
 }
 
 article > hr {
   margin-top: 3em;
   border: none;
-  border-top: 1px solid hsl(var(--border));
+  border-top: 1px solid var(--border);
 }

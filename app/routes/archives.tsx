@@ -1,16 +1,11 @@
-import { LoaderFunctionArgs, MetaFunction, json } from "@remix-run/node";
-import {
-  Link,
-  useLoaderData,
-  useNavigate,
-  useSearchParams,
-} from "@remix-run/react";
+import { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
 
 import { articleAPI } from "~/api/article";
 
 import { formatDate } from "~/utils/format-date";
-import { generateMeta } from "~/utils/generate-meta";
-import { pathJoin } from "~/utils/path";
+import { generateMeta } from "~/utils/seo";
+import { pathJoin } from "~/utils/string";
 
 import blogConfig from "blog.config";
 
@@ -23,67 +18,65 @@ export const meta: MetaFunction = () => {
   });
 };
 
-const categories = ["retrospect", "essay"];
+const categories = ["retrospect", "essay"] as const;
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
-  const category = url.searchParams.get("category");
-  return json(await articleAPI.getArticles(category));
+  const selectedCategory = url.searchParams.get("category");
+  const articles = await articleAPI.getArticles(selectedCategory);
+  return { articles, selectedCategory };
 }
 
 export default function ArchivesPage() {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-
-  const articles = useLoaderData<typeof loader>();
-
-  const handleCategoryChange = (category: string | null) => {
-    navigate(category ? `?category=${category}` : "");
-  };
+  const { articles, selectedCategory } = useLoaderData<typeof loader>();
 
   return (
     <div>
-      <div className="mb-6">
-        <button
-          onClick={() => handleCategoryChange(null)}
-          className={`mr-3 ${
-            !searchParams.get("category") ? "text-primary" : ""
+      <div className="mb-6 flex gap-4">
+        <Link
+          to="/archives"
+          prefetch="intent"
+          viewTransition
+          className={`inline-block transition-colors ${
+            !selectedCategory
+              ? "text-primary font-medium"
+              : "text-muted-foreground hover:text-foreground"
           }`}
         >
           all
-        </button>
+        </Link>
         {categories.map((category) => (
-          <button
+          <Link
             key={category}
-            onClick={() => handleCategoryChange(category)}
-            className={`mr-3 ${
-              searchParams.get("category") === category ? "text-primary" : ""
+            to={`/archives?category=${category}`}
+            prefetch="intent"
+            viewTransition
+            className={`inline-block transition-colors ${
+              selectedCategory === category
+                ? "text-primary font-medium"
+                : "text-muted-foreground hover:text-foreground"
             }`}
           >
             {category}
-          </button>
+          </Link>
         ))}
       </div>
       <ul>
-        {articles.map(
-          ({ id, title, subtitle, lastUpdatedAt, category }, index) => (
-            <li
-              key={index}
-              className="group block py-4 border-b-[0.1em] first:pt-0 last:pb-0 last:border-0"
-            >
-              <Link to={`/archives/${id}`} prefetch="intent">
-                <p className="mb-2 text-sm text-primary underline">
-                  {category}
-                </p>
-                <p className="text-xl group-hover:underline">{title}</p>
-                <p className="mb-4 text-sm font-light">{subtitle}</p>
-                <p className="text-xs text-muted-foreground">
-                  {formatDate(lastUpdatedAt)}
-                </p>
-              </Link>
-            </li>
-          )
-        )}
+        {articles.map(({ id, title, subtitle, lastUpdatedAt, category }) => (
+          <li
+            key={id}
+            className="group block py-4 border-b-[0.1em] first:pt-0 last:pb-0 last:border-0"
+          >
+            <Link to={`/archives/${id}`} prefetch="intent" viewTransition>
+              <p className="mb-2 text-sm text-primary underline">{category}</p>
+              <p className="text-xl group-hover:underline">{title}</p>
+              <p className="mb-4 text-sm font-light">{subtitle}</p>
+              <p className="text-xs text-muted-foreground">
+                {formatDate(lastUpdatedAt)}
+              </p>
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   );
