@@ -1,6 +1,6 @@
-import { routes } from "@remix-run/dev/server-build";
+import { routes } from "virtual:remix/server-build";
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { generateSitemap } from "~/utils/generate-sitemap";
+import { generateSitemap } from "~/utils/seo";
 
 export function loader({ request }: LoaderFunctionArgs) {
   return generateSitemap(request, routes, {

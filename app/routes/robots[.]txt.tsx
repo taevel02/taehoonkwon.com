@@ -1,4 +1,4 @@
-import { generateRobotsTxt } from "~/utils/generate-robotstxt";
+import { generateRobotsTxt } from "~/utils/seo";
 
 export function loader() {
   return generateRobotsTxt([
