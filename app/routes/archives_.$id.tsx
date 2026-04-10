@@ -1,6 +1,5 @@
 import {
   type LoaderFunctionArgs,
-  json,
   MetaFunction,
   redirect,
 } from "@remix-run/node";
@@ -10,11 +9,10 @@ import { articleAPI } from "~/api/article";
 
 import { Badge } from "~/components/ui/Badge";
 
-import { generateMeta } from "~/utils/generate-meta";
 import { formatDate } from "~/utils/format-date";
 import invariant from "~/utils/invariant";
-import { pathJoin } from "~/utils/path";
-import { clamp, toPlainText } from "~/utils/to-plain-text";
+import { generateMeta } from "~/utils/seo";
+import { pathJoin, clamp, toPlainText } from "~/utils/string";
 
 import blogConfig from "blog.config";
 import "~/styles/article.css";
@@ -32,6 +30,10 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     author: blogConfig.author,
     site: blogConfig.site,
     url: pathJoin(blogConfig.site, "archives", id.toString()),
+    image: pathJoin(
+      blogConfig.site,
+      `resource/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(data?.article.subtitle || "")}`,
+    ),
   });
 };
 
@@ -42,7 +44,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const [article] = await Promise.all([articleAPI.getArticle(id)]);
   if (article === null) return redirect("/404");
 
-  return json({ article });
+  return { article };
 }
 
 export default function ArchivePage() {

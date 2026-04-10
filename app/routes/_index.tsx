@@ -1,7 +1,7 @@
 import { MetaFunction } from "@remix-run/node";
 
 import Contact from "~/components/Contact";
-import { generateMeta } from "~/utils/generate-meta";
+import { generateMeta } from "~/utils/seo";
 
 import blogConfig from "blog.config";
 
@@ -20,7 +20,7 @@ export default function Index() {
       </h1>
       <Contact />
       <p
-        className="text-wrap mt-8 [&>a]:text-primary"
+        className="text-wrap mt-8 leading-relaxed [&_a]:text-primary"
         dangerouslySetInnerHTML={{ __html: blogConfig.about }}
       />
     </div>

@@ -14,7 +14,7 @@ export function GlobalNavigationBar() {
 function GNBLink({ to, children }: { to: string; children: React.ReactNode }) {
   return (
     <li className="text-base uppercase max-[320px]:text-sm">
-      <NavLink prefetch="render" to={to}>
+      <NavLink prefetch="render" to={to} viewTransition>
         {children}
       </NavLink>
     </li>
