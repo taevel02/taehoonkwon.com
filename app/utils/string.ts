@@ -1,3 +1,10 @@
+export function pathJoin(...args: string[]) {
+  return args
+    .map((p) => p.replace(/^\.\//, "").replace(/^\/+/, "").replace(/\/+$/, ""))
+    .filter(Boolean)
+    .join("/");
+}
+
 export function toPlainText(html: string) {
   return html
     .replace(/<[^>]*>?/g, "")

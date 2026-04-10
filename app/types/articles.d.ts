@@ -1,4 +1,4 @@
-export type ArticleCategory = "essay" | "retrospect" | "tech";
+export type ArticleCategory = "essay" | "retrospect";
 
 export interface Article {
   id: string;

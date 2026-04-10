@@ -9,6 +9,9 @@ import remarkRehype from "remark-rehype";
 import remarkFrontmatter from "remark-frontmatter";
 import rehypeStringify from "rehype-stringify";
 import rehypeShiki from "@shikijs/rehype";
+import sharp from "sharp";
+import { visit } from "unist-util-visit";
+import blogConfig from "~/../blog.config";
 
 import { Article, ArticleCategory, ArticleFrontMatter } from "~/types/articles";
 
@@ -26,7 +29,7 @@ export async function prepareArticles({
   await Promise.all(
     markdownFiles.map(async (file) => {
       const text = await readFileToString(baseDirectory, file);
-      const article = await buildArticle(text);
+      const article = await buildArticle(text, file);
 
       if (article !== null) {
         manifest.push(article);
@@ -36,13 +39,33 @@ export async function prepareArticles({
     })
   );
 
+  const imageFiles = await globby(blogConfig.image.extensions, { cwd: baseDirectory });
+  
+  await Promise.all(
+    imageFiles.map(async (file) => {
+      const rawPath = path.join(baseDirectory, file);
+      const fileName = path.parse(file).name;
+      const fileDir = path.dirname(file);
+      const destDir = path.join(path.resolve(), "public", "images", "articles", fileDir);
+      
+      await fs.ensureDir(destDir);
+      
+      const destPath = path.join(destDir, `${fileName}.webp`);
+      await sharp(rawPath)
+        .webp({ quality: 80 })
+        .toFile(destPath);
+      
+      console.log(`Image Optimized: ${file} -> ${destPath}`);
+    })
+  );
+
   await fs.outputJson(`${destination}/manifest.json`, {
     articles: JSON.stringify(manifest),
   });
 }
 
-async function buildArticle(text: string) {
-  const result = await parseMarkdown<ArticleFrontMatter>(text);
+async function buildArticle(text: string, file: string) {
+  const result = await parseMarkdown<ArticleFrontMatter>(text, file);
 
   if (result === null) {
     console.warn("Invalid frontmatter", text.substring(0, 30));
@@ -74,7 +97,7 @@ async function readFileToString(...args: string[]): Promise<string> {
   return data;
 }
 
-async function parseMarkdown<T>(text: string) {
+async function parseMarkdown<T>(text: string, filePath: string) {
   const frontmatter = fm<T>(text);
 
   if (frontmatter === null) return null;
@@ -83,6 +106,20 @@ async function parseMarkdown<T>(text: string) {
   const html = await unified()
     .use(remarkParse)
     .use(remarkRehype)
+    .use(() => (tree) => {
+      visit(tree, "element", (node: any) => {
+        if (node.tagName === "img" && node.properties?.src) {
+          const src = node.properties.src as string;
+          if (!src.startsWith("http") && !src.startsWith("data:") && !src.startsWith("/")) {
+            const relativeSrc = src.replace(/^\.\//, "");
+            const parsed = path.parse(relativeSrc);
+            const fileDir = path.dirname(filePath);
+            const newSrc = `/images/articles/${fileDir}/${parsed.name}.webp`;
+            node.properties.src = newSrc.replace(/\/\//g, '/');
+          }
+        }
+      });
+    })
     .use(rehypeShiki, {
       themes: {
         light: "vitesse-light",
