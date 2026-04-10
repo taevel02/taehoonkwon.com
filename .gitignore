@@ -1,18 +1,31 @@
 node_modules
 
-/.cache
-.vscode
-/build
-/public/build
-.env
-.generated
+# pnpm
+pnpm-debug.log*
 
-.yarn/*
-!.yarn/cache
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-.pnp.*
+# Remix/Vite
+/build
+/.cache
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode
+.idea
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Static data/cache
+.generated
 v10
