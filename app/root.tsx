@@ -1,7 +1,6 @@
 import type { LinksFunction } from "@remix-run/node";
 import {
   Links,
-  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -17,25 +16,26 @@ import { Footer } from "./components/Footer";
 
 import { GoogleAnalyticsScripts } from "./utils/google-analytics";
 
-import globalStyles from "./styles/globals.css";
-import articleStyles from "./styles/article.css";
+import globalStyles from "./styles/globals.css?url";
+import articleStyles from "./styles/article.css?url";
 
-import blogConfig from "blog.config";
+import blogConfig from "../blog.config";
 
 export const links: LinksFunction = () => [
+  {
+    rel: "preconnect",
+    href: "https://www.googletagmanager.com",
+    crossOrigin: "anonymous",
+  },
   { rel: "stylesheet", href: globalStyles },
   { rel: "stylesheet", href: articleStyles },
   {
-    rel: "stylesheet",
-    href: "https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css",
-  },
-  {
     rel: "icon",
     href: "/favicon.ico",
+  },
+  {
+    rel: "manifest",
+    href: "/manifest.webmanifest",
   },
   {
     rel: "sitemap",
@@ -66,7 +66,6 @@ export default function App() {
         </Layout>
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
         <Analytics />
         <SpeedInsights />
       </body>
