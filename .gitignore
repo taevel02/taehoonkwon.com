@@ -5,6 +5,7 @@ pnpm-debug.log*
 
 # Remix/Vite
 /build
+/public/build
 /.cache
 
 # Environment variables
