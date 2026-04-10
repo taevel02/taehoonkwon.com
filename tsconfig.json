@@ -13,21 +13,12 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "allowImportingTsExtensions": true,
-    "baseUrl": ".",
     "paths": {
-      "~/*": ["./app/*"]
+      "~/*": ["./app/*"],
+      "blog.config": ["./blog.config.ts"]
     },
-
     // Remix takes care of building everything in `remix build`.
-    "noEmit": true
-  },
-
-  "ts-node": {
-    "transpileOnly": true,
-    "esm": true,
-    "compilerOptions": {
-      "module": "Node16",
-      "moduleResolution": "Node16"
-    }
+    "noEmit": true,
+    "types": ["@remix-run/node", "vite/client"]
   }
 }
