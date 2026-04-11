@@ -2,8 +2,7 @@ import { LoaderFunctionArgs, MetaFunction, redirect } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 
 import { articleAPI } from "~/api/article";
-import { getLanguage } from "~/utils/i18n";
-
+import { getLanguage, getLocalizedPath } from "~/utils/i18n";
 import { formatDate } from "~/utils/format-date";
 import { generateMeta } from "~/utils/seo";
 import { pathJoin } from "~/utils/string";
@@ -26,9 +25,9 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const lang = getLanguage(request, params.lang);
   const url = new URL(request.url);
 
-  // Auto-redirect exclusively to /en/archives for non-Korean users accessing the root archives
-  if (lang === "en" && !params.lang && url.pathname.startsWith("/archives")) {
-    return redirect(`/en${url.pathname}${url.search}`);
+  const redirectPath = getLocalizedPath(url.pathname, lang);
+  if (redirectPath) {
+    return redirect(redirectPath + url.search);
   }
 
   const selectedCategory = url.searchParams.get("category");
@@ -86,7 +85,7 @@ export default function ArchivesPage() {
               <p className="text-xl group-hover:underline">{title}</p>
               <p className="mb-4 text-sm font-light">{subtitle}</p>
               <p className="text-xs text-muted-foreground">
-                {formatDate(lastUpdatedAt)}
+                {formatDate(lastUpdatedAt, lang)}
               </p>
             </Link>
           </li>

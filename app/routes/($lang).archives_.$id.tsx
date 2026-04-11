@@ -1,23 +1,18 @@
-import {
-  type LoaderFunctionArgs,
-  MetaFunction,
-  redirect,
-} from "@remix-run/node";
+import { LoaderFunctionArgs, MetaFunction, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
 import { articleAPI } from "~/api/article";
+import { getLanguage, getLocalizedPath } from "~/utils/i18n";
+import { formatDate } from "~/utils/format-date";
+import { generateMeta } from "~/utils/seo";
+import { pathJoin, clamp, toPlainText } from "~/utils/string";
+import invariant from "~/utils/invariant";
 
 import { Badge } from "~/components/ui/Badge";
 
-import { formatDate } from "~/utils/format-date";
-import invariant from "~/utils/invariant";
-import { generateMeta } from "~/utils/seo";
-import { pathJoin, clamp, toPlainText } from "~/utils/string";
-
 import blogConfig from "blog.config";
-import "~/styles/article.css";
 
-import { getLanguage } from "~/utils/i18n";
+import "~/styles/article.css";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { id, title } = data?.article ?? {};
@@ -50,9 +45,10 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   invariant(id !== undefined, "'id' is required");
 
   const url = new URL(request.url);
-  // Auto-redirect exclusively to /en/archives/:id for non-Korean users accessing the root
-  if (lang === "en" && !params.lang && url.pathname.startsWith("/archives/")) {
-    return redirect(`/en${url.pathname}${url.search}`);
+
+  const redirectPath = getLocalizedPath(url.pathname, lang);
+  if (redirectPath) {
+    return redirect(redirectPath + url.search);
   }
 
   const [article] = await Promise.all([articleAPI.getArticle(lang, id)]);
@@ -64,6 +60,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 export default function ArchivePage() {
   const {
     article: { category, title, subtitle, lastUpdatedAt, content },
+    lang,
   } = useLoaderData<typeof loader>();
 
   return (
@@ -79,7 +76,7 @@ export default function ArchivePage() {
           {title}
         </h1>
         <span className="block text-right text-sm text-muted-foreground">
-          {formatDate(lastUpdatedAt)}
+          {formatDate(lastUpdatedAt, lang)}
         </span>
       </div>
       <article dangerouslySetInnerHTML={{ __html: content }} />

@@ -1,5 +1,4 @@
 import { NavLink, useParams, useLocation } from "@remix-run/react";
-import blogConfig from "blog.config";
 
 export function GlobalNavigationBar() {
   const { lang } = useParams();
@@ -11,13 +10,18 @@ export function GlobalNavigationBar() {
     if (targetLang === l) return;
 
     // Set explicit preference cookie
-    document.cookie = `lang=${targetLang}; path=/; max-age=31536000`;
+    document.cookie = `lang=${targetLang}; path=/; max-age=31536000; SameSite=Lax`;
 
-    // Compute current path ignoring /en prefix
-    const pathWithoutLang = location.pathname.startsWith("/en")
-      ? location.pathname.slice(3) || "/"
-      : location.pathname;
+    // Strip any leading /en or /ko from the path
+    const pathSegments = location.pathname.split("/").filter(Boolean);
+    if (
+      pathSegments.length > 0 &&
+      (pathSegments[0] === "en" || pathSegments[0] === "ko")
+    ) {
+      pathSegments.shift();
+    }
 
+    const pathWithoutLang = "/" + pathSegments.join("/");
     const dest =
       targetLang === "en"
         ? pathWithoutLang === "/"

@@ -1,17 +1,20 @@
 import { LoaderFunctionArgs, MetaFunction, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import Contact from "~/components/Contact";
+
+import { getLanguage, getLocalizedPath } from "~/utils/i18n";
 import { generateMeta } from "~/utils/seo";
+
+import Contact from "~/components/Contact";
+
 import blogConfig from "blog.config";
-import { getLanguage } from "~/utils/i18n";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const lang = getLanguage(request, params.lang);
-
   const url = new URL(request.url);
-  // Auto-redirect exclusively to /en for non-Korean users accessing the root
-  if (lang === "en" && !params.lang && url.pathname === "/") {
-    return redirect(`/en`);
+
+  const redirectPath = getLocalizedPath(url.pathname, lang);
+  if (redirectPath) {
+    return redirect(redirectPath + url.search);
   }
 
   return { lang };

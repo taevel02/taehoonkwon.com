@@ -1,4 +1,4 @@
-import { RiMailLine, RiInstagramLine } from "@remixicon/react";
+import { RiMailLine } from "@remixicon/react";
 
 export default function ContactList() {
   return (
