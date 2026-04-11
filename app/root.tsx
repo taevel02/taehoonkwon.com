@@ -34,6 +34,10 @@ export const links: LinksFunction = () => [
     href: "/favicon.ico",
   },
   {
+    rel: "apple-touch-icon",
+    href: "/apple-touch-icon.png",
+  },
+  {
     rel: "manifest",
     href: "/manifest.webmanifest",
   },
@@ -55,7 +59,7 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta property="og:site_name" content={blogConfig.seo.name}></meta>
+        <meta property="og:site_name" content={blogConfig.seo.ko.name}></meta>
         <Meta />
         <Links />
         <GoogleAnalyticsScripts id={blogConfig.ga.id} />
