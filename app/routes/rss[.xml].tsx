@@ -6,11 +6,11 @@ import { generateRss } from "~/utils/seo";
 import blogConfig from "blog.config";
 
 export const loader: LoaderFunction = async () => {
-  const articles = await articleAPI.getArticles();
+  const articles = await articleAPI.getArticles("ko");
 
   const feed = generateRss(blogConfig.origin, {
-    title: blogConfig.seo.title,
-    description: blogConfig.seo.description,
+    title: blogConfig.seo.ko.title,
+    description: blogConfig.seo.ko.description,
     link: `https://${blogConfig.origin}`,
     entries: articles.map((article) => ({
       description: article.subtitle ?? "",

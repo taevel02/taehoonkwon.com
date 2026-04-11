@@ -17,19 +17,26 @@ import { pathJoin, clamp, toPlainText } from "~/utils/string";
 import blogConfig from "blog.config";
 import "~/styles/article.css";
 
+import { getLanguage } from "~/utils/i18n";
+
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { id, title } = data?.article ?? {};
-  invariant(id !== undefined, "'id' is required");
-  invariant(title !== undefined, "'title' is required");
+  const lang = data?.lang === "en" ? "en" : "ko";
+
+  if (!id || !title) return [];
 
   const description = clamp(toPlainText(data?.article.content ?? ""));
 
   return generateMeta({
-    title: [title, blogConfig.seo.title],
-    description: description || blogConfig.seo.description,
+    title: [title, blogConfig.seo[lang].title],
+    description: description || blogConfig.seo[lang].description,
     author: blogConfig.author,
     site: blogConfig.site,
-    url: pathJoin(blogConfig.site, "archives", id.toString()),
+    url: pathJoin(
+      blogConfig.site,
+      lang === "ko" ? "archives" : "en/archives",
+      id.toString(),
+    ),
     image: pathJoin(
       blogConfig.site,
       `resource/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(data?.article.subtitle || "")}`,
@@ -37,14 +44,21 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   });
 };
 
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function loader({ request, params }: LoaderFunctionArgs) {
+  const lang = getLanguage(request, params.lang);
   const id = params.id;
   invariant(id !== undefined, "'id' is required");
 
-  const [article] = await Promise.all([articleAPI.getArticle(id)]);
+  const url = new URL(request.url);
+  // Auto-redirect exclusively to /en/archives/:id for non-Korean users accessing the root
+  if (lang === "en" && !params.lang && url.pathname.startsWith("/archives/")) {
+    return redirect(`/en${url.pathname}${url.search}`);
+  }
+
+  const [article] = await Promise.all([articleAPI.getArticle(lang, id)]);
   if (article === null) return redirect("/404");
 
-  return { article };
+  return { article, lang };
 }
 
 export default function ArchivePage() {
