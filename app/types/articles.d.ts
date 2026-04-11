@@ -2,6 +2,7 @@ export type ArticleCategory = "essay" | "retrospect";
 
 export interface Article {
   id: string;
+  lang: string;
   title: string;
   subtitle?: string;
   lastUpdatedAt: string;
@@ -12,6 +13,7 @@ export interface Article {
 
 export interface ArticleFrontMatter {
   id: string;
+  lang?: string;
   title: string;
   subtitle?: string;
   date: string;

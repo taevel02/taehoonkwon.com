@@ -24,17 +24,23 @@ export async function prepareArticles({
 }) {
   const markdownFiles = await globby("**/*.md", { cwd: baseDirectory });
 
-  const manifest: Article[] = [];
+  // Map of language to an array of articles
+  const manifests: Record<string, Article[]> = {};
 
   await Promise.all(
     markdownFiles.map(async (file) => {
+      // Assuming folder structure is: articles/[lang]/filename.md
+      const lang = file.split(path.sep)[0] || "ko";
       const text = await readFileToString(baseDirectory, file);
-      const article = await buildArticle(text, file);
+      const article = await buildArticle(text, file, lang);
 
       if (article !== null) {
-        manifest.push(article);
-        console.log("Content Generated: ", article.title);
-        await fs.outputJson(`${destination}/${article.id}.json`, article);
+        if (!manifests[lang]) {
+          manifests[lang] = [];
+        }
+        manifests[lang].push(article);
+        console.log(`Content Generated [${lang}]: `, article.title);
+        await fs.outputJson(`${destination}/${lang}/${article.id}.json`, article);
       }
     })
   );
@@ -59,12 +65,17 @@ export async function prepareArticles({
     })
   );
 
-  await fs.outputJson(`${destination}/manifest.json`, {
-    articles: JSON.stringify(manifest),
-  });
+  // Write separate manifest per language
+  await Promise.all(
+    Object.keys(manifests).map(async (lang) => {
+      await fs.outputJson(`${destination}/${lang}/manifest.json`, {
+        articles: JSON.stringify(manifests[lang]),
+      });
+    })
+  );
 }
 
-async function buildArticle(text: string, file: string) {
+async function buildArticle(text: string, file: string, lang: string) {
   const result = await parseMarkdown<ArticleFrontMatter>(text, file);
 
   if (result === null) {
@@ -81,6 +92,7 @@ async function buildArticle(text: string, file: string) {
 
   const article: Article = {
     id: attr.id,
+    lang, // the inferred language from folder
     title: attr.title,
     subtitle: attr.subtitle,
     lastUpdatedAt: attr.date,
