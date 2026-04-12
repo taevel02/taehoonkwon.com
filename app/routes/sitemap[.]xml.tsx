@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import { routes } from "virtual:remix/server-build";
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { generateSitemap } from "~/utils/seo";

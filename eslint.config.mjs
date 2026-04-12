@@ -9,7 +9,15 @@ import importPlugin from "eslint-plugin-import";
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
-  { ignores: ["build/**", ".cache/**", "public/**", "node_modules/**", ".generated/**"] },
+  {
+    ignores: [
+      "build/**",
+      ".cache/**",
+      "public/**",
+      "node_modules/**",
+      ".generated/**",
+    ],
+  },
   js.configs.recommended,
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
@@ -34,7 +42,7 @@ export default [
       import: importPlugin,
     },
     settings: {
-      react: { version: "detect" },
+      react: { version: "19.0" },
       formComponents: ["Form"],
       linkComponents: [
         { name: "Link", linkAttribute: "to" },

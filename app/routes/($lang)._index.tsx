@@ -1,12 +1,11 @@
 import { LoaderFunctionArgs, MetaFunction, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import blogConfig from "blog.config";
 
 import { getLanguage, getLocalizedPath } from "~/utils/i18n";
 import { generateMeta } from "~/utils/seo";
 
 import Contact from "~/components/Contact";
-
-import blogConfig from "blog.config";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const lang = getLanguage(request, params.lang);
@@ -33,9 +32,9 @@ export default function Index() {
   const l = lang === "en" ? "en" : "ko";
 
   return (
-    <div className="">
+    <div>
       <h1 className="text-3xl font-medium mb-6">
-        {l === "ko" ? "권태훈 (Taehoon Kwon, 權泰勳)" : "Taehoon Kwon"}
+        {l === "ko" ? "권태훈 (權泰勳)" : "Taehoon (Theo) Kwon"}
       </h1>
       <Contact />
       <p

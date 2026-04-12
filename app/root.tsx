@@ -1,3 +1,4 @@
+import React from "react";
 import type { LinksFunction } from "@remix-run/node";
 import {
   Links,
@@ -8,16 +9,18 @@ import {
   isRouteErrorResponse,
   useRouteError,
 } from "@remix-run/react";
+import { RiAlertLine } from "@remixicon/react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/remix";
 
-import { GlobalNavigationBar } from "./components/GlobalNavigationBar";
-import { Footer } from "./components/Footer";
+import { GlobalNavigationBar } from "~/components/GlobalNavigationBar";
+import { Footer } from "~/components/Footer";
+import { EmptyState } from "~/components/EmptyState";
 
-import { GoogleAnalyticsScripts } from "./utils/google-analytics";
+import { GoogleAnalyticsScripts } from "~/utils/google-analytics";
 
-import globalStyles from "./styles/globals.css?url";
-import articleStyles from "./styles/article.css?url";
+import globalStyles from "~/styles/globals.css?url";
+import articleStyles from "~/styles/article.css?url";
 
 import blogConfig from "../blog.config";
 
@@ -89,30 +92,38 @@ function Layout({ children }: { children: React.ReactNode }) {
 
 export function ErrorBoundary() {
   const error = useRouteError();
-
-  function parseError(error: unknown) {
-    if (isRouteErrorResponse(error)) {
-      return `${error.status} ${error.statusText}`;
-    }
-    if (error instanceof Error) {
-      return error.message;
-    }
-
-    return "Unknown Error";
-  }
+  const is404 = isRouteErrorResponse(error) && error.status === 404;
 
   return (
     <html lang="ko">
       <head>
-        <title>Oops!</title>
+        <title>{is404 ? "Page Not Found" : "Oops!"}</title>
         <Meta />
         <Links />
       </head>
       <body>
         <Layout>
-          <h1 className="font-medium mt-6 mb-6 text-[18pt]">
-            {parseError(error)}
-          </h1>
+          <div className="flex flex-col items-center justify-center min-h-[60vh]">
+            <EmptyState
+              icon={<RiAlertLine className="w-12 h-12" />}
+              title={
+                is404 ? "페이지를 찾을 수 없습니다" : "문제가 발생했습니다"
+              }
+              description={
+                is404
+                  ? "존재하지 않는 페이지이거나, 이동되었을 수 있습니다."
+                  : "요청을 처리하는 중에 예상치 못한 오류가 발생했습니다."
+              }
+              action={
+                <button
+                  onClick={() => (window.location.href = "/")}
+                  className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
+                >
+                  홈으로 돌아가기
+                </button>
+              }
+            />
+          </div>
         </Layout>
         <Scripts />
       </body>

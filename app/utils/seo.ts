@@ -1,5 +1,4 @@
-import type { MetaDescriptor } from "@remix-run/node";
-import type { ServerBuild } from "@remix-run/node";
+import type { MetaDescriptor, ServerBuild } from "@remix-run/node";
 
 // --- META GENERATOR ---
 
@@ -50,7 +49,7 @@ export type RobotsPolicy = {
 
 export type RobotsConfig = {
   appendOnDefaultPolicies?: boolean;
-  headers?: HeadersInit;
+  headers?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 };
 
 const typeTextMap = {
@@ -68,16 +67,16 @@ const defaultPolicies: RobotsPolicy[] = [
 
 export function generateRobotsTxt(
   policies: RobotsPolicy[] = [],
-  { appendOnDefaultPolicies = true, headers }: RobotsConfig = {}
+  { appendOnDefaultPolicies = true, headers }: RobotsConfig = {},
 ) {
   const policiesToUse = appendOnDefaultPolicies
     ? [...defaultPolicies, ...policies]
     : policies;
-    
+
   const robotText = policiesToUse.reduce((acc, policy) => {
     return `${acc}${typeTextMap[policy.type]}: ${policy.value}\n`;
   }, "");
-  
+
   const bytes = new TextEncoder().encode(robotText).byteLength;
 
   return new Response(robotText, {
@@ -102,7 +101,12 @@ export type RssEntry = {
 
 export function generateRss(
   origin: string,
-  { title, description, link, entries }: { title: string; description: string; link: string; entries: RssEntry[] }
+  {
+    title,
+    description,
+    link,
+    entries,
+  }: { title: string; description: string; link: string; entries: RssEntry[] },
 ): string {
   return `<?xml version="1.0" encoding="UTF-8"?>
   <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -122,7 +126,7 @@ export function generateRss(
               <pubDate>${entry.pubDate}</pubDate>
               <link>${entry.link}</link>
               ${entry.guid ? `<guid isPermaLink="false">${entry.guid}</guid>` : ""}
-            </item>`
+            </item>`,
         )
         .join("")}
     </channel>
@@ -134,13 +138,20 @@ export function generateRss(
 export type SitemapEntry = {
   route: string;
   lastmod?: string;
-  changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
+  changefreq?:
+    | "always"
+    | "hourly"
+    | "daily"
+    | "weekly"
+    | "monthly"
+    | "yearly"
+    | "never";
   priority?: 0.0 | 0.1 | 0.2 | 0.3 | 0.4 | 0.5 | 0.6 | 0.7 | 0.8 | 0.9 | 1.0;
 };
 
 export type SEOHandle = {
   getSitemapEntries?: (
-    request: Request
+    request: Request,
   ) =>
     | Promise<Array<SitemapEntry | null> | null>
     | Array<SitemapEntry | null>
@@ -149,13 +160,13 @@ export type SEOHandle = {
 
 export type PickSitemapOptions = {
   siteUrl: string;
-  headers?: HeadersInit;
+  headers?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 };
 
 export async function generateSitemap(
   request: Request,
   routes: ServerBuild["routes"],
-  options: PickSitemapOptions
+  options: PickSitemapOptions,
 ) {
   const { siteUrl, headers } = options;
   const sitemap = await getSitemapXml(request, routes, { siteUrl });
@@ -177,11 +188,16 @@ function removeTrailingSlash(s: string) {
 async function getSitemapXml(
   request: Request,
   routes: ServerBuild["routes"],
-  options: { siteUrl: string }
+  options: { siteUrl: string },
 ) {
   const { siteUrl } = options;
 
-  function getEntry({ route, lastmod, changefreq, priority = 0.7 }: SitemapEntry) {
+  function getEntry({
+    route,
+    lastmod,
+    changefreq,
+    priority = 0.7,
+  }: SitemapEntry) {
     return `
       <url>
         <loc>${siteUrl}${route}</loc>
@@ -195,7 +211,7 @@ async function getSitemapXml(
   const rawSitemapEntries = (
     await Promise.all(
       Object.entries(routes).map(async ([id, routeEntry]) => {
-        const mod = (routeEntry as any).module;
+        const mod = (routeEntry as any).module; // eslint-disable-line @typescript-eslint/no-explicit-any
         if (id === "root" || !mod) return;
 
         const handle = mod.handle as SEOHandle | undefined;
@@ -221,7 +237,9 @@ async function getSitemapXml(
         }
 
         while (parent) {
-          const parentPath = parent.path ? removeTrailingSlash(parent.path) : "";
+          const parentPath = parent.path
+            ? removeTrailingSlash(parent.path)
+            : "";
           path = `${parentPath}/${path}`;
           parentId = parent.parentId;
           parent = parentId ? routes[parentId] : null;
@@ -230,7 +248,7 @@ async function getSitemapXml(
         if (path.includes(":")) return;
 
         return { route: removeTrailingSlash(path) };
-      })
+      }),
     )
   )
     .flatMap((z) => z)
@@ -238,7 +256,7 @@ async function getSitemapXml(
 
   const sitemapEntries: Array<SitemapEntry> = [];
   const routeSet = new Set<string>();
-  
+
   for (const entry of rawSitemapEntries) {
     if (!routeSet.has(entry.route)) {
       sitemapEntries.push(entry);
