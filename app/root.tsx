@@ -1,12 +1,14 @@
 import React from "react";
 import type { LinksFunction } from "@remix-run/node";
 import {
+  Link,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
+  useLocation,
   useRouteError,
 } from "@remix-run/react";
 import { RiAlertLine } from "@remixicon/react";
@@ -92,10 +94,12 @@ function Layout({ children }: { children: React.ReactNode }) {
 
 export function ErrorBoundary() {
   const error = useRouteError();
+  const location = useLocation();
   const is404 = isRouteErrorResponse(error) && error.status === 404;
+  const isEn = location.pathname.startsWith("/en");
 
   return (
-    <html lang="ko">
+    <html lang={isEn ? "en" : "ko"}>
       <head>
         <title>{is404 ? "Page Not Found" : "Oops!"}</title>
         <Meta />
@@ -107,20 +111,31 @@ export function ErrorBoundary() {
             <EmptyState
               icon={<RiAlertLine className="w-12 h-12" />}
               title={
-                is404 ? "페이지를 찾을 수 없습니다" : "문제가 발생했습니다"
+                is404
+                  ? isEn
+                    ? "Page Not Found"
+                    : "페이지를 찾을 수 없습니다"
+                  : isEn
+                    ? "Something went wrong"
+                    : "문제가 발생했습니다"
               }
               description={
                 is404
-                  ? "존재하지 않는 페이지이거나, 이동되었을 수 있습니다."
-                  : "요청을 처리하는 중에 예상치 못한 오류가 발생했습니다."
+                  ? isEn
+                    ? "The page you are looking for does not exist or has been moved."
+                    : "존재하지 않는 페이지이거나, 이동되었을 수 있습니다."
+                  : isEn
+                    ? "An unexpected error occurred while processing your request."
+                    : "요청을 처리하는 중에 예상치 못한 오류가 발생했습니다."
               }
               action={
-                <button
-                  onClick={() => (window.location.href = "/")}
-                  className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
+                <Link
+                  to={isEn ? "/en" : "/"}
+                  className="text-primary"
+                  viewTransition
                 >
-                  홈으로 돌아가기
-                </button>
+                  {isEn ? "Back to Home" : "홈으로 돌아가기"}
+                </Link>
               }
             />
           </div>
