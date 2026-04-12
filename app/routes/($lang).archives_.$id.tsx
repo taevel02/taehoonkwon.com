@@ -1,16 +1,15 @@
 import { LoaderFunctionArgs, MetaFunction, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
+import blogConfig from "blog.config";
+
 import { articleAPI } from "~/api/article";
 import { getLanguage, getLocalizedPath } from "~/utils/i18n";
-import { formatDate } from "~/utils/format-date";
 import { generateMeta } from "~/utils/seo";
 import { pathJoin, clamp, toPlainText } from "~/utils/string";
 import invariant from "~/utils/invariant";
 
-import { Badge } from "~/components/ui/Badge";
-
-import blogConfig from "blog.config";
+import { ArticleHeader } from "~/components/ArticleHeader";
 
 import "~/styles/article.css";
 
@@ -23,7 +22,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const description = clamp(toPlainText(data?.article.content ?? ""));
 
   return generateMeta({
-    title: [title, blogConfig.seo[lang].title],
+    title: [title, "ARCHIVES", blogConfig.seo[lang].title],
     description: description || blogConfig.seo[lang].description,
     author: blogConfig.author,
     site: blogConfig.site,
@@ -64,21 +63,14 @@ export default function ArchivePage() {
   } = useLoaderData<typeof loader>();
 
   return (
-    <div>
-      <div className="mb-20">
-        <div className="flex flex-row items-center gap-2">
-          <Badge variant="outline">{category}</Badge>
-          {subtitle && (
-            <h2 className="text-xs text-muted-foreground">{subtitle}</h2>
-          )}
-        </div>
-        <h1 className="block text-4xl leading-relaxed font-medium font-serif mt-2 text-wrap">
-          {title}
-        </h1>
-        <span className="block text-right text-sm text-muted-foreground">
-          {formatDate(lastUpdatedAt, lang)}
-        </span>
-      </div>
+    <div className="animate-fade-in">
+      <ArticleHeader
+        title={title}
+        subtitle={subtitle}
+        category={category}
+        date={lastUpdatedAt}
+        lang={lang}
+      />
       <article dangerouslySetInnerHTML={{ __html: content }} />
     </div>
   );
