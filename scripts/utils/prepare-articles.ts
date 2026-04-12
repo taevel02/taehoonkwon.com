@@ -166,8 +166,8 @@ async function parseMarkdown<T>(text: string, filePath: string) {
     .use(remarkParse)
     .use(remarkRehype)
     .use(() => (tree) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       visit(tree, "element", (node: any) => {
-        // eslint-disable-line @typescript-eslint/no-explicit-any
         if (node.tagName === "img" && node.properties?.src) {
           const src = node.properties.src as string;
           if (
