@@ -1,8 +1,8 @@
 ---
-id: 254
+id: redefining-the-standards
 title: Redefining the Standards
 subtitle: 2025 Annual Letter
-date: 2025-12-25
+date: 25-12-2025
 category: retrospect
 ---
 

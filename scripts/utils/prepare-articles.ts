@@ -2,6 +2,7 @@ import path from "path";
 import fs from "fs-extra";
 import fm from "front-matter";
 import { globby } from "globby";
+import dayjs from "dayjs";
 
 import { unified } from "unified";
 import remarkParse from "remark-parse";
@@ -11,9 +12,10 @@ import rehypeStringify from "rehype-stringify";
 import rehypeShiki from "@shikijs/rehype";
 import sharp from "sharp";
 import { visit } from "unist-util-visit";
-import blogConfig from "~/../blog.config";
 
 import { Article, ArticleCategory, ArticleFrontMatter } from "~/types/articles";
+
+import blogConfig from "~/../blog.config";
 
 export async function prepareArticles({
   from: baseDirectory,
@@ -22,56 +24,88 @@ export async function prepareArticles({
   from: string;
   to: string;
 }) {
+  // Clear old generated files to prevent stale content (e.g., old numeric ID files)
+  await fs.emptyDir(destination);
+
   const markdownFiles = await globby("**/*.md", { cwd: baseDirectory });
 
-  // Map of language to an array of articles
-  const manifests: Record<string, Article[]> = {};
+  // Map of category to language to an array of articles
+  const manifests: Record<string, Record<string, Article[]>> = {};
 
   await Promise.all(
     markdownFiles.map(async (file) => {
-      // Assuming folder structure is: articles/[lang]/filename.md
-      const lang = file.split(path.sep)[0] || "ko";
+      const parts = file.split(path.sep);
+      let entryCategory = "archives";
+      let lang = "ko";
+
+      if (parts.length >= 3) {
+        entryCategory = parts[0];
+        lang = parts[1];
+      } else if (parts.length === 2) {
+        lang = parts[0];
+      }
+
       const text = await readFileToString(baseDirectory, file);
       const article = await buildArticle(text, file, lang);
 
       if (article !== null) {
-        if (!manifests[lang]) {
-          manifests[lang] = [];
+        if (!manifests[entryCategory]) {
+          manifests[entryCategory] = {};
         }
-        manifests[lang].push(article);
-        console.log(`Content Generated [${lang}]: `, article.title);
-        await fs.outputJson(`${destination}/${lang}/${article.id}.json`, article);
+        if (!manifests[entryCategory][lang]) {
+          manifests[entryCategory][lang] = [];
+        }
+        manifests[entryCategory][lang].push(article);
+        console.log(
+          `Content Generated [${entryCategory}/${lang}]: `,
+          article.title,
+        );
+        await fs.outputJson(
+          path.join(destination, entryCategory, lang, `${article.id}.json`),
+          article,
+        );
       }
-    })
+    }),
   );
 
-  const imageFiles = await globby(blogConfig.image.extensions, { cwd: baseDirectory });
-  
+  const imageFiles = await globby(blogConfig.image.extensions, {
+    cwd: baseDirectory,
+  });
+
   await Promise.all(
     imageFiles.map(async (file) => {
       const rawPath = path.join(baseDirectory, file);
       const fileName = path.parse(file).name;
       const fileDir = path.dirname(file);
-      const destDir = path.join(path.resolve(), "public", "images", "articles", fileDir);
-      
+      const destDir = path.join(
+        path.resolve(),
+        "public",
+        "images",
+        "articles",
+        fileDir,
+      );
+
       await fs.ensureDir(destDir);
-      
+
       const destPath = path.join(destDir, `${fileName}.webp`);
-      await sharp(rawPath)
-        .webp({ quality: 80 })
-        .toFile(destPath);
-      
+      await sharp(rawPath).webp({ quality: 80 }).toFile(destPath);
+
       console.log(`Image Optimized: ${file} -> ${destPath}`);
-    })
+    }),
   );
 
-  // Write separate manifest per language
+  // Write separate manifest per category and language
   await Promise.all(
-    Object.keys(manifests).map(async (lang) => {
-      await fs.outputJson(`${destination}/${lang}/manifest.json`, {
-        articles: JSON.stringify(manifests[lang]),
-      });
-    })
+    Object.entries(manifests).flatMap(([category, langManifests]) =>
+      Object.entries(langManifests).map(async ([lang, articles]) => {
+        await fs.outputJson(
+          path.join(destination, category, lang, "manifest.json"),
+          {
+            articles: JSON.stringify(articles),
+          },
+        );
+      }),
+    ),
   );
 }
 
@@ -85,17 +119,30 @@ async function buildArticle(text: string, file: string, lang: string) {
 
   const { html, attr } = result;
 
-  if (new Date(attr.date).toString() === "Invalid Date") {
-    console.warn("Invalid date", attr.date);
+  // Try parsing multiple formats
+  let date = dayjs(attr.date);
+  if (!date.isValid() && typeof attr.date === "string") {
+    // Attempt DD-MM-YYYY manually if dayjs fails
+    const match = attr.date.match(/^(\d{2})-(\d{2})-(\d{4})$/);
+    if (match) {
+      date = dayjs(`${match[3]}-${match[2]}-${match[1]}`);
+    }
+  }
+
+  if (!date.isValid()) {
+    console.warn(`Invalid date format in ${file}:`, attr.date);
     return null;
   }
 
+  // Normalize to YYYY-MM-DD for internal storage and consistent sorting
+  const normalizedDate = date.format("YYYY-MM-DD");
+
   const article: Article = {
     id: attr.id,
-    lang, // the inferred language from folder
+    lang,
     title: attr.title,
     subtitle: attr.subtitle,
-    lastUpdatedAt: attr.date,
+    lastUpdatedAt: normalizedDate,
     category: attr.category as ArticleCategory,
     thumbnail: attr.thumbnail,
     content: html,
@@ -120,14 +167,19 @@ async function parseMarkdown<T>(text: string, filePath: string) {
     .use(remarkRehype)
     .use(() => (tree) => {
       visit(tree, "element", (node: any) => {
+        // eslint-disable-line @typescript-eslint/no-explicit-any
         if (node.tagName === "img" && node.properties?.src) {
           const src = node.properties.src as string;
-          if (!src.startsWith("http") && !src.startsWith("data:") && !src.startsWith("/")) {
+          if (
+            !src.startsWith("http") &&
+            !src.startsWith("data:") &&
+            !src.startsWith("/")
+          ) {
             const relativeSrc = src.replace(/^\.\//, "");
             const parsed = path.parse(relativeSrc);
             const fileDir = path.dirname(filePath);
             const newSrc = `/images/articles/${fileDir}/${parsed.name}.webp`;
-            node.properties.src = newSrc.replace(/\/\//g, '/');
+            node.properties.src = newSrc.replace(/\/\//g, "/");
           }
         }
       });

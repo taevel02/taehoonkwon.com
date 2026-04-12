@@ -3,20 +3,34 @@ import path from "path";
 import fs from "fs-extra";
 import { Article } from "~/types/articles";
 
+import dayjs from "dayjs";
+
 const DIRNAME = path.resolve();
 
-const articlesDir = (lang: string, file: string) =>
-  path.join(DIRNAME, blogConfig.archives.generatedDirectory, lang, file);
+const articlesDir = (folder: string, lang: string, file: string) =>
+  path.join(
+    DIRNAME,
+    blogConfig.archives.generatedDirectory,
+    folder,
+    lang,
+    file,
+  );
 
-async function getArticles(lang: string, category?: string | null): Promise<Article[]> {
+async function getArticles(
+  lang: string,
+  category?: string | null,
+  folder: string = "archives",
+): Promise<Article[]> {
   try {
-    const manifestFile = await fs.readJSON(articlesDir(lang, "manifest.json"));
+    const manifestFile = await fs.readJSON(
+      articlesDir(folder, lang, "manifest.json"),
+    );
     const articles = JSON.parse(manifestFile.articles) as Article[];
 
     const sortedArticles = articles.sort((a, b) => {
-      return (
-        new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime()
-      );
+      const dateA = dayjs(a.lastUpdatedAt);
+      const dateB = dayjs(b.lastUpdatedAt);
+      return dateB.unix() - dateA.unix();
     });
 
     if (category) {
@@ -29,11 +43,15 @@ async function getArticles(lang: string, category?: string | null): Promise<Arti
   }
 }
 
-async function getArticle(lang: string, id: string): Promise<Article | null> {
+async function getArticle(
+  lang: string,
+  id: string,
+  folder: string = "archives",
+): Promise<Article | null> {
   try {
-    return await fs.readJSON(articlesDir(lang, `${id}.json`));
+    return await fs.readJSON(articlesDir(folder, lang, `${id}.json`));
   } catch {
-    console.error(`Article not found: ${id} in ${lang}`);
+    console.error(`Article not found: ${id} in ${folder}/${lang}`);
     return null;
   }
 }

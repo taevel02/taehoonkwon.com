@@ -1,7 +1,7 @@
 ---
-id: 12
+id: the-idea-of-a-university
 title: The Idea of a University
-date: 2021-06-18
+date: 18-06-2021
 category: essay
 ---
 

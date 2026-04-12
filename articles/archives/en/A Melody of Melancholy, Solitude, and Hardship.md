@@ -1,8 +1,8 @@
 ---
-id: 21
+id: a-melody-of-melancholy-solitude-and-hardship
 title: A Melody of Melancholy, Solitude, and Hardship
 subtitle: 2025 Semi-Annual Letter
-date: 2025-06-25
+date: 25-06-2025
 category: retrospect
 ---
 

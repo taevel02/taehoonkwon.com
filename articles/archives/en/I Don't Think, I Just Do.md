@@ -1,8 +1,8 @@
 ---
-id: 36
+id: i-dont-think-i-just-do
 title: "I Don't Think, I Just Do."
 subtitle: 2023 Semi-Annual Letter
-date: 2023-07-02
+date: 02-07-2023
 category: retrospect
 ---
 

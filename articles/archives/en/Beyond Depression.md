@@ -1,8 +1,8 @@
 ---
-id: 30
+id: beyond-depression
 title: Beyond Depression
 subtitle: In Search of Emotions (2)
-date: 2022-04-04
+date: 04-04-2022
 category: essay
 ---
 

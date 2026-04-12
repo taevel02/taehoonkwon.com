@@ -1,8 +1,8 @@
 ---
-id: 34
+id: sad-yet-joyful-fated-yet-hopeful
 title: Sad yet Joyful, Fated yet Hopeful
 subtitle: A Year of Wishing for Peace; 2022
-date: 2022-12-09
+date: 09-12-2022
 category: retrospect
 ---
 
