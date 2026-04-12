@@ -8,8 +8,8 @@ const DIRNAME = path.resolve();
 (async () => {
   await Promise.all([
     prepareArticles({
-      from: path.join(DIRNAME, blogConfig.archives.contentDirectory),
-      to: path.join(DIRNAME, blogConfig.archives.generatedDirectory),
+      from: path.join(DIRNAME, blogConfig.content.contentDirectory),
+      to: path.join(DIRNAME, blogConfig.content.generatedDirectory),
     }),
   ]);
 })();

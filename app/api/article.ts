@@ -8,13 +8,7 @@ import dayjs from "dayjs";
 const DIRNAME = path.resolve();
 
 const articlesDir = (folder: string, lang: string, file: string) =>
-  path.join(
-    DIRNAME,
-    blogConfig.archives.generatedDirectory,
-    folder,
-    lang,
-    file,
-  );
+  path.join(DIRNAME, blogConfig.content.generatedDirectory, folder, lang, file);
 
 async function getArticles(
   lang: string,
