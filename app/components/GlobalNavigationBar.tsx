@@ -1,3 +1,4 @@
+import React from "react";
 import { NavLink, useParams, useLocation } from "@remix-run/react";
 
 export function GlobalNavigationBar() {
@@ -34,9 +35,10 @@ export function GlobalNavigationBar() {
 
   return (
     <nav className="flex flex-row justify-between items-center mt-8 mb-16">
-      <ul className="inline-flex items-center gap-8 p-0 list-none leading-10 max-[320px]:gap-2">
+      <ul className="inline-flex items-center gap-4 sm:gap-8 p-0 list-none leading-10 max-[320px]:gap-2">
         <GNBLink to={prefix || "/"}>About</GNBLink>
         <GNBLink to={`${prefix}/archives`}>Archives</GNBLink>
+        <GNBLink to={`${prefix}/scuba`}>Scuba</GNBLink>
       </ul>
 
       <button
