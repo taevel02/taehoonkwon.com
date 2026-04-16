@@ -5,8 +5,7 @@ export const SCUBA_CATEGORIES = [
   "knowledge",
   "skill",
   "environment",
-  "tech",
-  "tip",
+  "technical",
 ] as const;
 export type ScubaCategory = (typeof SCUBA_CATEGORIES)[number];
 

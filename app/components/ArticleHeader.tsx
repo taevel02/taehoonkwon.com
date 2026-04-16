@@ -27,7 +27,7 @@ export function ArticleHeader({
       <h1 className="block text-4xl leading-relaxed font-medium font-serif mt-2 text-wrap">
         {title}
       </h1>
-      <span className="block text-right text-sm text-muted-foreground">
+      <span className="block text-right text-sm text-muted-foreground mt-2">
         {formatDate(date, lang)}
       </span>
     </div>
