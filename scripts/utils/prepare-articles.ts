@@ -77,13 +77,7 @@ export async function prepareArticles({
       const rawPath = path.join(baseDirectory, file);
       const fileName = path.parse(file).name;
       const fileDir = path.dirname(file);
-      const destDir = path.join(
-        path.resolve(),
-        "public",
-        "images",
-        "articles",
-        fileDir,
-      );
+      const destDir = path.join(path.resolve(), ".generated", fileDir);
 
       await fs.ensureDir(destDir);
 
@@ -175,10 +169,10 @@ async function parseMarkdown<T>(text: string, filePath: string) {
             !src.startsWith("data:") &&
             !src.startsWith("/")
           ) {
-            const relativeSrc = src.replace(/^\.\//, "");
-            const parsed = path.parse(relativeSrc);
-            const fileDir = path.dirname(filePath);
-            const newSrc = `/images/articles/${fileDir}/${parsed.name}.webp`;
+            // Resolve the image path relative to the markdown file within the articles directory
+            const resolvedPath = path.join(path.dirname(filePath), src);
+            const parsed = path.parse(resolvedPath);
+            const newSrc = `/.generated/${parsed.dir}/${parsed.name}.webp`;
             node.properties.src = newSrc.replace(/\/\//g, "/");
           }
         }
