@@ -17,13 +17,21 @@ article > p > a {
 }
 
 article > p > strong {
-  font-family: var(--font-sans);
-  font-weight: 500;
+  font-family: var(--font-serif);
+  font-weight: 700;
+}
+
+article > ul,
+article > ol {
+  font-family: var(--font-serif);
+  font-size: 11pt;
+  line-height: 22pt;
 }
 
 article > h1 {
   margin: 1.5em 0;
 
+  font-family: var(--font-sans);
   font-weight: 500;
   font-size: 18pt;
   letter-spacing: 0.8px;
@@ -33,6 +41,7 @@ article > h1 {
 article > h2 {
   margin: 1.5em 0;
 
+  font-family: var(--font-sans);
   font-weight: 500;
   font-size: 16pt;
   letter-spacing: 0.8px;
@@ -42,6 +51,7 @@ article > h2 {
 article > h3 {
   margin: 1.5em 0;
 
+  font-family: var(--font-sans);
   font-weight: 500;
   font-size: 14pt;
   letter-spacing: 0.8px;
@@ -51,6 +61,7 @@ article > h3 {
 article > h4 {
   margin: 1.5em 0;
 
+  font-family: var(--font-sans);
   font-weight: 500;
   font-size: 12pt;
   letter-spacing: 0.8px;
@@ -60,6 +71,7 @@ article > h4 {
 article > h5 {
   margin: 1.5em 0;
 
+  font-family: var(--font-sans);
   font-weight: 500;
   font-size: 11pt;
   letter-spacing: 0.8px;
@@ -69,6 +81,7 @@ article > h5 {
 article > h6 {
   margin: 1.5em 0;
 
+  font-family: var(--font-sans);
   font-weight: 500;
   font-size: 10pt;
   letter-spacing: 0.8px;
@@ -80,6 +93,7 @@ article > blockquote {
   padding: 0 0.8em;
   border-left: 2px solid var(--border);
 
+  font-family: var(--font-sans);
   font-size: 11pt;
   font-weight: 100;
   letter-spacing: 0.8px;
@@ -99,4 +113,17 @@ article > hr {
   margin-top: 3em;
   border: none;
   border-top: 1px solid var(--border);
+}
+
+article > img {
+  max-width: 100%;
+  height: auto;
+  margin: 2rem 0;
+  /* Prevent dragging and selection */
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
