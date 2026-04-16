@@ -39,6 +39,11 @@ export async function loader() {
 
 export const links: LinksFunction = () => [
   {
+    rel: "stylesheet",
+    href: "https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css",
+    crossOrigin: "anonymous",
+  },
+  {
     rel: "preconnect",
     href: "https://www.googletagmanager.com",
     crossOrigin: "anonymous",

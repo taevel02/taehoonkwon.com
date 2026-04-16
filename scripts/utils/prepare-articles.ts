@@ -6,8 +6,10 @@ import dayjs from "dayjs";
 
 import { unified } from "unified";
 import remarkParse from "remark-parse";
+import remarkMath from "remark-math";
 import remarkRehype from "remark-rehype";
 import remarkFrontmatter from "remark-frontmatter";
+import rehypeKatex from "rehype-katex";
 import rehypeStringify from "rehype-stringify";
 import rehypeShiki from "@shikijs/rehype";
 import sharp from "sharp";
@@ -158,7 +160,9 @@ async function parseMarkdown<T>(text: string, filePath: string) {
   const attr = frontmatter.attributes;
   const html = await unified()
     .use(remarkParse)
+    .use(remarkMath)
     .use(remarkRehype)
+    .use(rehypeKatex)
     .use(() => (tree) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       visit(tree, "element", (node: any) => {
