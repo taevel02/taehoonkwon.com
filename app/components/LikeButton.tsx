@@ -43,7 +43,7 @@ export function LikeButton({
           "group flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200",
           isLiked
             ? "text-primary cursor-default"
-            : "text-muted-foreground hover:bg-gray-50 hover:text-foreground active:scale-95",
+            : "text-muted-foreground cursor-pointer hover:bg-gray-50 hover:text-foreground active:scale-95",
         )}
       >
         <RiHeartFill
