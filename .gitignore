@@ -8,6 +8,9 @@ pnpm-debug.log*
 /public/build
 /.cache
 
+# Vercel
+.vercel
+
 # Environment variables
 .env
 .env.*

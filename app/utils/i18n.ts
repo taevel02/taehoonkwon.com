@@ -3,8 +3,12 @@ export const LANGUAGES: Language[] = ["ko", "en"];
 
 export function getLanguage(request: Request, langParam?: string): Language {
   // 1. Explicit path segment (URL) - This MUST win to make links shareable
-  if (langParam === "en" || langParam === "ko") {
-    return langParam as Language;
+  if (langParam) {
+    if (langParam === "en" || langParam === "ko") {
+      return langParam as Language;
+    }
+    // If a lang param was provided but it's not supported, it's a 404
+    throw new Response("Not Found", { status: 404 });
   }
 
   // 2. User Preference (Cookie) - TRUMPS GeoIP and Headers

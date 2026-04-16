@@ -4,8 +4,13 @@ import { NavLink, useParams, useLocation } from "@remix-run/react";
 export function GlobalNavigationBar() {
   const { lang } = useParams();
   const location = useLocation();
-  const l = lang === "en" ? "en" : "ko";
-  const prefix = l === "ko" ? "" : `/${lang}`;
+  const l =
+    lang === "en" ||
+    location.pathname === "/en" ||
+    location.pathname.startsWith("/en/")
+      ? "en"
+      : "ko";
+  const prefix = l === "ko" ? "" : "/en";
 
   const toggleLanguage = (targetLang: string) => {
     if (targetLang === l) return;

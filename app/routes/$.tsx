@@ -5,7 +5,12 @@ import { EmptyState } from "~/components/EmptyState";
 import { getLanguage } from "~/utils/i18n";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
-  const lang = getLanguage(request, params.lang);
+  const url = new URL(request.url);
+  const isEnPath = url.pathname === "/en" || url.pathname.startsWith("/en/");
+  const lang = getLanguage(
+    request,
+    params.lang || (isEnPath ? "en" : undefined),
+  );
   return { lang };
 }
 

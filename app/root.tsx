@@ -11,6 +11,7 @@ import {
   useLocation,
   useRouteError,
   useLoaderData,
+  useParams,
 } from "@remix-run/react";
 import { RiAlertLine } from "@remixicon/react";
 import { Analytics } from "@vercel/analytics/react";
@@ -70,9 +71,15 @@ export const links: LinksFunction = () => [
 
 export default function App() {
   const data = useLoaderData<typeof loader>();
+  const { lang } = useParams();
+  const location = useLocation();
+  const isEn =
+    lang === "en" ||
+    location.pathname === "/en" ||
+    location.pathname.startsWith("/en/");
 
   return (
-    <html lang="ko">
+    <html lang={isEn ? "en" : "ko"}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
