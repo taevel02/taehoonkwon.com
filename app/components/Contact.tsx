@@ -1,4 +1,4 @@
-import { RiMailLine, RiMapPin2Line, RiWhatsappLine } from "@remixicon/react";
+import { RiMailLine, RiMapPin2Line } from "@remixicon/react";
 
 export default function ContactList() {
   return (
