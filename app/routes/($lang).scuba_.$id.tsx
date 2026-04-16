@@ -1,5 +1,6 @@
 import { LoaderFunctionArgs, MetaFunction, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { useEffect, useState } from "react";
 
 import blogConfig from "blog.config";
 
@@ -8,8 +9,10 @@ import { getLanguage, getLocalizedPath } from "~/utils/i18n";
 import { generateMeta } from "~/utils/seo";
 import { pathJoin, clamp, toPlainText } from "~/utils/string";
 import invariant from "~/utils/invariant";
+import { supabase } from "~/utils/supabase";
 
 import { ArticleHeader } from "~/components/ArticleHeader";
+import { LikeButton } from "~/components/LikeButton";
 
 import "~/styles/article.css";
 
@@ -54,14 +57,58 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const article = await articleAPI.getArticle(lang, id, "scuba");
   if (article === null) return redirect("/404");
 
-  return { article, lang };
+  // Fetch initial stats from Supabase
+  const { data: stats } = await supabase
+    .from("article_interactions")
+    .select("likes")
+    .eq("article_id", id)
+    .single();
+
+  return { article, lang, initialLikes: stats?.likes || 0 };
 }
 
 export default function ScubaDetailPage() {
   const {
-    article: { category, title, subtitle, lastUpdatedAt, content },
+    article: { id, category, title, subtitle, lastUpdatedAt, content },
     lang,
+    initialLikes,
   } = useLoaderData<typeof loader>();
+
+  const [isLikedLocally, setIsLikedLocally] = useState(false);
+
+  useEffect(() => {
+    // 1. LocalStorage check for "Liked" status persistence
+    if (typeof window !== "undefined") {
+      const liked = localStorage.getItem(`blog_liked_${id}`);
+      if (liked) {
+        // Use a small delay to avoid synchronous setState during effect execution
+        setTimeout(() => setIsLikedLocally(true), 0);
+      }
+    }
+
+    // 2. Increment views on page load
+    supabase.rpc("increment_views", { target_article_id: id }).then();
+
+    const handleContextMenu = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).tagName === "IMG") {
+        e.preventDefault();
+      }
+    };
+    document.addEventListener("contextmenu", handleContextMenu);
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, [id]);
+
+  const handleLike = () => {
+    if (!isLikedLocally) {
+      if (typeof window !== "undefined") {
+        localStorage.setItem(`blog_liked_${id}`, "true");
+      }
+      setIsLikedLocally(true);
+      supabase.rpc("increment_likes", { target_article_id: id }).then();
+    }
+  };
 
   return (
     <div className="animate-fade-in">
@@ -73,6 +120,12 @@ export default function ScubaDetailPage() {
         lang={lang}
       />
       <article dangerouslySetInnerHTML={{ __html: content }} />
+      <LikeButton
+        label={lang === "ko" ? "도움이 되었어요" : "Helpful"}
+        initialLikes={initialLikes}
+        alreadyLiked={isLikedLocally}
+        onLike={handleLike}
+      />
     </div>
   );
 }

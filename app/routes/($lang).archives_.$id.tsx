@@ -1,5 +1,6 @@
 import { LoaderFunctionArgs, MetaFunction, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { useEffect } from "react";
 
 import blogConfig from "blog.config";
 
@@ -8,6 +9,7 @@ import { getLanguage, getLocalizedPath } from "~/utils/i18n";
 import { generateMeta } from "~/utils/seo";
 import { pathJoin, clamp, toPlainText } from "~/utils/string";
 import invariant from "~/utils/invariant";
+import { supabase } from "~/utils/supabase";
 
 import { ArticleHeader } from "~/components/ArticleHeader";
 
@@ -58,9 +60,21 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 export default function ArchivePage() {
   const {
-    article: { category, title, subtitle, lastUpdatedAt, content },
+    article: { id, category, title, subtitle, lastUpdatedAt, content },
     lang,
   } = useLoaderData<typeof loader>();
+
+  useEffect(() => {
+    supabase.rpc("increment_views", { target_article_id: id }).then();
+
+    const handleContextMenu = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).tagName === "IMG") {
+        e.preventDefault();
+      }
+    };
+    document.addEventListener("contextmenu", handleContextMenu);
+    return () => document.removeEventListener("contextmenu", handleContextMenu);
+  }, [id]);
 
   return (
     <div className="animate-fade-in">
