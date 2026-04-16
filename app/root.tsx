@@ -10,6 +10,7 @@ import {
   isRouteErrorResponse,
   useLocation,
   useRouteError,
+  useLoaderData,
 } from "@remix-run/react";
 import { RiAlertLine } from "@remixicon/react";
 import { Analytics } from "@vercel/analytics/react";
@@ -25,6 +26,15 @@ import globalStyles from "~/styles/globals.css?url";
 import articleStyles from "~/styles/article.css?url";
 
 import blogConfig from "../blog.config";
+
+export async function loader() {
+  return {
+    ENV: {
+      SUPABASE_URL: process.env.SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY: process.env.SUPABASE_PUBLISHABLE_KEY,
+    },
+  };
+}
 
 export const links: LinksFunction = () => [
   {
@@ -59,6 +69,8 @@ export const links: LinksFunction = () => [
 ];
 
 export default function App() {
+  const data = useLoaderData<typeof loader>();
+
   return (
     <html lang="ko">
       <head>
@@ -74,6 +86,11 @@ export default function App() {
           <Outlet />
         </Layout>
         <ScrollRestoration />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+          }}
+        />
         <Scripts />
         <Analytics />
         <SpeedInsights />
