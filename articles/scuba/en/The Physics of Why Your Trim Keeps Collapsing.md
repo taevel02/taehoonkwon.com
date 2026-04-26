@@ -1,7 +1,7 @@
 ---
-id: the-physical-reason-your-trim-keeps-collapsing
-title: The Physical Reason Your Trim Keeps Collapsing
-subtitle: Stop Fighting the Water with Your Core Strength
+id: the-physics-of-why-your-trim-keeps-collapsing
+title: The Physics of Why Your Trim Keeps Collapsing
+subtitle: "Stop Fighting the Water: The Secret to Effortless Trim"
 date: 16-04-2026
 category: skill
 ---
@@ -12,7 +12,7 @@ However, true trim isn't about muscular endurance. It should be a state of **Sta
 
 Today, we’re going beyond basic beginner advice like "look forward" or "straighten your back." We’ll dive deep into the actual physics of why your trim collapses and how to fix it at the source.
 
-![concept-map / © Taehoon Kwon](../images/the-physical-reason-your-trim-keeps-collapsing/concept-map.png)
+![concept-map / © Taehoon Kwon](../images/the-physics-of-why-your-trim-keeps-collapsing/concept-map.png)
 
 ### Your Body is an Underwater Seesaw: Center of Gravity vs. Center of Buoyancy
 
@@ -40,7 +40,7 @@ Adjusting the band by just 5cm while setting up on land can drastically shorten 
 
 The weight of your fins also significantly impacts your trim. Heavy rubber fins (like Jet Fins) are negatively buoyant, while plastic or carbon fins are much lighter or even positively buoyant. For example, Mares Avanti Quattro + fins are slightly positively buoyant (nearly neutral) in the water.
 
-![change-in-cg-due-to-pins / © Taehoon Kwon](../images/the-physical-reason-your-trim-keeps-collapsing/change-in-cg-due-to-pins.png)
+![change-in-cg-due-to-pins / © Taehoon Kwon](../images/the-physics-of-why-your-trim-keeps-collapsing/change-in-cg-due-to-pins.png)
 
 When wearing a drysuit, air tends to migrate toward the feet, making the legs floaty. In this case, heavy rubber fins help anchor the lower body. However, wearing heavy fins with a thin wetsuit creates a strong rotational force that drags your legs down.
 
