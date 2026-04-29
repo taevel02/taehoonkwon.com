@@ -83,12 +83,39 @@ export default function App() {
     location.pathname === "/en" ||
     location.pathname.startsWith("/en/");
 
+  const pathname = location.pathname;
+  const search = location.search;
+  const isEnPath =
+    pathname.startsWith("/en") &&
+    (pathname.length === 3 || pathname[3] === "/");
+
+  const cleanSite = blogConfig.site.endsWith("/")
+    ? blogConfig.site.slice(0, -1)
+    : blogConfig.site;
+
+  const koPath = isEnPath
+    ? pathname.length === 3
+      ? "/"
+      : pathname.slice(3)
+    : pathname;
+  const enPath = isEnPath
+    ? pathname
+    : pathname === "/"
+      ? "/en"
+      : `/en${pathname}`;
+
+  const koUrl = `${cleanSite}${koPath}${search}`;
+  const enUrl = `${cleanSite}${enPath}${search}`;
+
   return (
     <html lang={isEn ? "en" : "ko"}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:site_name" content={blogConfig.seo.ko.name}></meta>
+        <link rel="alternate" hrefLang="ko" href={koUrl} />
+        <link rel="alternate" hrefLang="en" href={enUrl} />
+        <link rel="alternate" hrefLang="x-default" href={koUrl} />
         <Meta />
         <Links />
         <GoogleAnalyticsScripts id={blogConfig.ga.id} />
@@ -115,7 +142,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="container max-w-(--breakpoint-md) overflow-auto">
       <GlobalNavigationBar />
-      {children}
+      <main>{children}</main>
       <Footer />
     </div>
   );
