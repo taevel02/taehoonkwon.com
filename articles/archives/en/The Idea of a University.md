@@ -36,4 +36,4 @@ Scholarship is more than specialized knowledge and professional skill. We suspen
 ---
 
 Reference:\
-1. Karl Jaspers (1997). *The Idea of a University*. Hakjisa.
+1\. Karl Jaspers (1997). _The Idea of a University_. Hakjisa.

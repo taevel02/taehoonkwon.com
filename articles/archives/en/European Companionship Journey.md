@@ -22,7 +22,7 @@ Upon finishing my trip, I posted the following on the 'Yurang' cafe, which I’m
 >
 > Through this community, I’ve met many people during my travels. Thanks to them, my journey was far more enjoyable than it would have been alone. They shared restaurant recommendations and local tips, and helped me create better memories as we shared meals or drinks. Some were even individuals who could have a significant impact on my life.
 >
-> I can't say I remember every face or every name. That is the reality. But I do remember the moments. In the movie *Into the Wild*, there’s a line: "Happiness is only real when shared." My days were a continuous string of such moments.
+> I can't say I remember every face or every name. That is the reality. But I do remember the moments. In the movie _Into the Wild_, there’s a line: "Happiness is only real when shared." My days were a continuous string of such moments.
 >
 > I believe everyone has had an experience like this at least once. Even if it’s not a trip to Europe, the moments we experience while traveling tend to stick with us for a long time. I think that’s one of the reasons we love traveling.
 >
@@ -30,10 +30,10 @@ Upon finishing my trip, I posted the following on the 'Yurang' cafe, which I’m
 >
 > Here is what I’ve experienced and heard:
 >
-> 1. Using informal language (*banmal*) immediately upon first contact.\
-> 2. Making plans and then failing to show up at the agreed time.\
-> 3. Excluding or bullying an individual when meeting as a group.\
-> 4. Consistently failing to respond to messages.
+> 1\. Using informal language (_banmal_) immediately upon first contact.\
+> 2\. Making plans and then failing to show up at the agreed time.\
+> 3\. Excluding or bullying an individual when meeting as a group.\
+> 4\. Consistently failing to respond to messages.
 >
 > There are many other issues, but I’ve summarized the most common ones. I’ve seen this happen across the board, regardless of gender, but (without intending to disparage any specific group) it seemed more frequent with younger travelers and, in some cases, more often with women.
 >
@@ -41,7 +41,7 @@ Upon finishing my trip, I posted the following on the 'Yurang' cafe, which I’m
 >
 > I have a request. As I wrap up my European trip and head back to Korea, I hope this post serves as a starting point for a better companion culture, so that others might suffer less from these issues.
 >
-> Let’s maintain basic etiquette. Please use polite language (*jondaemal*) with strangers and take responsibility for the promises you make.
+> Let’s maintain basic etiquette. Please use polite language (_jondaemal_) with strangers and take responsibility for the promises you make.
 >
 > Just as you invest your time and money into the people you meet, they are doing the same for you. I hope we can all try to leave good impressions and create positive memories rather than sour ones.
 >

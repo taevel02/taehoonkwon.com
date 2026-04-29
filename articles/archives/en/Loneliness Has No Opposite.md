@@ -19,7 +19,7 @@ The Standard Korean Dictionary defines them as above. I suppose you could say I 
 
 I enjoy being alone. Usually, my work flows better and I achieve more when I’m by myself. Yet, I still long for my friends and want to see people. My people—those I’m close to and who make me feel comfortable. And the environment that allows for this was essential to me.
 
-Jeju was like that. The people I met in Jeju were like that. If they read this, they might be puzzled. I’m actually quite shy. However, even though they were strangers, they became older brothers (*Hyungs*) and sisters (*Noonas*) to me without a moment’s hesitation. The age gap was not small. Yet, they acted as my *Noonas* and *Hyungs*. (Contrary to my worries, age was never an issue; rather, I was happy and grateful).
+Jeju was like that. The people I met in Jeju were like that. If they read this, they might be puzzled. I’m actually quite shy. However, even though they were strangers, they became older brothers (_Hyungs_) and sisters (_Noonas_) to me without a moment’s hesitation. The age gap was not small. Yet, they acted as my _Noonas_ and _Hyungs_. (Contrary to my worries, age was never an issue; rather, I was happy and grateful).
 
 Objectively speaking, I am young, but I am also objectively mature. My friends, those around me, and everyone I met in Jeju said the same. Even if I looked twenty, after talking to me, they’d say I seemed more mature than them. I hear that I’m "mature for my age" quite often. I don't hate this remark. I truly want to become a "good adult," even if I don't yet know exactly what that means.
 
@@ -29,7 +29,7 @@ Usually, I’m someone who habitually plans things down to the minute and always
 
 Then I left Jeju behind and returned home. The emotions that greeted me were none other than loneliness and helplessness.
 
-Currently, I define myself as someone learning about many different emotions. I am piecing together everything I’ve felt so far. Through this trip, I was able to recognize these feelings within myself as loneliness and helplessness. It’s not that I don't know the definitions and theories of various emotions. But whether I truly *feel* them or have *experienced* them was unclear. I hadn't been aware of my state, but now I am.
+Currently, I define myself as someone learning about many different emotions. I am piecing together everything I’ve felt so far. Through this trip, I was able to recognize these feelings within myself as loneliness and helplessness. It’s not that I don't know the definitions and theories of various emotions. But whether I truly _feel_ them or have _experienced_ them was unclear. I hadn't been aware of my state, but now I am.
 
 They say loneliness has no antonym. Not even in the dictionary. Some might say it’s "love," but love has its own opposite. Is loneliness something that can't be resolved? Is it something humanity hasn't figured out yet? Unlike the version of me right after returning from Jeju, my current self might still be feeling lonely. I fill that space with work and meetings with friends.
 
@@ -38,4 +38,4 @@ Among the emotions I am discovering one by one, I hope to truly find myself and 
 ---
 
 Reference:\
-1. [[IU TV] Jieun viewed by Jieun](https://youtu.be/ZAghZAZ23x8)
+1\. [[IU TV] A real bro and sis interview part.1](https://youtu.be/ZAghZAZ23x8)
