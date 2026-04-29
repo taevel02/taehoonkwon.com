@@ -11,15 +11,20 @@ export function ArticleListItem({ article, baseUrl }: ArticleListItemProps) {
   const { id, title, subtitle, lastUpdatedAt, category, lang } = article;
 
   return (
-    <li className="group block py-4 border-b-[0.1em] first:pt-0 last:pb-0 last:border-0">
-      <Link to={`${baseUrl}/${id}`} prefetch="intent" viewTransition>
+    <Link
+      to={`${baseUrl}/${id}`}
+      prefetch="intent"
+      viewTransition
+      className="group block py-4 border-b-[0.1em] first:pt-0 last:pb-0 last:border-0"
+    >
+      <li>
         <p className="mb-2 text-sm text-primary underline">{category}</p>
-        <p className="text-xl group-hover:underline">{title}</p>
+        <h2 className="text-xl group-hover:underline">{title}</h2>
         <p className="mb-4 text-sm font-light">{subtitle}</p>
         <p className="text-xs text-muted-foreground">
           {formatDate(lastUpdatedAt, lang)}
         </p>
-      </Link>
-    </li>
+      </li>
+    </Link>
   );
 }
