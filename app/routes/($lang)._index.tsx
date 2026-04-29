@@ -24,6 +24,9 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return generateMeta({
     title: ["ABOUT", blogConfig.seo[lang].title],
     description: blogConfig.seo[lang].description,
+    author: blogConfig.author,
+    site: blogConfig.site,
+    url: lang === "ko" ? blogConfig.site : `${blogConfig.site}/en`,
   });
 };
 

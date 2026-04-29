@@ -1,4 +1,5 @@
 import type { MetaDescriptor, ServerBuild } from "@remix-run/node";
+import blogConfig from "blog.config";
 
 // --- META GENERATOR ---
 
@@ -22,6 +23,16 @@ export function generateMeta({
   url = "",
   logo = "",
 }: GenerateMetaOptions): MetaDescriptor[] {
+  let ogImage = image;
+  if (!ogImage && title.length > 0) {
+    const ogTitle = title[0];
+    const ogSubtitle = title.length > 1 ? title[1] : "";
+    const cleanSite = blogConfig.site.endsWith("/")
+      ? blogConfig.site.slice(0, -1)
+      : blogConfig.site;
+    ogImage = `${cleanSite}/resource/og?title=${encodeURIComponent(ogTitle)}&subtitle=${encodeURIComponent(ogSubtitle || description)}`;
+  }
+
   return [
     { title: title.join(DELIMITER) },
     { name: "description", content: description },
@@ -29,11 +40,11 @@ export function generateMeta({
     { property: "og:title", content: title[0] },
     { property: "og:description", content: description },
     { property: "og:url", content: url },
-    { property: "og:image", content: image },
+    { property: "og:image", content: ogImage },
     { property: "og:logo", content: logo },
     { name: "twitter:title", content: title[0] },
     { name: "twitter:description", content: description },
-    { name: "twitter:image", content: image },
+    { name: "twitter:image", content: ogImage },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:creator", content: `@${author}` },
     { name: "twitter:site", content: `@${author}` },
