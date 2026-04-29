@@ -15,6 +15,30 @@ import { ArticleHeader } from "~/components/ArticleHeader";
 
 import "~/styles/article.css";
 
+export const handle = {
+  getSitemapEntries: async (request: Request) => {
+    const { articleAPI } = await import("~/api/article");
+    const [koArticles, enArticles] = await Promise.all([
+      articleAPI.getArticles("ko", null, "archives"),
+      articleAPI.getArticles("en", null, "archives"),
+    ]);
+
+    const koEntries = koArticles.map((article) => ({
+      route: `/archives/${article.id}`,
+      lastmod: article.lastUpdatedAt,
+      priority: 0.8,
+    }));
+
+    const enEntries = enArticles.map((article) => ({
+      route: `/en/archives/${article.id}`,
+      lastmod: article.lastUpdatedAt,
+      priority: 0.8,
+    }));
+
+    return [...koEntries, ...enEntries];
+  },
+};
+
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { id, title } = data?.article ?? {};
   const lang = data?.lang === "en" ? "en" : "ko";

@@ -16,6 +16,30 @@ import { LikeButton } from "~/components/LikeButton";
 
 import "~/styles/article.css";
 
+export const handle = {
+  getSitemapEntries: async (request: Request) => {
+    const { articleAPI } = await import("~/api/article");
+    const [koArticles, enArticles] = await Promise.all([
+      articleAPI.getArticles("ko", null, "scuba"),
+      articleAPI.getArticles("en", null, "scuba"),
+    ]);
+
+    const koEntries = koArticles.map((article) => ({
+      route: `/scuba/${article.id}`,
+      lastmod: article.lastUpdatedAt,
+      priority: 0.8,
+    }));
+
+    const enEntries = enArticles.map((article) => ({
+      route: `/en/scuba/${article.id}`,
+      lastmod: article.lastUpdatedAt,
+      priority: 0.8,
+    }));
+
+    return [...koEntries, ...enEntries];
+  },
+};
+
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { id, title } = data?.article ?? {};
   const lang = data?.lang === "en" ? "en" : "ko";
