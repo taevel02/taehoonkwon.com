@@ -2,7 +2,7 @@
 id: the-hidden-math-behind-your-dive-computer
 title: The Hidden Math Behind Your Dive Computer
 subtitle: Why You and Your Buddy Have Different NDLs
-date: 05-02-2026
+date: 2026-05-02
 category: knowledge
 ---
 

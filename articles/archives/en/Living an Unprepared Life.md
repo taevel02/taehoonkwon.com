@@ -2,7 +2,7 @@
 id: living-an-unprepared-life
 title: Living an Unprepared Life
 subtitle: 2023 Annual Letter
-date: 31-12-2023
+date: 2023-12-31
 category: retrospect
 ---
 

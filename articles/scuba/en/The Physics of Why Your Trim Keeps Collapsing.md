@@ -2,7 +2,7 @@
 id: the-physics-of-why-your-trim-keeps-collapsing
 title: The Physics of Why Your Trim Keeps Collapsing
 subtitle: "Stop Fighting the Water: The Secret to Effortless Trim"
-date: 16-04-2026
+date: 2026-04-16
 category: skill
 ---
 

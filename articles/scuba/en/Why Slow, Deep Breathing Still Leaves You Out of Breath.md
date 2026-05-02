@@ -2,7 +2,7 @@
 id: why-slow-deep-breathing-still-leaves-you-out-of-breath
 title: Why Slow, Deep Breathing Still Leaves You Out of Breath
 subtitle: "Stop Fighting for Air: Master Your Dead Space"
-date: 26-04-2026
+date: 2026-04-26
 category: skill
 ---
 

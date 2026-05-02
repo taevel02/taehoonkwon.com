@@ -2,7 +2,7 @@
 id: happiness-is-only-real-when-shared
 title: Happiness is Only Real When Shared
 subtitle: A Year of Simple Joys; 2021
-date: 28-12-2021
+date: 2021-12-28
 category: retrospect
 ---
 

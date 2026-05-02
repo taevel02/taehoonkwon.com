@@ -115,15 +115,7 @@ async function buildArticle(text: string, file: string, lang: string) {
 
   const { html, attr } = result;
 
-  // Try parsing multiple formats
   let date = dayjs(attr.date);
-  if (!date.isValid() && typeof attr.date === "string") {
-    // Attempt DD-MM-YYYY manually if dayjs fails
-    const match = attr.date.match(/^(\d{2})-(\d{2})-(\d{4})$/);
-    if (match) {
-      date = dayjs(`${match[3]}-${match[2]}-${match[1]}`);
-    }
-  }
 
   if (!date.isValid()) {
     console.warn(`Invalid date format in ${file}:`, attr.date);

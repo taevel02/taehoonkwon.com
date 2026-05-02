@@ -1,7 +1,7 @@
 ---
 id: making-better-choices
 title: Making Better Choices
-date: 06-07-2022
+date: 2022-07-06
 category: essay
 ---
 

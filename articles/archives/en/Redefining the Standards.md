@@ -2,7 +2,7 @@
 id: redefining-the-standards
 title: Redefining the Standards
 subtitle: 2025 Annual Letter
-date: 25-12-2025
+date: 2025-12-25
 category: retrospect
 ---
 

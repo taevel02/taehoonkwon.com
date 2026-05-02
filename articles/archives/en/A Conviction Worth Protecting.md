@@ -2,7 +2,7 @@
 id: a-conviction-worth-protecting
 title: A Conviction Worth Protecting
 subtitle: 2024 Annual Letter
-date: 18-12-2024
+date: 2024-12-18
 category: retrospect
 ---
 

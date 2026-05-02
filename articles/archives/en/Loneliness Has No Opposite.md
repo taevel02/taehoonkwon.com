@@ -2,7 +2,7 @@
 id: loneliness-has-no-opposite
 title: Loneliness Has No Opposite
 subtitle: In Search of Emotions (1)
-date: 28-01-2021
+date: 2021-01-28
 category: essay
 ---
 

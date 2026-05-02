@@ -2,7 +2,7 @@
 id: european-companionship-journey
 title: European Companionship Journey
 subtitle: Finding Good Connections in Europe
-date: 30-06-2022
+date: 2022-06-30
 category: essay
 ---
 
