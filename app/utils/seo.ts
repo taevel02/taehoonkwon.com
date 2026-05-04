@@ -286,3 +286,51 @@ async function getSitemapXml(
       </urlset>
     `.trim();
 }
+
+// --- SCHEMA GENERATORS ---
+
+export function getArticleSchema({
+  title,
+  description,
+  date,
+  author = "태훈",
+  url,
+  image = "",
+}: {
+  title: string;
+  description: string;
+  date: string;
+  author?: string;
+  url: string;
+  image?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: title,
+    description: description,
+    author: {
+      "@type": "Person",
+      name: author,
+    },
+    datePublished: date,
+    url: url,
+    image: image ? [image] : undefined,
+  };
+}
+
+export function getFAQSchema(faqs: { question: string; answer: string }[]) {
+  if (!faqs || faqs.length === 0) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+}

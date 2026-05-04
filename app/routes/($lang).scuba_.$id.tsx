@@ -6,7 +6,7 @@ import blogConfig from "blog.config";
 
 import { articleAPI } from "~/api/article";
 import { getLanguage, getLocalizedPath } from "~/utils/i18n";
-import { generateMeta } from "~/utils/seo";
+import { generateMeta, getArticleSchema } from "~/utils/seo";
 import { pathJoin, clamp, toPlainText } from "~/utils/string";
 import invariant from "~/utils/invariant";
 import { supabase } from "~/utils/supabase";
@@ -46,10 +46,15 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
   if (!id || !title) return [];
 
-  const description = clamp(toPlainText(data?.article.content ?? ""));
+  const baseDescription = clamp(toPlainText(data?.article.content ?? ""), 100);
+  const cta =
+    lang === "ko"
+      ? "다이빙 실력을 높이는 과학적 원리."
+      : "Scientific principles to improve your diving skills.";
+  const description = `${cta} ${baseDescription}`;
 
   return generateMeta({
-    title: [title, "SCUBA", blogConfig.seo[lang].title],
+    title: [clamp(title, 60), "SCUBA", blogConfig.seo[lang].title],
     description: description || blogConfig.seo[lang].description,
     author: blogConfig.author,
     site: blogConfig.site,
@@ -134,8 +139,25 @@ export default function ScubaDetailPage() {
     }
   };
 
+  const schemaUrl = pathJoin(
+    blogConfig.site,
+    lang === "ko" ? "scuba" : "en/scuba",
+    id.toString(),
+  );
+
+  const articleSchema = getArticleSchema({
+    title,
+    description: clamp(toPlainText(content), 100),
+    date: lastUpdatedAt,
+    url: schemaUrl,
+  });
+
   return (
     <div className="animate-fade-in">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <ArticleHeader
         title={title}
         subtitle={subtitle}

@@ -1,6 +1,6 @@
 ---
 id: the-hidden-math-behind-your-dive-computer
-title: The Hidden Math Behind Your Dive Computer
+title: "Scuba Diving Physics: The Hidden Math Behind Your Dive Computer"
 subtitle: Why You and Your Buddy Have Different NDLs
 date: 2026-05-02
 category: knowledge
@@ -28,7 +28,7 @@ So, exactly how does the computer determine this NDL? In the Bühlmann model, ea
 
 As your dive progresses, the time remaining until _any single one_ of the 16 compartments reaches its specific M-Value is the NDL blinking on your screen. Generally, in deep dives beyond 30 meters, the fast tissues absorb nitrogen rapidly and drain your NDL. Conversely, during long, shallow dives, the intermediate or slow tissues that slowly accumulate nitrogen become the **Leading Tissue** that ultimately dictates your NDL.
 
-![m-value-limit / © Taehoon Kwon](../images/the-hidden-math-behind-your-dive-computer/m-value-limit.jpeg)
+![Dive Computer Algorithm M-value Limit Graph / © Taehoon Kwon](../images/the-hidden-math-behind-your-dive-computer/m-value-limit.jpeg)
 
 ### The Decisive Reason Your NDL Differs From Your Buddy's
 
@@ -36,8 +36,10 @@ Now we can mathematically explain why your buddy's NDL differs from yours. The p
 
 Even if you use the exact same dive computer with identical settings, your NDLs can still differ. Diving is not a perfectly synchronized three-legged race. If your buddy dipped one meter below you for just 30 seconds to look at a coral on the bottom, their fastest compartment #1 has already experienced more pressure and absorbed more nitrogen than yours. The computer's ultra-precise pressure sensor continuously tracks these microscopic depth variations and time accumulations second by second, penalizing your buddy's NDL by a minute or two before yours.
 
-![dive-profile-variation / © Taehoon Kwon](../images/the-hidden-math-behind-your-dive-computer/dive-profile-variation.png)
+![Dive Profile Variation due to Dive Computer Algorithm / © Taehoon Kwon](../images/the-hidden-math-behind-your-dive-computer/dive-profile-variation.png)
 
 ### Understanding Beyond the Machine's Instructions
 
 A dive computer is not a magical box. It is a precise calculator that constantly feeds real-time pressure data into a mathematical model to derive an answer. Once you understand the mechanics of the algorithm and the state of the 16 virtual compartments hidden behind the NDL digits on your screen, you evolve. You move beyond being a passive diver relying solely on machine alarms, gaining a higher level of perspective to proactively control and design your own dive profile.
+
+Understanding and controlling these physical limits extends beyond the underwater world. Acknowledging your boundaries and [redefining the standards](/en/archives/redefining-the-standards) is equally important in everyday life.

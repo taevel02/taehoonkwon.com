@@ -1,6 +1,6 @@
 ---
 id: why-slow-deep-breathing-still-leaves-you-out-of-breath
-title: Why Slow, Deep Breathing Still Leaves You Out of Breath
+title: "Scuba Diving Breathing Techniques: Why Slow, Deep Breathing Still Leaves You Out of Breath"
 subtitle: "Stop Fighting for Air: Master Your Dead Space"
 date: 2026-04-26
 category: skill
@@ -18,7 +18,7 @@ The pathway from your airway to your mouth, including the regulator's mouthpiece
 
 Consequently, when you take your next breath, before you inhale the crisp, fresh air from your cylinder, you first draw this lingering carbon dioxide back into your lungs.
 
-![dead-space-in-scuba / © Taehoon Kwon](../images/why-slow-deep-breathing-still-leaves-you-out-of-breath/dead-space-in-scuba.png)
+![Dead Space Diagram in Scuba Diving Breathing Techniques / © Taehoon Kwon](../images/why-slow-deep-breathing-still-leaves-you-out-of-breath/dead-space-in-scuba.png)
 
 ### The Terrifying Vicious Cycle of Shallow Breathing
 
@@ -26,7 +26,7 @@ What happens if a diver becomes tense or focuses too much on finning, causing th
 
 Our brain triggers a much stronger urge to breathe when blood carbon dioxide levels rise than when oxygen levels fall. To expel the accumulated carbon dioxide, your body instinctively commands your brain to make you breathe faster and harder. Because you feel out of breath, your breathing becomes shallow and rapid. This shallow breathing traps even more carbon dioxide, pushing you into a terrifying vicious cycle. This is exactly when you notice your pressure gauge needle dropping visibly fast.
 
-![breathing-cycle / © Taehoon Kwon](../images/why-slow-deep-breathing-still-leaves-you-out-of-breath/breathing-cycle.png)
+![Vicious Cycle of Shallow Breathing in Scuba Diving / © Taehoon Kwon](../images/why-slow-deep-breathing-still-leaves-you-out-of-breath/breathing-cycle.png)
 
 ### Focus on 'Exhaling', Not Inhaling
 
