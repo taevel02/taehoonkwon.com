@@ -116,6 +116,14 @@ export default function App() {
         <link rel="alternate" hrefLang="ko" href={koUrl} />
         <link rel="alternate" hrefLang="en" href={enUrl} />
         <link rel="alternate" hrefLang="x-default" href={koUrl} />
+        <meta
+          name="google-site-verification"
+          content="f8FnWjzvnJhcxJIy_eib3JntyvsUCKeO0UItFWTTYsY"
+        />
+        <meta
+          name="naver-site-verification"
+          content="a3d37490dd36ea4af2e82ac4572ccb61411d1939"
+        />
         <Meta />
         <Links />
         <GoogleAnalyticsScripts id={blogConfig.ga.id} />
