@@ -1,7 +1,7 @@
 ---
 id: how-is-the-visibility-today
-title: "How's the Visibility Today?"
-subtitle: "How to Predict the Ocean's Clarity"
+title: How's the Visibility Today?
+subtitle: How to Predict the Ocean's Clarity
 date: 2026-05-09
 category: environment
 ---
