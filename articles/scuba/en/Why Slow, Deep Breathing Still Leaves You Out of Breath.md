@@ -1,7 +1,7 @@
 ---
 id: why-slow-deep-breathing-still-leaves-you-out-of-breath
-title: "Scuba Diving Breathing Techniques: Why Slow, Deep Breathing Still Leaves You Out of Breath"
-subtitle: "Stop Fighting for Air: Master Your Dead Space"
+title: Why Slow, Deep Breathing Still Leaves You Out of Breath
+subtitle: Stop Fighting for Air
 date: 2026-04-26
 category: skill
 ---

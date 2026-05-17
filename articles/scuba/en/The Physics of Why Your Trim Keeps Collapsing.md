@@ -1,7 +1,7 @@
 ---
 id: the-physics-of-why-your-trim-keeps-collapsing
-title: "Scuba Diving Trim Correction: The Physics of Why Your Trim Keeps Collapsing"
-subtitle: "Stop Fighting the Water: The Secret to Effortless Trim"
+title: The Physics of Why Your Trim Keeps Collapsing
+subtitle: The Secret to Effortless Trim
 date: 2026-04-16
 category: skill
 ---

@@ -1,6 +1,6 @@
 ---
 id: the-hidden-math-behind-your-dive-computer
-title: "Scuba Diving Physics: The Hidden Math Behind Your Dive Computer"
+title: The Hidden Math Behind Your Dive Computer
 subtitle: Why You and Your Buddy Have Different NDLs
 date: 2026-05-02
 category: knowledge
