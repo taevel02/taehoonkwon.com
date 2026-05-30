@@ -8,7 +8,7 @@ category: skill
 
 Have you ever finished a dive with a sore lower back or aching thighs? Most likely, you've been exhausting yourself by tensing your core and forcing your legs into a 90-degree angle to maintain that "perfect" horizontal position, or "Trim."
 
-However, true trim isn't about muscular endurance. It should be a state of **Static Equilibrium**—where your equipment and body are so perfectly balanced that you remain horizontal even when completely relaxed. This is exactly why divers obsess over moving a 1kg weight by mere millimeters to find that perfect balance.
+However, true trim isn't about muscular endurance. It should be a state of static equilibrium—where your equipment and body are so perfectly balanced that you remain horizontal even when completely relaxed. This is exactly why divers obsess over moving a 1kg weight by mere millimeters to find that perfect balance.
 
 Today, we’re going beyond basic beginner advice like "look forward" or "straighten your back." We’ll dive deep into the actual physics of why your trim collapses and how to fix it at the source.
 
@@ -18,15 +18,15 @@ Today, we’re going beyond basic beginner advice like "look forward" or "straig
 
 Underwater, your body is governed by two opposing forces: buoyancy, which pulls you up, and gravity, which pulls you down.
 
-Your **Center of Buoyancy (CB)** generally forms near your chest, where your air-filled lungs and BCD bladder are located. Conversely, your **Center of Gravity (CG)** is determined by your cylinder, lead weights, and your high-muscle-mass lower body, usually centering around your hips or navel.
+Your center of buoyancy (CB) generally forms near your chest, where your air-filled lungs and BCD bladder are located. Conversely, your center of gravity (CG) is determined by your cylinder, lead weights, and your high-muscle-mass lower body, usually centering around your hips or navel.
 
-If these two centers aren't vertically aligned, they create a **Moment**—a rotational force that tries to flip or tilt your body.
+If these two centers aren't vertically aligned, they create a moment—a rotational force that tries to flip or tilt your body.
 
 $$
 M = F \cdot d
 $$
 
-Here, force **F** represents the weight or buoyancy of your gear, and distance **d** is the horizontal distance between the Center of Buoyancy (acting as the pivot point) and the Center of Gravity. When this distance **d** exists, the laws of physics will inevitably pull your legs down or lift your head up—no matter how hard you flex your back.
+Here, force F represents the weight or buoyancy of your gear, and distance d is the horizontal distance between the center of buoyancy (acting as the pivot point) and the center of gravity. When this distance d exists, the laws of physics will inevitably pull your legs down or lift your head up—no matter how hard you flex your back.
 
 ### The 5cm Cylinder Miracle
 
@@ -34,7 +34,7 @@ Leg-heaviness is one of the most common issues divers face. Many try to compensa
 
 The simplest and most effective solution is adjusting your cylinder's position. The cylinder is the heaviest single piece of equipment you carry. If your legs keep sinking, try lowering the cylinder band on your BCD, effectively sliding the tank up toward your head. Shifting that center of gravity toward your upper body relieves the burden on your lower half and restores balance. Conversely, if you feel head-heavy, slide the cylinder down toward your hips.
 
-Adjusting the band by just 5cm while setting up on land can drastically shorten the moment arm (**d**) underwater, leading to a dramatic improvement in your trim.
+Adjusting the band by just 5cm while setting up on land can drastically shorten the moment arm (d) underwater, leading to a dramatic improvement in your trim.
 
 ### It’s Not Your Fins' Fault
 

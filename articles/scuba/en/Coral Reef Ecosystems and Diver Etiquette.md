@@ -10,7 +10,7 @@ Ask any scuba diver to name their favorite underwater sight, and they will likel
 
 ### Just 1cm a Year: A Masterpiece Built Over Eons
 
-To the untrained eye, coral may look like lifeless, sturdy rock. In reality, it is a colony of thousands of tiny, delicate animals called **polyps**. These microscopic creatures absorb calcium ions from seawater to build a hard calcium carbonate skeleton for protection. Over generations, these skeletons accumulate, forming the massive, complex reef structures we marvel at today.
+To the untrained eye, coral may look like lifeless, sturdy rock. In reality, it is a colony of thousands of tiny, delicate animals called polyps. These microscopic creatures absorb calcium ions from seawater to build a hard calcium carbonate skeleton for protection. Over generations, these skeletons accumulate, forming the massive, complex reef structures we marvel at today.
 
 ![Timeline of coral growth rates and slow growth speed in reef ecosystems / © Taehoon Kwon](../images/coral-reef-and-diver-etiquette/coral-growth-rate-timeline.jpeg)
 

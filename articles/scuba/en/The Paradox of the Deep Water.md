@@ -12,7 +12,7 @@ However, from the perspective of physics, this intuition is completely wrong. Se
 
 ### The Seesaw Game of Pressure and Volume: Boyle's Law
 
-The most powerful and simple principle governing the underwater world is **Boyle's Law**. This law, stating that the volume (V) of a gas is inversely proportional to pressure (P) when temperature is constant, is expressed by the following simple equation:
+The most powerful and simple principle governing the underwater world is Boyle's Law. This law, stating that the volume (V) of a gas is inversely proportional to pressure (P) when temperature is constant, is expressed by the following simple equation:
 
 $$
 P \cdot V = k
@@ -32,7 +32,7 @@ This time, let's ascend the exact same 10 meters, but from a depth of 10 meters 
 
 ### Our Mindset Toward the 5-Meter Depth, the Danger Zone
 
-What happens if a beginner diver, after finishing their dive and doing a safety stop at 5 meters, panics due to low air supply or a failure in buoyancy control, holds their breath, and shoots up to the surface? With an ascent of just 5 meters, the air in the lungs expands rapidly by nearly 1.5 times. If the ballooning air cannot find a way out, it will eventually tear the alveoli and enter the bloodstream, causing a fatal **Arterial Gas Embolism** (AGE).
+What happens if a beginner diver, after finishing their dive and doing a safety stop at 5 meters, panics due to low air supply or a failure in buoyancy control, holds their breath, and shoots up to the surface? With an ascent of just 5 meters, the air in the lungs expands rapidly by nearly 1.5 times. If the ballooning air cannot find a way out, it will eventually tear the alveoli and enter the bloodstream, causing a fatal Arterial Gas Embolism (AGE).
 
 This is the exact physical reason why the shallow water just below the surface, which seems the safest, is cited as the most lethal zone in diving accident statistics.
 
