@@ -66,11 +66,5 @@
   "engines": {
     "node": "22.x"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@vercel/speed-insights",
-      "esbuild"
-    ]
-  },
   "packageManager": "pnpm@11.5.0"
 }
