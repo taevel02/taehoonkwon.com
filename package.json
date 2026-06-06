@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "prepare": "npx tsx ./scripts/prepare.ts",
-    "build": "remix vite:build",
+    "build": "pnpm run prepare && remix vite:build",
     "dev": "remix vite:dev",
     "lint": "eslint .",
     "start": "remix-serve ./build/server/index.js",
