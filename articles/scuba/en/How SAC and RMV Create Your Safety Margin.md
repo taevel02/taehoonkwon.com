@@ -33,7 +33,7 @@ $$
 For example, suppose a diver breathes from a 12-liter cylinder at an average depth of 20 meters (3 ATA) for 20 minutes, noting a total pressure drop of 60 bar. Plugging these variables into the equation yields the following calculation:
 
 $$
-SAC = \frac{\text{60}}{20 \times 3} = 1\text{ bar/min}
+SAC = \frac{60}{20 \times 3} = 1\text{ bar/min}
 $$
 
 This establishes that the diver consumes 1 bar of pressure per minute at surface pressure within that specific cylinder configuration.

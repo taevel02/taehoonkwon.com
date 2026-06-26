@@ -27,7 +27,7 @@ category: knowledge
 나의 실제 호흡 데이터를 구하는 방법은 생각보다 간단합니다. 수심 변화가 거의 없는 평탄한 지형에서 일정 시간 동안 다이빙을 진행한 뒤, 소모된 압력과 시간, 그리고 평균 수심을 공식에 대입하면 됩니다. 먼저 수면 압력으로 환산된 소모율인 SAC를 구하는 공식은 다음과 같습니다.
 
 $$
-SAC = \frac{\text{소모된 기체 압력 (bar)}}{\text{다이빙 시간 (min)} \times \text{평균 수심 압력 (ATA)}}
+SAC = \frac{\text{Gas Consumed (bar)}}{\text{Time (min)} \times \text{Average Depth Pressure (ATA)}}
 $$
 
 예를 들어, 12리터 실린더를 사용해 평균 수심 20미터(3 ATA)에서 20분 동안 다이빙을 했고, 그동안 잔압계의 바늘이 60bar만큼 떨어졌다고 가정해 봅시다. 이 데이터를 공식에 대입하면 다음과 같은 결과가 나옵니다.
@@ -41,7 +41,7 @@ $$
 이제 이 SAC 값에 사용한 실린더의 내부 용적(리터)을 곱해주면 실린더 크기에서 자유로운 순수 호흡 용량인 RMV가 완성됩니다.
 
 $$
-RMV = SAC \times \text{실린더 용적 (L)}
+RMV = SAC \times \text{Cylinder Volume (L)}
 $$
 
 앞선 예시의 다이버는 분당 1bar에 12리터를 곱하므로 다음과 같은 최종 호흡 용량을 얻게 됩니다.
