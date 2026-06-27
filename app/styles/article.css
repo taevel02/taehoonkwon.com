@@ -127,3 +127,50 @@ article > img {
   user-select: none;
   -webkit-touch-callout: none;
 }
+
+/* LaTeX (KaTeX) mobile responsiveness and scroll optimization */
+article .katex-display {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 1em 0;
+  padding: 0.5em 0.3em 0.8em 0.3em; /* Prevent clipping at boundaries and allow space for scrollbar */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+article .katex {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  vertical-align: middle;
+  padding: 0.2em 0.2em;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Webkit scrollbar customization for cleaner look - transparent by default */
+article .katex-display::-webkit-scrollbar,
+article .katex::-webkit-scrollbar {
+  height: 4px;
+}
+
+article .katex-display::-webkit-scrollbar-thumb,
+article .katex::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Hidden by default */
+  border-radius: 2px;
+  transition: background-color 0.2s ease;
+}
+
+/* Only show scrollbar when hovering or active (scrolling/touching) */
+article .katex-display:hover::-webkit-scrollbar-thumb,
+article .katex-display:active::-webkit-scrollbar-thumb,
+article .katex:hover::-webkit-scrollbar-thumb,
+article .katex:active::-webkit-scrollbar-thumb {
+  background-color: var(--border, #e2e8f0);
+}
+
+article .katex-display::-webkit-scrollbar-track,
+article .katex::-webkit-scrollbar-track {
+  background-color: transparent;
+}
