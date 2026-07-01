@@ -70,7 +70,7 @@ I should start working out again. Soon, I plan to establish a routine to move my
 
 This letter feels like the quickest and most naturally written one so far. I always want to write less and convey more, but it has turned into a long piece. I hope to convey more stories even more compactly in my next annual letter.
 
-I was inspired to take the leap and apply for this Australian working holiday by someone I met back in Europe. Although I vaguely knew about the program, I didn't know anyone around me who had actually gone through with it. Thank you for leading me to this new journey.
+I was inspired to take the leap and apply for this Australian working holiday by a couple I met back in Europe. Although I vaguely knew about the program, I didn't know anyone around me who had actually gone through with it. Thank you for leading me to this new journey.
 
 Above all, my deepest gratitude goes to Jia, who planned and has been sharing this new journey with me.
 
