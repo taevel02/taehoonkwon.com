@@ -15,6 +15,27 @@
   src: url("/fonts/maru-buri/MaruBuri-Bold.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: "Yeomil Mono";
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/yeomil-mono/YeomilMono-Light.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Yeomil Mono";
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/yeomil-mono/YeomilMono-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Yeomil Mono";
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/yeomil-mono/YeomilMono-Bold.woff2") format("woff2");
+}
+
 @theme {
   --font-sans:
     "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
@@ -22,6 +43,7 @@
     "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", sans-serif;
   --font-serif: "MaruBuri", ui-serif, Georgia, STIXGeneral, serif;
+  --font-mono: "Yeomil Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
   --color-border: var(--border);
   --color-input: var(--input);
