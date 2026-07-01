@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { LoaderFunctionArgs, MetaFunction, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { RiTerminalBoxLine, RiDownloadLine, RiFileCopyLine, RiCheckLine, RiGithubFill } from "@remixicon/react";
+import { RiTerminalBoxLine, RiDownloadLine, RiFileCopyLine, RiCheckLine, RiGithubFill, RiRefreshLine } from "@remixicon/react";
 import blogConfig from "blog.config";
 
 import { getLanguage, getLocalizedPath } from "~/utils/i18n";
@@ -28,10 +28,7 @@ interface Translations {
   controlSize: string;
   controlWeight: string;
   controlLineHeight: string;
-  presetTitle: string;
-  presetJs: string;
-  presetHtml: string;
-  presetText: string;
+  controlTextInputPlaceholder: string;
   alignDemoTitle: string;
   alignDemoDesc: string;
   installTitle: string;
@@ -41,6 +38,7 @@ interface Translations {
   downloadZip: string;
   githubRepo: string;
   copied: string;
+  reset: string;
 }
 
 const translations: Record<"ko" | "en", Translations> = {
@@ -58,16 +56,13 @@ const translations: Record<"ko" | "en", Translations> = {
     feature2Desc: "Vercel의 Geist Mono가 주는 모던하고 샤프한 영문 숫자 폰트와, 한국어 웹 환경의 표준이 된 Pretendard의 깔끔하고 가독성 높은 한글 구조를 결합해 최고의 코딩 경험을 선사합니다.",
     feature3Title: "3. 개발 친화적 글자 구별",
     feature3Desc: "숫자 0과 알파벳 O, 숫자 1과 소문자 l 및 대문자 I 등 코딩 시 혼동하기 쉬운 글리프들을 명확하게 구분할 수 있도록 최적화되어 있습니다.",
-    playgroundTitle: "실시간 타이핑 및 미리보기",
-    playgroundSubtitle: "여밀 모노 폰트의 정렬과 가독성을 직접 테스트해 보세요.",
-    playgroundPlaceholder: "여기에 텍스트를 입력해 보세요.\nTry typing your code here.\n\nfunction helloWorld() {\n  const message = \"여밀 모노는 100% 정렬됩니다!\";\n  console.log(message);\n}",
+    playgroundTitle: "폰트 플레이그라운드",
+    playgroundSubtitle: "글자 크기와 굵기를 조절하며 여밀 모노를 자유롭게 입력해 보세요.",
+    playgroundPlaceholder: "여밀 모노는 한글과 영문이 완벽하게 2:1로 정렬되는 고정폭 폰트입니다.",
     controlSize: "크기",
     controlWeight: "굵기",
     controlLineHeight: "줄 높이",
-    presetTitle: "코드 예시 선택",
-    presetJs: "JavaScript 코드",
-    presetHtml: "HTML/CSS 코드",
-    presetText: "한글-영문 혼용 정렬 테스트",
+    controlTextInputPlaceholder: "여기에 문장을 입력하여 서체를 테스트해보세요...",
     alignDemoTitle: "완벽한 2:1 고정폭 정렬 데모",
     alignDemoDesc: "한글 한 글자의 너비는 정확히 영문/기호 두 글자의 너비와 일치합니다. 아래의 아스키 그리드 표에서 완벽한 정렬을 눈으로 직접 확인해 보세요.",
     installTitle: "설치 및 다운로드",
@@ -77,6 +72,7 @@ const translations: Record<"ko" | "en", Translations> = {
     downloadZip: "서체 파일 다운로드 (.zip)",
     githubRepo: "GitHub 저장소 방문하기",
     copied: "복사됨!",
+    reset: "초기화",
   },
   en: {
     title: "Yeomil Mono",
@@ -92,16 +88,13 @@ const translations: Record<"ko" | "en", Translations> = {
     feature2Desc: "Combines the sharp, geometric beauty of Vercel's Geist Mono for English/numbers with the practical, highly-readable structures of Pretendard for Korean glyphs.",
     feature3Title: "3. Developer-Friendly Distinguishability",
     feature3Desc: "Optimized to clearly differentiate commonly confused characters, such as zero (0) vs. capital letter O, and number one (1) vs. lowercase l vs. uppercase I.",
-    playgroundTitle: "Live Playground & Preview",
-    playgroundSubtitle: "Test the alignment and readability of Yeomil Mono in real-time.",
-    playgroundPlaceholder: "Type something here...\n\nfunction helloWorld() {\n  const message = \"Yeomil Mono aligns perfectly!\";\n  console.log(message);\n}",
+    playgroundTitle: "Font Playground",
+    playgroundSubtitle: "Change font size, weight and type custom text to test Yeomil Mono.",
+    playgroundPlaceholder: "Yeomil Mono is a monospace font that aligns Hangul and Latin in a perfect 2:1 ratio.",
     controlSize: "Size",
     controlWeight: "Weight",
     controlLineHeight: "Line Height",
-    presetTitle: "Select Code Template",
-    presetJs: "JavaScript Code",
-    presetHtml: "HTML/CSS Code",
-    presetText: "CJK-Latin Alignment Test",
+    controlTextInputPlaceholder: "Type something here to preview the font...",
     alignDemoTitle: "Perfect 2:1 Monospace Grid Alignment",
     alignDemoDesc: "One Hangul character occupies exactly the width of two Latin characters or symbols. Notice the perfect alignment inside the ASCII grid below.",
     installTitle: "Installation & Download",
@@ -111,45 +104,22 @@ const translations: Record<"ko" | "en", Translations> = {
     downloadZip: "Download Font Zip (.zip)",
     githubRepo: "Visit GitHub Repository",
     copied: "Copied!",
+    reset: "Reset",
   }
 };
 
-const PRESETS = {
-  js: `// JavaScript / TypeScript - Yeomil Mono
-function checkFontAlignment() {
-  const fontName = "Yeomil Mono";
-  const developerTerminal = true;
-  
-  if (developerTerminal && fontName === "Yeomil Mono") {
-    console.log("여밀 모노: Perfect 2:1 Monospace Ratio! 🚀");
-    return { latin: 1.0, cjk: 2.0 };
-  }
-  return null;
-}`,
-  html: `/* CSS - Font configuration */
-@font-face {
-  font-family: "Yeomil Mono";
-  src: url("/fonts/yeomil-mono/YeomilMono-Regular.woff2") format("woff2");
-}
-
-.editor-style {
-  font-family: "Yeomil Mono", monospace;
-  font-size: 14px;
-  line-height: 1.6;
-}`,
-  align: `┌────────────────────────────────────────┐
-│  여밀 모노 고정폭 그리드 테스트 (2:1 비율) │
+const ALIGN_GRID = `┌────────────────────────────────────────┐
+│  Yeomil Mono Grid Test (40 Width)      │
 ├────────────────────────────────────────┤
-│  가나다라마바사아자차카타파하              │
-│  abcdefghijklmnopqrstuvwxyz            │
-│  ABCDEFGHIJKLMOPQRSTUVWXZY             │
-│  12345678901234567890123456            │
-│  !@#$%^&*()_+{}|:"<>?[];',./           │
+│  여밀모노는한글과영문의너비를정밀하게조율  │
+│  abcdefghijklmnopqrstuvwxyzabcdefghij  │
+│  ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJ  │
+│  123456789012345678901234567890123456  │
+│  !@#$%^&*()_+{}|:"<>?[];',./!@#$%^&*()  │
 ├────────────────────────────────────────┤
-│  한글한글한글한글한글한글한글          │
-│  EnglishEnglishEnglishEnglish          │
-└────────────────────────────────────────┘`
-};
+│  한글한글한글한글한글한글한글한글한글  │
+│  EnglishEnglishEnglishEnglishEnglishE  │
+└────────────────────────────────────────┘`;
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const lang = getLanguage(request, params.lang);
@@ -182,10 +152,8 @@ export default function YeomilMonoPage() {
   const isEn = lang === "en";
   const t = translations[isEn ? "en" : "ko"];
 
-  const [text, setText] = useState("");
-  const [fontSize, setFontSize] = useState(15);
-  const [fontWeight, setFontWeight] = useState("400");
-  const [lineHeight, setLineHeight] = useState(1.6);
+  const [customText, setCustomText] = useState("");
+  const [fontSize, setFontSize] = useState(32);
   const [copied, setCopied] = useState(false);
 
   const curlCommand = "curl -fsSL https://raw.githubusercontent.com/taevel02/yeomil-mono/main/install.sh | bash";
@@ -200,15 +168,17 @@ export default function YeomilMonoPage() {
     }
   };
 
-  const loadPreset = (type: "js" | "html" | "align") => {
-    setText(PRESETS[type]);
-  };
+  const displayText = customText || t.playgroundPlaceholder;
 
   return (
-    <article className="animate-fade-in pb-16">
+    // Apply Yeomil Mono to the entire page via inline style & font-mono class
+    <article 
+      style={{ fontFamily: "'Yeomil Mono', ui-monospace, monospace" }} 
+      className="animate-fade-in pb-16 font-mono text-zinc-900 dark:text-zinc-100"
+    >
       {/* Header section */}
       <header className="mb-10 border-b border-zinc-200 dark:border-zinc-800 pb-6">
-        <h1 className="text-4xl font-mono font-bold tracking-tight mb-2">
+        <h1 className="text-4xl font-bold tracking-tight mb-2">
           {t.title}
         </h1>
         <p className="text-zinc-600 dark:text-zinc-400 text-lg mb-4">
@@ -217,13 +187,13 @@ export default function YeomilMonoPage() {
         
         {/* Badges */}
         <div className="flex flex-wrap gap-2 text-xs">
-          <span className="px-2.5 py-1 rounded bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 font-mono">
+          <span className="px-2.5 py-1 rounded bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300">
             {t.badgeTerminal}
           </span>
-          <span className="px-2.5 py-1 rounded bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 font-mono">
+          <span className="px-2.5 py-1 rounded bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300">
             {t.badgeUnified}
           </span>
-          <span className="px-2.5 py-1 rounded bg-emerald-50 dark:bg-emerald-950 border border-emerald-200 dark:border-emerald-900 text-emerald-800 dark:text-emerald-300 font-mono">
+          <span className="px-2.5 py-1 rounded bg-emerald-50 dark:bg-emerald-950 border border-emerald-200 dark:border-emerald-900 text-emerald-800 dark:text-emerald-300">
             {t.badgeOfl}
           </span>
         </div>
@@ -231,20 +201,20 @@ export default function YeomilMonoPage() {
 
       {/* Intro Description */}
       <section className="mb-12">
-        <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed text-base">
+        <p className="leading-relaxed text-base">
           {t.introText}
         </p>
       </section>
 
       {/* Key Features Grid */}
       <section className="mb-16">
-        <h2 className="text-xl font-mono font-bold mb-6 flex items-center gap-2">
+        <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
           <RiTerminalBoxLine className="w-5 h-5 text-primary" />
           {t.featureTitle}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
-            <h3 className="text-sm font-mono font-bold mb-3 text-zinc-950 dark:text-zinc-50">
+            <h3 className="text-sm font-bold mb-3">
               {t.feature1Title}
             </h3>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
@@ -252,7 +222,7 @@ export default function YeomilMonoPage() {
             </p>
           </div>
           <div className="p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
-            <h3 className="text-sm font-mono font-bold mb-3 text-zinc-950 dark:text-zinc-50">
+            <h3 className="text-sm font-bold mb-3">
               {t.feature2Title}
             </h3>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
@@ -260,7 +230,7 @@ export default function YeomilMonoPage() {
             </p>
           </div>
           <div className="p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
-            <h3 className="text-sm font-mono font-bold mb-3 text-zinc-950 dark:text-zinc-50">
+            <h3 className="text-sm font-bold mb-3">
               {t.feature3Title}
             </h3>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
@@ -270,195 +240,155 @@ export default function YeomilMonoPage() {
         </div>
       </section>
 
-      {/* Playground Area */}
+      {/* Playground Area (Google Fonts Specimen Style - Light background matching blog config) */}
       <section className="mb-16">
         <div className="mb-6">
-          <h2 className="text-xl font-mono font-bold">{t.playgroundTitle}</h2>
+          <h2 className="text-xl font-bold">{t.playgroundTitle}</h2>
           <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">{t.playgroundSubtitle}</p>
         </div>
 
-        {/* Playground Box */}
-        <div className="border border-zinc-300 dark:border-zinc-800 rounded-lg overflow-hidden bg-zinc-950 text-zinc-100 shadow-lg">
-          {/* Editor Header */}
-          <div className="bg-zinc-900 px-4 py-2 border-b border-zinc-800 flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-400">
-            <div className="flex items-center gap-1.5 font-mono">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500"></span>
-              <span className="w-2.5 h-2.5 rounded-full bg-yellow-500"></span>
-              <span className="w-2.5 h-2.5 rounded-full bg-green-500"></span>
-              <span className="ml-2">yeomil-mono-playground.txt</span>
+        {/* Playground Box - Uses background matching parent container */}
+        <div className="border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden bg-zinc-50/40 dark:bg-zinc-900/20 shadow-sm">
+          {/* Editor Header Toolbar - Google Fonts specimen bar style */}
+          <div className="bg-zinc-50 dark:bg-zinc-900 px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 text-sm justify-between">
+            {/* Real-time Text Input Field */}
+            <div className="flex-1">
+              <input
+                type="text"
+                value={customText}
+                onChange={(e) => setCustomText(e.target.value)}
+                placeholder={t.controlTextInputPlaceholder}
+                className="w-full bg-transparent border-none text-zinc-800 dark:text-zinc-200 focus:outline-none placeholder-zinc-400 dark:placeholder-zinc-600"
+              />
             </div>
             
-            {/* Presets selectors */}
-            <div className="flex items-center gap-2 font-mono">
-              <span className="text-zinc-500">{t.presetTitle}:</span>
-              <button 
-                onClick={() => loadPreset("js")}
-                className="hover:text-zinc-200 bg-zinc-800 px-2 py-0.5 rounded transition"
-              >
-                JS
-              </button>
-              <button 
-                onClick={() => loadPreset("html")}
-                className="hover:text-zinc-200 bg-zinc-800 px-2 py-0.5 rounded transition"
-              >
-                CSS
-              </button>
-              <button 
-                onClick={() => loadPreset("align")}
-                className="hover:text-zinc-200 bg-zinc-800 px-2 py-0.5 rounded transition"
-              >
-                Grid
-              </button>
-            </div>
-          </div>
-
-          {/* Playground controls */}
-          <div className="bg-zinc-900/60 p-4 border-b border-zinc-800 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-mono">
-            {/* Size control */}
-            <div className="flex items-center gap-3">
-              <span className="text-zinc-400 w-12">{t.controlSize}:</span>
-              <input 
-                type="range" 
-                min="12" 
-                max="28" 
-                value={fontSize} 
-                onChange={(e) => setFontSize(Number(e.target.value))}
-                className="flex-1 accent-primary h-1 bg-zinc-800 rounded-lg cursor-pointer"
-              />
-              <span className="text-zinc-300 w-8 text-right">{fontSize}px</span>
-            </div>
-
-            {/* Weight control */}
-            <div className="flex items-center gap-3">
-              <span className="text-zinc-400 w-12">{t.controlWeight}:</span>
-              <div className="flex bg-zinc-800 rounded p-0.5 flex-1">
-                {["300", "400", "700"].map((w) => (
-                  <button
-                    key={w}
-                    onClick={() => setFontWeight(w)}
-                    className={`flex-1 text-center py-0.5 rounded transition ${
-                      fontWeight === w ? "bg-zinc-700 text-zinc-100" : "text-zinc-400 hover:text-zinc-200"
-                    }`}
-                  >
-                    {w === "300" ? "Light" : w === "400" ? "Regular" : "Bold"}
-                  </button>
-                ))}
+            {/* Control Sliders */}
+            <div className="flex items-center gap-4 border-t sm:border-t-0 pt-3 sm:pt-0 border-zinc-200 dark:border-zinc-800">
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-zinc-500">{t.controlSize}</span>
+                <input 
+                  type="range" 
+                  min="16" 
+                  max="72" 
+                  value={fontSize} 
+                  onChange={(e) => setFontSize(Number(e.target.value))}
+                  className="w-24 sm:w-32 accent-primary h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
+                />
+                <span className="text-xs text-zinc-600 dark:text-zinc-400 w-8 text-right">{fontSize}px</span>
               </div>
-            </div>
-
-            {/* Line Height control */}
-            <div className="flex items-center gap-3">
-              <span className="text-zinc-400 w-16">{t.controlLineHeight}:</span>
-              <input 
-                type="range" 
-                min="1.2" 
-                max="2.2" 
-                step="0.1"
-                value={lineHeight} 
-                onChange={(e) => setLineHeight(Number(e.target.value))}
-                className="flex-1 accent-primary h-1 bg-zinc-800 rounded-lg cursor-pointer"
-              />
-              <span className="text-zinc-300 w-8 text-right">{lineHeight}</span>
+              
+              {customText && (
+                <button 
+                  onClick={() => setCustomText("")}
+                  className="p-1 rounded text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+                  title={t.reset}
+                >
+                  <RiRefreshLine className="w-4 h-4" />
+                </button>
+              )}
             </div>
           </div>
 
-          {/* Text Area */}
-          <div className="relative">
-            <textarea
-              style={{
-                fontFamily: "'Yeomil Mono', ui-monospace, monospace",
-                fontSize: `${fontSize}px`,
-                fontWeight: fontWeight,
-                lineHeight: lineHeight,
-              }}
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              placeholder={t.playgroundPlaceholder}
-              className="w-full min-h-[250px] p-6 bg-zinc-950 text-zinc-200 focus:outline-none resize-y placeholder-zinc-700 border-0"
-              spellCheck="false"
-            />
+          {/* Large Specimen Multiweight Rendering */}
+          <div className="p-8 space-y-12">
+            {/* Sample: Light 300 */}
+            <div className="border-b border-zinc-100 dark:border-zinc-900 pb-8">
+              <div className="text-xs text-zinc-400 mb-3 flex items-center justify-between">
+                <span>Yeomil Mono Light</span>
+                <span>300</span>
+              </div>
+              <p
+                style={{
+                  fontSize: `${fontSize}px`,
+                  fontWeight: 300,
+                  lineHeight: 1.4,
+                  wordBreak: "break-all",
+                }}
+                className="text-zinc-800 dark:text-zinc-200 transition-all duration-100"
+              >
+                {displayText}
+              </p>
+            </div>
+
+            {/* Sample: Regular 400 */}
+            <div className="border-b border-zinc-100 dark:border-zinc-900 pb-8">
+              <div className="text-xs text-zinc-400 mb-3 flex items-center justify-between">
+                <span>Yeomil Mono Regular</span>
+                <span>400</span>
+              </div>
+              <p
+                style={{
+                  fontSize: `${fontSize}px`,
+                  fontWeight: 400,
+                  lineHeight: 1.4,
+                  wordBreak: "break-all",
+                }}
+                className="text-zinc-800 dark:text-zinc-200 transition-all duration-100"
+              >
+                {displayText}
+              </p>
+            </div>
+
+            {/* Sample: Bold 700 */}
+            <div className="pb-4">
+              <div className="text-xs text-zinc-400 mb-3 flex items-center justify-between">
+                <span>Yeomil Mono Bold</span>
+                <span>700</span>
+              </div>
+              <p
+                style={{
+                  fontSize: `${fontSize}px`,
+                  fontWeight: 700,
+                  lineHeight: 1.4,
+                  wordBreak: "break-all",
+                }}
+                className="text-zinc-855 dark:text-zinc-100 transition-all duration-100"
+              >
+                {displayText}
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Grid Alignment details */}
       <section className="mb-16">
-        <h2 className="text-xl font-mono font-bold mb-3">{t.alignDemoTitle}</h2>
+        <h2 className="text-xl font-bold mb-3">{t.alignDemoTitle}</h2>
         <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6">{t.alignDemoDesc}</p>
-        <div className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-5 overflow-x-auto">
+        <div className="bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-lg p-5 overflow-x-auto">
           <pre 
-            style={{ fontFamily: "'Yeomil Mono', monospace" }}
             className="text-xs sm:text-sm text-zinc-800 dark:text-zinc-300 leading-relaxed whitespace-pre"
           >
-            {PRESETS.align}
+            {ALIGN_GRID}
           </pre>
-        </div>
-      </section>
-
-      {/* Weights Comparison */}
-      <section className="mb-16 border-t border-zinc-200 dark:border-zinc-800 pt-12">
-        <h2 className="text-xl font-mono font-bold mb-6">Font Weight Samples</h2>
-        <div className="space-y-6">
-          {/* Light */}
-          <div>
-            <div className="text-xs text-zinc-400 font-mono mb-1.5">Light 300</div>
-            <p 
-              style={{ fontFamily: "'Yeomil Mono', monospace", fontWeight: 300 }}
-              className="text-lg text-zinc-900 dark:text-zinc-100 overflow-x-auto whitespace-nowrap py-1"
-            >
-              The quick brown fox jumps over the lazy dog. 여밀 모노 300
-            </p>
-          </div>
-          
-          {/* Regular */}
-          <div>
-            <div className="text-xs text-zinc-400 font-mono mb-1.5">Regular 400</div>
-            <p 
-              style={{ fontFamily: "'Yeomil Mono', monospace", fontWeight: 400 }}
-              className="text-lg text-zinc-900 dark:text-zinc-100 overflow-x-auto whitespace-nowrap py-1"
-            >
-              The quick brown fox jumps over the lazy dog. 여밀 모노 400
-            </p>
-          </div>
-
-          {/* Bold */}
-          <div>
-            <div className="text-xs text-zinc-400 font-mono mb-1.5">Bold 700</div>
-            <p 
-              style={{ fontFamily: "'Yeomil Mono', monospace", fontWeight: 700 }}
-              className="text-lg text-zinc-900 dark:text-zinc-100 overflow-x-auto whitespace-nowrap py-1"
-            >
-              The quick brown fox jumps over the lazy dog. 여밀 모노 700
-            </p>
-          </div>
         </div>
       </section>
 
       {/* Installation / Download */}
       <section className="border-t border-zinc-200 dark:border-zinc-800 pt-12">
-        <h2 className="text-2xl font-mono font-bold mb-8 flex items-center gap-2">
+        <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
           <RiDownloadLine className="w-6 h-6 text-primary" />
           {t.installTitle}
         </h2>
 
         <div className="space-y-8">
-          {/* Curl Command */}
+          {/* Curl Command - Light background matching specimen design */}
           <div>
-            <h3 className="text-base font-mono font-bold mb-3">{t.installCurl}</h3>
-            <div className="flex items-center gap-2 border border-zinc-300 dark:border-zinc-800 bg-zinc-950 text-zinc-200 px-4 py-3 rounded-lg overflow-x-auto relative">
-              <code className="text-xs sm:text-sm font-mono flex-1 whitespace-nowrap pr-12">
+            <h3 className="text-base font-bold mb-3">{t.installCurl}</h3>
+            <div className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/40 text-zinc-800 dark:text-zinc-200 px-4 py-3 rounded-lg overflow-x-auto relative">
+              <code className="text-xs sm:text-sm flex-1 whitespace-nowrap pr-12">
                 {curlCommand}
               </code>
               <button
                 onClick={handleCopy}
-                className="absolute right-3 p-1.5 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-zinc-200 transition"
+                className="absolute right-3 p-1.5 rounded bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition"
                 title="Copy command"
               >
-                {copied ? <RiCheckLine className="w-4 h-4 text-emerald-400" /> : <RiFileCopyLine className="w-4 h-4" />}
+                {copied ? <RiCheckLine className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> : <RiFileCopyLine className="w-4 h-4" />}
               </button>
             </div>
             {copied && (
-              <span className="text-xs text-emerald-500 font-mono mt-1.5 block animate-pulse">
+              <span className="text-xs text-emerald-600 dark:text-emerald-400 mt-1.5 block animate-pulse">
                 {t.copied}
               </span>
             )}
@@ -468,7 +398,7 @@ export default function YeomilMonoPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
             <div className="border border-zinc-200 dark:border-zinc-800 rounded-lg p-5 flex flex-col justify-between">
               <div>
-                <h4 className="text-sm font-mono font-bold mb-2">{t.installManual}</h4>
+                <h4 className="text-sm font-bold mb-2">{t.installManual}</h4>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed mb-6">
                   {t.installManualDesc}
                 </p>
@@ -477,7 +407,7 @@ export default function YeomilMonoPage() {
                 href="https://github.com/taevel02/yeomil-mono/releases"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-50 dark:hover:bg-zinc-100 text-zinc-50 dark:text-zinc-900 text-sm font-mono font-medium transition"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-50 dark:hover:bg-zinc-100 text-zinc-50 dark:text-zinc-900 text-sm font-medium transition"
               >
                 <RiDownloadLine className="w-4 h-4" />
                 {t.downloadZip}
@@ -486,7 +416,7 @@ export default function YeomilMonoPage() {
 
             <div className="border border-zinc-200 dark:border-zinc-800 rounded-lg p-5 flex flex-col justify-between">
               <div>
-                <h4 className="text-sm font-mono font-bold mb-2">GitHub Repository</h4>
+                <h4 className="text-sm font-bold mb-2">GitHub Repository</h4>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed mb-6">
                   {isEn 
                     ? "Check out the source code, open issues, and contribute to the Yeomil Mono project on GitHub."
@@ -497,7 +427,7 @@ export default function YeomilMonoPage() {
                 href="https://github.com/taevel02/yeomil-mono"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-800 dark:text-zinc-200 text-sm font-mono font-medium transition"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-800 dark:text-zinc-200 text-sm font-medium transition"
               >
                 <RiGithubFill className="w-4 h-4" />
                 {t.githubRepo}
