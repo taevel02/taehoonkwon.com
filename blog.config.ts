@@ -1,7 +1,7 @@
 export default {
   origin: "taehoonkwon.com",
   site: "https://taehoonkwon.com",
-  author: "권태훈",
+  author: "Taehoon Kwon",
   seo: {
     ko: {
       title: "Taehoon Kwon",
@@ -26,7 +26,7 @@ export default {
   },
   about: {
     ko: `
-      스쿠버 다이빙 강사.<br /><br />
+      스쿠버 다이빙 강사, 소프트웨어 엔지니어, 사업가<br /><br />
 
       삶을 헤엄치고 있습니다.<br />
       글과 사랑, 그리고 행복을 추구합니다.<br /><br />
@@ -35,7 +35,7 @@ export default {
       저의 <a href="https://abit.ly/taehoon-bookshelf">서재</a>를 둘러보세요.
     `,
     en: `
-      Scuba Diving Instructor.<br /><br />
+      Scuba Diving Instructor, Software Engineer, Entrepreneur<br /><br />
 
       Swimming through life.<br />
       I pursue writing, love, and happiness.<br /><br />
