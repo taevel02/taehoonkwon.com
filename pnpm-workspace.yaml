@@ -2,3 +2,14 @@ allowBuilds:
   esbuild: true
   sharp: true
   unrs-resolver: true
+
+peerDependencyRules:
+  allowedVersions:
+    typescript: "*"
+    vite: "*"
+    eslint: "*"
+    esbuild: "*"
+    workbox-build: "*"
+    workbox-window: "*"
+    react: "*"
+    react-dom: "*"
