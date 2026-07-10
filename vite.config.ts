@@ -5,26 +5,30 @@ import { VitePWA } from "vite-plugin-pwa";
 
 const customRemix = (options?: Parameters<typeof remix>[0]) => {
   const plugins = remix(options);
-  const remixPlugin = plugins.flat().find((p) => p && p.name === "remix") as any;
+  const remixPlugin = plugins
+    .flat()
+    .find((p) => p && p.name === "remix") as any;
   if (remixPlugin && remixPlugin.config) {
     const originalConfig = remixPlugin.config;
-    if (typeof originalConfig === "function") {
-      remixPlugin.config = async function (this: any, config: any, env: any) {
-        const resolved = await originalConfig.call(this, config, env);
-        if (resolved && "esbuild" in resolved) {
-          delete resolved.esbuild;
-        }
-        return resolved;
-      };
-    } else if (originalConfig && typeof originalConfig === "object" && originalConfig.handler) {
-      const originalHandler = originalConfig.handler;
-      originalConfig.handler = async function (this: any, config: any, env: any) {
+    const originalHandler =
+      typeof originalConfig === "function"
+        ? originalConfig
+        : originalConfig.handler;
+
+    if (originalHandler) {
+      const wrappedHandler = async function (this: any, config: any, env: any) {
         const resolved = await originalHandler.call(this, config, env);
         if (resolved && "esbuild" in resolved) {
           delete resolved.esbuild;
         }
         return resolved;
       };
+
+      if (typeof originalConfig === "function") {
+        remixPlugin.config = wrappedHandler;
+      } else {
+        remixPlugin.config.handler = wrappedHandler;
+      }
     }
   }
   return plugins;
@@ -42,12 +46,17 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2,webp}"],
         runtimeCaching: [
           {
-            urlPattern: ({ request }) => request.destination === "document" || request.destination === "image",
+            urlPattern: ({ request }) =>
+              request.destination === "document" ||
+              request.destination === "image",
             handler: "NetworkFirst",
             options: { cacheName: "content-cache" },
           },
           {
-            urlPattern: ({ request }) => request.destination === "script" || request.destination === "style" || request.destination === "font",
+            urlPattern: ({ request }) =>
+              request.destination === "script" ||
+              request.destination === "style" ||
+              request.destination === "font",
             handler: "CacheFirst",
             options: {
               cacheName: "assets-cache",
@@ -62,7 +71,13 @@ export default defineConfig({
         theme_color: "#ffffff",
         background_color: "#ffffff",
         display: "standalone",
-        icons: [{ src: "/favicon.ico", sizes: "64x64 32x32 24x24 16x16", type: "image/x-icon" }],
+        icons: [
+          {
+            src: "/favicon.ico",
+            sizes: "64x64 32x32 24x24 16x16",
+            type: "image/x-icon",
+          },
+        ],
       },
     }),
     customRemix({
