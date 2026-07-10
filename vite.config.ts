@@ -3,6 +3,33 @@ import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
 
+const customRemix = (options?: Parameters<typeof remix>[0]) => {
+  const plugins = remix(options);
+  const remixPlugin = plugins.flat().find((p) => p && p.name === "remix") as any;
+  if (remixPlugin && remixPlugin.config) {
+    const originalConfig = remixPlugin.config;
+    if (typeof originalConfig === "function") {
+      remixPlugin.config = async function (this: any, config: any, env: any) {
+        const resolved = await originalConfig.call(this, config, env);
+        if (resolved && "esbuild" in resolved) {
+          delete resolved.esbuild;
+        }
+        return resolved;
+      };
+    } else if (originalConfig && typeof originalConfig === "object" && originalConfig.handler) {
+      const originalHandler = originalConfig.handler;
+      originalConfig.handler = async function (this: any, config: any, env: any) {
+        const resolved = await originalHandler.call(this, config, env);
+        if (resolved && "esbuild" in resolved) {
+          delete resolved.esbuild;
+        }
+        return resolved;
+      };
+    }
+  }
+  return plugins;
+};
+
 export default defineConfig({
   resolve: {
     tsconfigPaths: true,
@@ -38,7 +65,7 @@ export default defineConfig({
         icons: [{ src: "/favicon.ico", sizes: "64x64 32x32 24x24 16x16", type: "image/x-icon" }],
       },
     }),
-    remix({
+    customRemix({
       ignoredRouteFiles: ["**/*.css"],
       future: {
         v3_fetcherPersist: true,
