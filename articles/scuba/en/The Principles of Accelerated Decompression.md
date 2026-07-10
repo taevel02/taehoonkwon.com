@@ -38,7 +38,7 @@ $$
 
 By driving the nitrogen partial pressure of the breathing gas to absolute zero, a massive pressure precipice—a steep gradient—is established between the nitrogen pressure in the body tissues and the lungs. Powered by this maximized gradient, the nitrogen trapped within the tissues gains incredible momentum, cascading out of the body through the bloodstream and lungs. Utilizing dedicated decompression gases like Nitrox 50% or 100% oxygen to slash absolute decompression time by up to half or more is the foundational mechanism of accelerated decompression.
 
-![The principles of accelerated decompression / © Taehoon Kwon](../images/the-principles-of-accelerated-decompression/accelerated-decompression-gas-switch-gradient.png)
+![The principles of accelerated decompression / © Taehoon Kwon](../images/the-principles-of-accelerated-decompression/accelerated-decompression-gas-switch-gradient.jpeg)
 
 ### Opening the Biological Window: The Oxygen Window Effect
 
