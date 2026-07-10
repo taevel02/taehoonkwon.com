@@ -2,6 +2,7 @@ import { vitePlugin as remix } from "@remix-run/dev";
 import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
+import { vercelPreset } from "@vercel/remix/vite";
 
 const customRemix = (options?: Parameters<typeof remix>[0]) => {
   const plugins = remix(options);
@@ -82,6 +83,7 @@ export default defineConfig({
     }),
     customRemix({
       ignoredRouteFiles: ["**/*.css"],
+      presets: [vercelPreset()],
       future: {
         v3_fetcherPersist: true,
         v3_lazyRouteDiscovery: true,
