@@ -34,7 +34,7 @@ The most dependable safeguard against hazardous marine life encounters is precis
 
 Developing a consistent horizontal trim position while maintaining a clear safety margin of 1 to 1.5 meters above the substrate prevents accidental contact. Keeping the eyes scanning downward and forward ensures early detection of camouflaged organisms along the swim path. Folding the arms and observing marine life solely through controlled buoyancy allows divers to navigate sensitive habitats without disrupting native species or risking injury.
 
-![Diver Horizontal Trim and Safety Margin / © Taehoon Kwon](../images/the-ocean-never-attacks-first/diver_horizontal_trim_and_safety_margin.png)
+![Diver Horizontal Trim and Safety Margin / © Taehoon Kwon](../images/the-ocean-never-attacks-first/diver_horizontal_trim_and_safety_margin.jpeg)
 
 ### True Exploration Begins Beyond Ignorance
 
