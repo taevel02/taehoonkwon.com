@@ -48,7 +48,7 @@ async function waitFor(check, message) {
 
 async function press({ send, evaluate }, text) {
   const rect = await evaluate(`(() => {
-    const button = [...document.querySelectorAll("button,a")].find((element) => element.textContent?.trim() === ${JSON.stringify(text)} && element.getBoundingClientRect().width > 0);
+    const button = [...document.querySelectorAll("button,a,span")].find((element) => element.textContent?.trim() === ${JSON.stringify(text)} && element.getBoundingClientRect().width > 0);
     if (!button) return null;
     button.scrollIntoView({ block: "center" });
     const box = button.getBoundingClientRect();
@@ -71,16 +71,14 @@ test("products navigation, About, and font command", async () => {
 
     await new Promise((resolve) => setTimeout(resolve, 800));
     await press(browser, "EN");
-    assert.equal(await evaluate("location.pathname"), "/en/products/font/yeomil-mono", "selecting the active language must not toggle");
+    await waitFor(async () => (await evaluate("location.pathname")) === "/products/font/yeomil-mono" && (await evaluate("document.documentElement.lang")) === "ko", `EN-side toggle failed: ${await evaluate("location.pathname")}`);
     await press(browser, "KO");
-    await waitFor(async () => (await evaluate("location.pathname")) === "/products/font/yeomil-mono" && (await evaluate("document.documentElement.lang")) === "ko", `KO navigation failed: ${await evaluate("location.pathname")}`);
-    await press(browser, "EN");
-    await waitFor(async () => (await evaluate("location.pathname")) === "/en/products/font/yeomil-mono" && (await evaluate("document.documentElement.lang")) === "en", "EN navigation failed");
+    await waitFor(async () => (await evaluate("location.pathname")) === "/en/products/font/yeomil-mono" && (await evaluate("document.documentElement.lang")) === "en", "KO-side toggle failed");
 
     await waitFor(async () => (await evaluate("!!document.querySelector(\"summary\") && [...document.querySelectorAll(\"a\")].some(x => x.textContent?.trim() === \"Taehoon Kwon\")")) === true, "mobile header did not load");
     const header = await evaluate(`(() => {
       const brand = [...document.querySelectorAll("a")].find(x => x.textContent?.trim() === "Taehoon Kwon");
-      const locale = [...document.querySelectorAll("[role=group]")].find(x => x.getBoundingClientRect().width > 0);
+      const locale = [...document.querySelectorAll("a[aria-label='Switch to English'], a[aria-label='한국어로 전환']")].find(x => x.getBoundingClientRect().width > 0);
       const menu = document.querySelector("summary");
       return { brandRight: brand.getBoundingClientRect().right, localeLeft: locale.getBoundingClientRect().left, localeRight: locale.getBoundingClientRect().right, menuLeft: menu.getBoundingClientRect().left, pageWidth: document.documentElement.scrollWidth, viewport: innerWidth };
     })()`);
@@ -88,9 +86,9 @@ test("products navigation, About, and font command", async () => {
     assert.equal(header.pageWidth, header.viewport, "mobile header overflows");
 
     await send("Page.navigate", { url: `${site}/en/about` });
-    await waitFor(async () => (await evaluate("document.querySelector('h1')?.textContent")) === "Taehoon (Theo) Kwon", "About page did not load");
+    await waitFor(async () => (await evaluate("location.pathname")) === "/en" && (await evaluate("document.querySelector('h1')?.textContent")) === "Taehoon (Theo) Kwon", "About redirect did not load root");
     await send("Page.navigate", { url: `${site}/en` });
-    await waitFor(async () => (await evaluate("document.querySelector('h1')?.textContent")) === "Taehoon Kwon", "home page did not load");
+    await waitFor(async () => (await evaluate("document.querySelector('h1')?.textContent")) === "Taehoon (Theo) Kwon", "root About page did not load");
 
     await send("Page.navigate", { url: `${site}/en/products/font/yeomil-mono` });
     await waitFor(async () => (await evaluate("document.querySelector('h1')?.textContent")) === "Yeomil Mono", "font page did not reload");
@@ -100,6 +98,11 @@ test("products navigation, About, and font command", async () => {
     await waitFor(async () => (await evaluate("[...document.querySelectorAll('button')].some(x => x.textContent?.trim() === 'Copied')")) === true, `copy did not report success: ${JSON.stringify(await evaluate("({buttons:[...document.querySelectorAll(\"button\")].map(x=>x.textContent?.trim()),status:document.querySelector(\"[role=status]\")?.textContent,secure:isSecureContext})"))}`);
     assert.equal(await evaluate("navigator.clipboard.readText()"), "curl -fsSL https://raw.githubusercontent.com/taevel02/yeomil-mono/main/install.sh | bash", "clipboard contents");
     assert.equal(await evaluate("document.documentElement.scrollWidth <= innerWidth"), true, "mobile horizontal overflow");
+
+    await send("Page.navigate", { url: `${site}/scuba` });
+    await waitFor(async () => (await evaluate("!!document.querySelector('a[href^=\\\"/scuba/\\\"]')")) === true, "Scuba article link did not load");
+    await evaluate("document.querySelector('a[href^=\\\"/scuba/\\\"]')?.click()");
+    await waitFor(async () => (await evaluate("location.pathname.startsWith('/scuba/')")) === true, "Scuba article navigation did not complete");
   } finally {
     browser.close();
   }

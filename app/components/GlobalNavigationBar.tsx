@@ -9,7 +9,7 @@ export function GlobalNavigationBar() {
     { to: `${prefix}/products`, label: "Products" },
     { to: `${prefix}/archives`, label: "Writing" },
     { to: `${prefix}/scuba`, label: "Scuba" },
-    { to: `${prefix}/about`, label: "About" },
+    { to: prefix || "/", label: "About" },
   ];
 
   function languageHref(target: "ko" | "en") {
@@ -18,19 +18,23 @@ export function GlobalNavigationBar() {
     return `/set-language?lang=${target}&next=${encodeURIComponent(destination + location.search + location.hash)}`;
   }
 
+  const nextLanguage = lang === "ko" ? "en" : "ko";
   const languageControl = (
-    <div role="group" aria-label={lang === "ko" ? "언어 선택" : "Language"} className="inline-flex shrink-0 rounded-full bg-muted p-1 text-xs">
+    <a
+      href={languageHref(nextLanguage)}
+      aria-label={lang === "ko" ? "Switch to English" : "한국어로 전환"}
+      className="inline-flex shrink-0 rounded-full bg-muted p-1 text-xs focus-visible:ring-2 focus-visible:ring-primary active:scale-[.97]"
+    >
       {(["ko", "en"] as const).map((target) => (
-        <a
+        <span
           key={target}
-          href={languageHref(target)}
-          aria-current={lang === target ? "true" : undefined}
-          className={`flex min-h-9 min-w-10 items-center justify-center rounded-full px-2 font-medium focus-visible:ring-2 focus-visible:ring-primary active:scale-[.97] ${lang === target ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+          aria-hidden="true"
+          className={`flex min-h-9 min-w-10 items-center justify-center rounded-full px-2 font-medium ${lang === target ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
         >
           {target.toUpperCase()}
-        </a>
+        </span>
       ))}
-    </div>
+    </a>
   );
 
   return (
