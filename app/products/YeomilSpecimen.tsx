@@ -3,16 +3,29 @@ import { useState } from "react";
 export function YeomilSpecimen({ lang }: { lang: "ko" | "en" }) {
   const [sample, setSample] = useState("");
   const [size, setSize] = useState(28);
-  const [copied, setCopied] = useState(false);
+  const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "failed">("idle");
   const command = "curl -fsSL https://raw.githubusercontent.com/taevel02/yeomil-mono/main/install.sh | bash";
   const display = sample || (lang === "ko" ? "한글과 English, 0123456789" : "English and 한글, 0123456789");
 
   async function copyCommand() {
     try {
+      if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
       await navigator.clipboard.writeText(command);
-      setCopied(true);
+      setCopyStatus("copied");
     } catch {
-      setCopied(false);
+      const textArea = document.createElement("textarea");
+      textArea.value = command;
+      textArea.style.position = "fixed";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+      try {
+        textArea.select();
+        setCopyStatus(document.execCommand("copy") ? "copied" : "failed");
+      } catch {
+        setCopyStatus("failed");
+      } finally {
+        textArea.remove();
+      }
     }
   }
 
@@ -55,9 +68,12 @@ export function YeomilSpecimen({ lang }: { lang: "ko" | "en" }) {
         <div className="flex flex-col gap-3 rounded-md border bg-muted/40 p-4 sm:flex-row sm:items-center">
           <code className="min-w-0 flex-1 overflow-x-auto text-xs sm:text-sm">{command}</code>
           <button type="button" onClick={copyCommand} className="min-h-11 shrink-0 rounded-md border px-4 text-sm active:scale-[.97] focus-visible:ring-2 focus-visible:ring-primary">
-            {copied ? (lang === "ko" ? "복사됨" : "Copied") : (lang === "ko" ? "명령 복사" : "Copy command")}
+            {copyStatus === "copied" ? (lang === "ko" ? "복사됨" : "Copied") : (lang === "ko" ? "명령 복사" : "Copy command")}
           </button>
         </div>
+        <p role="status" aria-live="polite" className="mt-2 text-sm">
+          {copyStatus === "failed" ? (lang === "ko" ? "복사할 수 없습니다. 명령을 직접 선택해 복사하세요." : "Copy failed. Select the command and copy it manually.") : ""}
+        </p>
       </section>
     </div>
   );
