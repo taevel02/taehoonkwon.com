@@ -38,15 +38,33 @@ export function GlobalNavigationBar() {
     window.location.href = dest + location.search;
   };
 
-  return (
-    <nav className="flex flex-row justify-between items-center mt-8 mb-16">
-      <ul className="inline-flex items-center gap-4 sm:gap-8 p-0 list-none leading-10 max-[320px]:gap-2">
-        <GNBLink to={prefix || "/"}>About</GNBLink>
-        <GNBLink to={`${prefix}/archives`}>Archives</GNBLink>
-        <GNBLink to={`${prefix}/scuba`}>Scuba</GNBLink>
-      </ul>
+  const links = [
+    { to: `${prefix}/products`, label: "Products" },
+    { to: `${prefix}/archives`, label: "Writing" },
+    { to: `${prefix}/scuba`, label: "Scuba" },
+    { to: prefix || "/", label: "About" },
+  ];
 
+  return (
+    <nav aria-label={l === "ko" ? "주 메뉴" : "Main navigation"} className="relative flex items-center justify-between gap-3 mt-8 mb-16">
+      <ul className="hidden sm:inline-flex items-center gap-6 p-0 list-none leading-10">
+        {links.map((link) => <GNBLink key={link.label} to={link.to}>{link.label}</GNBLink>)}
+      </ul>
+      <details key={location.pathname} className="group sm:hidden">
+        <summary className="flex min-h-11 cursor-pointer list-none items-center rounded-md px-2 text-sm font-medium focus-visible:ring-2 focus-visible:ring-primary [&::-webkit-details-marker]:hidden">
+          {l === "ko" ? "메뉴" : "Menu"}
+        </summary>
+        <ul className="absolute inset-x-0 top-full z-20 mt-2 list-none rounded-md border bg-background p-2 shadow-sm">
+          {links.map((link) => (
+            <li key={link.label}>
+              <NavLink to={link.to} className="block min-h-11 rounded px-3 py-3 focus-visible:ring-2 focus-visible:ring-primary">{link.label}</NavLink>
+            </li>
+          ))}
+        </ul>
+      </details>
       <button
+        type="button"
+        aria-label={l === "ko" ? "Switch to English" : "한국어로 전환"}
         onClick={() => toggleLanguage(l === "en" ? "ko" : "en")}
         className="flex bg-[#f3f4f6] rounded-full p-1 text-xs cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
       >
@@ -75,8 +93,8 @@ export function GlobalNavigationBar() {
 
 function GNBLink({ to, children }: { to: string; children: React.ReactNode }) {
   return (
-    <li className="text-base uppercase max-[320px]:text-sm">
-      <NavLink prefetch="render" to={to} viewTransition>
+    <li className="text-base uppercase">
+      <NavLink prefetch="render" to={to} viewTransition className="focus-visible:ring-2 focus-visible:ring-primary">
         {children}
       </NavLink>
     </li>
