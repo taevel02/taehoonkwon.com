@@ -4,8 +4,8 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "prepare": "npx tsx ./scripts/prepare.ts",
-    "build": "pnpm run prepare && remix vite:build",
+    "prebuild": "tsx ./scripts/prepare.ts",
+    "build": "remix vite:build",
     "dev": "remix vite:dev",
     "lint": "eslint .",
     "start": "remix-serve ./build/server/index.js",
