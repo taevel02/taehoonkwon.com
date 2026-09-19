@@ -86,24 +86,17 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const article = await articleAPI.getArticle(lang, id, "scuba");
   if (article === null) return redirect("/404");
 
-  // Fetch initial stats from Supabase
-  const { data: stats } = await supabase
-    .from("article_interactions")
-    .select("likes")
-    .eq("article_id", id)
-    .single();
-
-  return { article, lang, initialLikes: stats?.likes || 0 };
+  return { article, lang };
 }
 
 export default function ScubaDetailPage() {
   const {
     article: { id, category, title, subtitle, lastUpdatedAt, content },
     lang,
-    initialLikes,
   } = useLoaderData<typeof loader>();
 
   const [isLikedLocally, setIsLikedLocally] = useState(false);
+  const [likes, setLikes] = useState(0);
 
   useEffect(() => {
     // 1. LocalStorage check for "Liked" status persistence
@@ -117,6 +110,14 @@ export default function ScubaDetailPage() {
 
     // 2. Increment views on page load
     supabase.rpc("increment_views", { target_article_id: id }).then();
+
+    // Load interaction stats after the article is rendered so a slow stats service cannot delay navigation.
+    supabase
+      .from("article_interactions")
+      .select("likes")
+      .eq("article_id", id)
+      .single()
+      .then(({ data }) => setLikes(data?.likes || 0));
 
     const handleContextMenu = (e: MouseEvent) => {
       if ((e.target as HTMLElement).tagName === "IMG") {
@@ -168,7 +169,7 @@ export default function ScubaDetailPage() {
       <article dangerouslySetInnerHTML={{ __html: content }} />
       <LikeButton
         label={lang === "ko" ? "도움이 되었어요" : "Helpful"}
-        initialLikes={initialLikes}
+        initialLikes={likes}
         alreadyLiked={isLikedLocally}
         onLike={handleLike}
       />

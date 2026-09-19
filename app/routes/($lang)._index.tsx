@@ -1,21 +1,17 @@
-import { LoaderFunctionArgs, MetaFunction, redirect } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import blogConfig from "blog.config";
 
+import Contact from "~/components/Contact";
 import { getLanguage, getLocalizedPath } from "~/utils/i18n";
 import { generateMeta } from "~/utils/seo";
-
-import Contact from "~/components/Contact";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const lang = getLanguage(request, params.lang);
   const url = new URL(request.url);
-
-  const redirectPath = getLocalizedPath(url.pathname, lang);
-  if (redirectPath) {
-    return redirect(redirectPath + url.search);
-  }
-
+  const localized = getLocalizedPath(url.pathname, lang);
+  if (localized) return redirect(localized + url.search);
   return { lang };
 }
 
@@ -25,25 +21,19 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     title: ["ABOUT", blogConfig.seo[lang].title],
     description: blogConfig.seo[lang].description,
     author: blogConfig.author,
-    site: blogConfig.site,
     url: lang === "ko" ? blogConfig.site : `${blogConfig.site}/en`,
   });
 };
 
-export default function Index() {
+export default function AboutPage() {
   const { lang } = useLoaderData<typeof loader>();
-  const l = lang === "en" ? "en" : "ko";
-
   return (
     <div>
-      <h1 className="text-3xl font-medium mb-6">
-        {l === "ko" ? "권태훈 (權泰勳)" : "Taehoon (Theo) Kwon"}
+      <h1 className="mb-6 text-3xl font-medium">
+        {lang === "ko" ? "권태훈 (權泰勳)" : "Taehoon (Theo) Kwon"}
       </h1>
       <Contact />
-      <p
-        className="text-wrap mt-8 leading-relaxed [&_a]:text-primary"
-        dangerouslySetInnerHTML={{ __html: blogConfig.about[l] }}
-      />
+      <p className="mt-8 text-wrap leading-relaxed [&_a]:text-primary" dangerouslySetInnerHTML={{ __html: blogConfig.about[lang] }} />
     </div>
   );
 }
