@@ -20,10 +20,14 @@ export function LikeButton({
 
   // Sync state when props change (for hydration/navigation)
   useEffect(() => {
+    // The stats query resolves after the article has rendered.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLikes(initialLikes);
   }, [initialLikes]);
 
   useEffect(() => {
+    // Local storage state resolves after the article has rendered.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLiked(alreadyLiked);
   }, [alreadyLiked]);
 

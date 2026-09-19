@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { vitePlugin as remix } from "@remix-run/dev";
 import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";

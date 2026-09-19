@@ -17,7 +17,7 @@ import { LikeButton } from "~/components/LikeButton";
 import "~/styles/article.css";
 
 export const handle = {
-  getSitemapEntries: async (request: Request) => {
+  getSitemapEntries: async () => {
     const { articleAPI } = await import("~/api/article");
     const [koArticles, enArticles] = await Promise.all([
       articleAPI.getArticles("ko", null, "scuba"),
