@@ -38,7 +38,7 @@ export function GlobalNavigationBar() {
   );
 
   return (
-    <nav aria-label={lang === "ko" ? "주 메뉴" : "Main navigation"} className="relative mt-7 mb-14">
+    <nav aria-label={lang === "ko" ? "주 메뉴" : "Main navigation"} className="relative mt-6 mb-10 sm:mt-7 sm:mb-14">
       <div className="hidden items-center justify-between gap-4 sm:flex">
         <ul className="flex list-none items-center gap-5 p-0 leading-10 md:gap-8">
           {links.map((link) => <NavItem key={link.label} to={link.to}>{link.label}</NavItem>)}
@@ -50,16 +50,16 @@ export function GlobalNavigationBar() {
         <div className="flex shrink-0 items-center gap-2">
           {languageControl}
           <details key={location.pathname} className="group">
-            <summary aria-label={lang === "ko" ? "메뉴" : "Menu"} className="flex size-11 cursor-pointer list-none items-center justify-center rounded-full border active:scale-[.96] focus-visible:ring-2 focus-visible:ring-primary [&::-webkit-details-marker]:hidden">
+            <summary aria-label={lang === "ko" ? "메뉴" : "Menu"} className="flex size-11 cursor-pointer list-none items-center justify-center rounded-xl border bg-background active:scale-[.96] focus-visible:ring-2 focus-visible:ring-primary [&::-webkit-details-marker]:hidden">
               <span aria-hidden="true" className="flex w-4 flex-col gap-1">
                 <span className="h-px w-4 bg-foreground group-open:translate-y-[2.5px] group-open:rotate-45" />
                 <span className="h-px w-4 bg-foreground group-open:-translate-y-[2.5px] group-open:-rotate-45" />
               </span>
             </summary>
-            <ul className="absolute inset-x-0 top-full z-20 mt-3 list-none border-y bg-background px-0 py-2 shadow-sm">
+            <ul className="absolute inset-x-0 top-full z-20 mt-3 list-none overflow-hidden rounded-[14px] border bg-background py-2">
               {links.map((link, index) => (
                 <li key={link.label} className="border-b last:border-b-0">
-                  <NavLink to={link.to} className="flex min-h-14 items-center justify-between px-2 text-lg font-medium focus-visible:ring-2 focus-visible:ring-primary">
+                  <NavLink to={link.to} className="flex min-h-[52px] items-center justify-between px-4 py-3 text-[17px] font-medium focus-visible:ring-2 focus-visible:ring-primary">
                     <span>{link.label}</span>
                     <span className="text-xs font-normal tabular-nums text-muted-foreground">0{index + 1}</span>
                   </NavLink>

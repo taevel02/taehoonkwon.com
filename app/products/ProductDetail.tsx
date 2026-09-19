@@ -45,8 +45,8 @@ export function ProductDetail({ product, lang }: { product: Product; lang: Produ
       </section>
       {product.type === "app" && (product.support || product.privacy) && (
         <nav aria-label={lang === "ko" ? "앱 문서" : "App documents"} className="mt-8 flex gap-5 border-t pt-5 text-sm">
-          {product.support && <Link to={`${productPath(product, lang)}/support`} className="text-primary">Support</Link>}
-          {product.privacy && <Link to={`${productPath(product, lang)}/privacy`} className="text-primary">Privacy Policy</Link>}
+          {product.support && <Link to={`${productPath(product, lang)}/support`} className="text-primary">{lang === "ko" ? "지원" : "Support"}</Link>}
+          {product.privacy && <Link to={`${productPath(product, lang)}/privacy`} className="text-primary">{lang === "ko" ? "개인정보 보호" : "Privacy Policy"}</Link>}
         </nav>
       )}
     </article>

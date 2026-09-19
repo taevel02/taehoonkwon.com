@@ -103,6 +103,16 @@ test("products navigation, About, and font command", async () => {
     await waitFor(async () => (await evaluate("!!document.querySelector('a[href^=\\\"/scuba/\\\"]')")) === true, "Scuba article link did not load");
     await evaluate("document.querySelector('a[href^=\\\"/scuba/\\\"]')?.click()");
     await waitFor(async () => (await evaluate("location.pathname.startsWith('/scuba/')")) === true, "Scuba article navigation did not complete");
+
+    await send("Page.navigate", { url: `${site}/en/products/app/dockpinch` });
+    await waitFor(async () => (await evaluate("document.querySelector('h1')?.textContent")) === "DockPinch", "DockPinch product page did not load");
+    assert.equal(await evaluate("[...document.querySelectorAll('a')].some(x => x.textContent?.trim() === 'Support')"), true, "DockPinch support link missing");
+    assert.equal(await evaluate("[...document.querySelectorAll('a')].some(x => x.textContent?.trim() === 'Privacy Policy')"), true, "DockPinch privacy link missing");
+    await send("Page.navigate", { url: `${site}/en/products/app/dockpinch/support` });
+    await waitFor(async () => (await evaluate("document.querySelector('h1')?.textContent")) === "Support", "DockPinch support page did not load");
+    assert.equal(await evaluate("document.body.textContent.includes('support@taehoonkwon.com')"), true, "DockPinch support email missing");
+    await send("Page.navigate", { url: `${site}/en/products/app/dockpinch/privacy` });
+    await waitFor(async () => (await evaluate("document.querySelector('h1')?.textContent")) === "Privacy Policy", "DockPinch privacy page did not load");
   } finally {
     browser.close();
   }

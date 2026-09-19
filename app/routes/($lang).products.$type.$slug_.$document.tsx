@@ -51,6 +51,12 @@ export default function ProductDocumentPage() {
       {document === "support" && product.support ? (
         <div className="space-y-5 leading-8">
           <p>{product.support.instructions[lang]}</p>
+          {product.support.sections?.map((section) => (
+            <section key={section.heading.en}>
+              <h2 className="mb-2 text-xl font-medium">{section.heading[lang]}</h2>
+              <p>{section.body[lang]}</p>
+            </section>
+          ))}
           <a className="text-primary underline" href={`mailto:${product.support.email}`}>{product.support.email}</a>
         </div>
       ) : product.privacy ? (
