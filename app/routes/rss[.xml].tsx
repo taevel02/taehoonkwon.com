@@ -1,6 +1,6 @@
 import { LoaderFunction } from "@remix-run/node";
 
-import { articleAPI } from "~/api/article";
+import { articleAPI } from "~/api/article.server";
 import { generateRss } from "~/utils/seo";
 
 import blogConfig from "blog.config";

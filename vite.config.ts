@@ -1,44 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { vitePlugin as remix } from "@remix-run/dev";
 import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
 import { vercelPreset } from "@vercel/remix/vite";
-
-const customRemix = (options?: Parameters<typeof remix>[0]) => {
-  const plugins = remix(options);
-  const remixPlugin = plugins
-    .flat()
-    .find((p) => p && p.name === "remix") as any;
-  if (remixPlugin && remixPlugin.config) {
-    const originalConfig = remixPlugin.config;
-    const originalHandler =
-      typeof originalConfig === "function"
-        ? originalConfig
-        : originalConfig.handler;
-
-    if (originalHandler) {
-      const wrappedHandler = async function (this: any, config: any, env: any) {
-        const resolved = await originalHandler.call(this, config, env);
-        if (resolved && "esbuild" in resolved) {
-          delete resolved.esbuild;
-        }
-        return resolved;
-      };
-
-      if (typeof originalConfig === "function") {
-        remixPlugin.config = wrappedHandler;
-      } else {
-        remixPlugin.config.handler = wrappedHandler;
-      }
-    }
-  }
-  return plugins;
-};
+import path from "node:path";
 
 export default defineConfig({
   resolve: {
-    tsconfigPaths: true,
+    alias: {
+      "~": path.resolve(import.meta.dirname, "app"),
+      "blog.config": path.resolve(import.meta.dirname, "blog.config.ts"),
+    },
   },
   plugins: [
     tailwindcss(),
@@ -82,7 +54,7 @@ export default defineConfig({
         ],
       },
     }),
-    customRemix({
+    remix({
       ignoredRouteFiles: ["**/*.css"],
       presets: [vercelPreset()],
       future: {

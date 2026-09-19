@@ -2,7 +2,7 @@ import { LoaderFunctionArgs, MetaFunction, redirect } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import blogConfig from "blog.config";
 
-import { articleAPI } from "~/api/article";
+import { articleAPI } from "~/api/article.server";
 
 import { getLanguage, getLocalizedPath } from "~/utils/i18n";
 import { generateMeta } from "~/utils/seo";

@@ -16,7 +16,8 @@ export default {
   },
   content: {
     contentDirectory: "articles",
-    generatedDirectory: ".generated",
+    generatedDataFile: "app/generated/articles.json",
+    generatedAssetDirectory: "public/generated",
   },
   image: {
     extensions: ["**/*.png", "**/*.jpg", "**/*.jpeg"],

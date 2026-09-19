@@ -15,28 +15,33 @@ import rehypeShiki from "@shikijs/rehype";
 import sharp from "sharp";
 import { visit } from "unist-util-visit";
 
-import { Article, ArticleCategory, ArticleFrontMatter } from "~/types/articles";
+import {
+  Article,
+  ArticleCatalog,
+  ArticleCategory,
+  ArticleFrontMatter,
+} from "~/types/articles";
 
 import blogConfig from "~/../blog.config";
 
 export async function prepareArticles({
   from: baseDirectory,
-  to: destination,
+  dataFile,
+  assetDirectory,
 }: {
   from: string;
-  to: string;
+  dataFile: string;
+  assetDirectory: string;
 }) {
-  // Clear old generated files to prevent stale content (e.g., old numeric ID files)
-  await fs.emptyDir(destination);
+  await fs.emptyDir(assetDirectory);
 
   const markdownFiles = await globby("**/*.md", { cwd: baseDirectory });
 
-  // Map of category to language to an array of articles
-  const manifests: Record<string, Record<string, Article[]>> = {};
+  const catalog: ArticleCatalog = {};
 
   await Promise.all(
     markdownFiles.map(async (file) => {
-      const parts = file.split(path.sep);
+      const parts = file.split("/");
       let entryCategory = "archives";
       let lang = "ko";
 
@@ -51,24 +56,26 @@ export async function prepareArticles({
       const article = await buildArticle(text, file, lang);
 
       if (article !== null) {
-        if (!manifests[entryCategory]) {
-          manifests[entryCategory] = {};
+        if (!catalog[entryCategory]) {
+          catalog[entryCategory] = {};
         }
-        if (!manifests[entryCategory][lang]) {
-          manifests[entryCategory][lang] = [];
+        if (!catalog[entryCategory][lang]) {
+          catalog[entryCategory][lang] = [];
         }
-        manifests[entryCategory][lang].push(article);
+        catalog[entryCategory][lang].push(article);
         console.log(
           `Content Generated [${entryCategory}/${lang}]: `,
           article.title,
         );
-        await fs.outputJson(
-          path.join(destination, entryCategory, lang, `${article.id}.json`),
-          article,
-        );
       }
     }),
   );
+
+  for (const languages of Object.values(catalog)) {
+    for (const articles of Object.values(languages)) {
+      articles.sort((a, b) => a.id.localeCompare(b.id));
+    }
+  }
 
   const imageFiles = await globby(blogConfig.image.extensions, {
     cwd: baseDirectory,
@@ -79,7 +86,7 @@ export async function prepareArticles({
       const rawPath = path.join(baseDirectory, file);
       const fileName = path.parse(file).name;
       const fileDir = path.dirname(file);
-      const destDir = path.join(path.resolve(), ".generated", fileDir);
+      const destDir = path.join(assetDirectory, fileDir);
 
       await fs.ensureDir(destDir);
 
@@ -90,19 +97,9 @@ export async function prepareArticles({
     }),
   );
 
-  // Write separate manifest per category and language
-  await Promise.all(
-    Object.entries(manifests).flatMap(([category, langManifests]) =>
-      Object.entries(langManifests).map(async ([lang, articles]) => {
-        await fs.outputJson(
-          path.join(destination, category, lang, "manifest.json"),
-          {
-            articles: JSON.stringify(articles),
-          },
-        );
-      }),
-    ),
-  );
+  const temporaryDataFile = `${dataFile}.tmp`;
+  await fs.outputJson(temporaryDataFile, catalog);
+  await fs.move(temporaryDataFile, dataFile, { overwrite: true });
 }
 
 async function buildArticle(text: string, file: string, lang: string) {
@@ -168,7 +165,7 @@ async function parseMarkdown<T>(text: string, filePath: string) {
             // Resolve the image path relative to the markdown file within the articles directory
             const resolvedPath = path.join(path.dirname(filePath), src);
             const parsed = path.parse(resolvedPath);
-            const newSrc = `/.generated/${parsed.dir}/${parsed.name}.webp`;
+            const newSrc = `/generated/${parsed.dir}/${parsed.name}.webp`;
             node.properties.src = newSrc.replace(/\/\//g, "/");
           }
         }

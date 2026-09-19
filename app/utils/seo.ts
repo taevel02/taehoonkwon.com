@@ -171,6 +171,7 @@ export type SEOHandle = {
 
 export type PickSitemapOptions = {
   siteUrl: string;
+  entries?: SitemapEntry[];
   headers?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 };
 
@@ -179,8 +180,8 @@ export async function generateSitemap(
   routes: ServerBuild["routes"],
   options: PickSitemapOptions,
 ) {
-  const { siteUrl, headers } = options;
-  const sitemap = await getSitemapXml(request, routes, { siteUrl });
+  const { siteUrl, entries = [], headers } = options;
+  const sitemap = await getSitemapXml(request, routes, { siteUrl, entries });
   const bytes = new TextEncoder().encode(sitemap).byteLength;
 
   return new Response(sitemap, {
@@ -199,9 +200,9 @@ function removeTrailingSlash(s: string) {
 async function getSitemapXml(
   request: Request,
   routes: ServerBuild["routes"],
-  options: { siteUrl: string },
+  options: { siteUrl: string; entries: SitemapEntry[] },
 ) {
-  const { siteUrl } = options;
+  const { siteUrl, entries } = options;
 
   function getEntry({
     route,
@@ -219,7 +220,7 @@ async function getSitemapXml(
     `.trim();
   }
 
-  const rawSitemapEntries = (
+  const routeEntries = (
     await Promise.all(
       Object.entries(routes).map(async ([id, routeEntry]) => {
         const mod = (routeEntry as any).module; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -264,6 +265,7 @@ async function getSitemapXml(
   )
     .flatMap((z) => z)
     .filter(Boolean) as SitemapEntry[];
+  const rawSitemapEntries = [...routeEntries, ...entries];
 
   const sitemapEntries: Array<SitemapEntry> = [];
   const routeSet = new Set<string>();

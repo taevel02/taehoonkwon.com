@@ -9,7 +9,11 @@ async function main() {
   await Promise.all([
     prepareArticles({
       from: path.join(DIRNAME, blogConfig.content.contentDirectory),
-      to: path.join(DIRNAME, blogConfig.content.generatedDirectory),
+      dataFile: path.join(DIRNAME, blogConfig.content.generatedDataFile),
+      assetDirectory: path.join(
+        DIRNAME,
+        blogConfig.content.generatedAssetDirectory,
+      ),
     }),
   ]);
 }

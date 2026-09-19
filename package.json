@@ -6,10 +6,12 @@
   "scripts": {
     "prebuild": "tsx ./scripts/prepare.ts",
     "build": "remix vite:build",
+    "predev": "tsx ./scripts/prepare.ts",
     "dev": "remix vite:dev",
     "lint": "eslint .",
     "start": "remix-serve ./build/server/index.js",
-    "typecheck": "tsc"
+    "test:articles": "tsx ./scripts/prepare.ts && node --test scripts/articles-build.test.mjs",
+    "typecheck": "node ./node_modules/@typescript/native/bin/tsc --noEmit"
   },
   "dependencies": {
     "@remix-run/node": "^2.17.5",
@@ -48,6 +50,7 @@
     "@types/react-dom": "^19.2.5",
     "@typescript-eslint/eslint-plugin": "^8.70.0",
     "@typescript-eslint/parser": "^8.70.0",
+    "@typescript/native": "npm:typescript@7.0.2",
     "eslint": "^10.11.0",
     "eslint-import-resolver-typescript": "^4.4.5",
     "eslint-plugin-import": "^2.32.0",
@@ -59,9 +62,9 @@
     "sharp": "^0.35.4",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.23.13",
-    "typescript": "7.0.2",
+    "typescript": "6.0.3",
     "unist-util-visit": "^5.1.0",
-    "vite": "^8.2.2",
+    "vite": "^6.4.3",
     "vite-plugin-pwa": "^1.3.0"
   },
   "engines": {

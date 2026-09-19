@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import blogConfig from "blog.config";
 
-import { articleAPI } from "~/api/article";
+import { articleAPI } from "~/api/article.server";
 import { getLanguage, getLocalizedPath } from "~/utils/i18n";
 import { generateMeta, getArticleSchema } from "~/utils/seo";
 import { pathJoin, clamp, toPlainText } from "~/utils/string";
@@ -15,30 +15,6 @@ import { ArticleHeader } from "~/components/ArticleHeader";
 import { LikeButton } from "~/components/LikeButton";
 
 import "~/styles/article.css";
-
-export const handle = {
-  getSitemapEntries: async () => {
-    const { articleAPI } = await import("~/api/article");
-    const [koArticles, enArticles] = await Promise.all([
-      articleAPI.getArticles("ko", null, "scuba"),
-      articleAPI.getArticles("en", null, "scuba"),
-    ]);
-
-    const koEntries = koArticles.map((article) => ({
-      route: `/scuba/${article.id}`,
-      lastmod: article.lastUpdatedAt,
-      priority: 0.8,
-    }));
-
-    const enEntries = enArticles.map((article) => ({
-      route: `/en/scuba/${article.id}`,
-      lastmod: article.lastUpdatedAt,
-      priority: 0.8,
-    }));
-
-    return [...koEntries, ...enEntries];
-  },
-};
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { id, title } = data?.article ?? {};

@@ -23,6 +23,8 @@ export interface Article {
   content: string;
 }
 
+export type ArticleCatalog = Record<string, Record<string, Article[]>>;
+
 export interface ArticleFrontMatter {
   id: string;
   lang?: string;
