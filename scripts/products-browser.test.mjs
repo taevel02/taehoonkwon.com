@@ -60,38 +60,35 @@ async function press({ send, evaluate }, text) {
   await send("Input.dispatchMouseEvent", { type: "mouseReleased", x: rect.x, y: rect.y, button: "left", clickCount: 1 });
 }
 
-test("products navigation, About, and font command", async () => {
+test("mobile navigation and product command", async () => {
   const browser = await connect();
   const { send, evaluate } = browser;
   try {
     await send("Page.enable");
     await send("Emulation.setDeviceMetricsOverride", { width: 375, height: 812, deviceScaleFactor: 1, mobile: true });
-    await send("Page.navigate", { url: `${site}/en/products/font/yeomil-mono` });
+    await send("Page.navigate", { url: `${site}/products/font/yeomil-mono` });
     await waitFor(async () => (await evaluate("document.querySelector('h1')?.textContent")) === "Yeomil Mono", "font page did not load");
 
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    await press(browser, "EN");
-    await waitFor(async () => (await evaluate("location.pathname")) === "/products/font/yeomil-mono" && (await evaluate("document.documentElement.lang")) === "ko", `EN-side toggle failed: ${await evaluate("location.pathname")}`);
-    await press(browser, "KO");
-    await waitFor(async () => (await evaluate("location.pathname")) === "/en/products/font/yeomil-mono" && (await evaluate("document.documentElement.lang")) === "en", "KO-side toggle failed");
-
-    await waitFor(async () => (await evaluate("!!document.querySelector(\"summary\") && [...document.querySelectorAll(\"a\")].some(x => x.textContent?.trim() === \"Taehoon Kwon\")")) === true, "mobile header did not load");
-    const header = await evaluate(`(() => {
-      const brand = [...document.querySelectorAll("a")].find(x => x.textContent?.trim() === "Taehoon Kwon");
-      const locale = [...document.querySelectorAll("a[aria-label='Switch to English'], a[aria-label='한국어로 전환']")].find(x => x.getBoundingClientRect().width > 0);
-      const menu = document.querySelector("summary");
-      return { brandRight: brand.getBoundingClientRect().right, localeLeft: locale.getBoundingClientRect().left, localeRight: locale.getBoundingClientRect().right, menuLeft: menu.getBoundingClientRect().left, pageWidth: document.documentElement.scrollWidth, viewport: innerWidth };
+    const mobileNav = await evaluate(`(() => {
+      const links = [...document.querySelectorAll("nav a")].map((link) => ({
+        label: link.textContent?.trim(),
+        href: link.getAttribute("href"),
+        width: link.getBoundingClientRect().width,
+      }));
+      return {
+        links,
+        hasMenuDisclosure: Boolean(document.querySelector("summary, details")),
+        hasBrand: [...document.querySelectorAll("nav a")].some((link) => link.textContent?.trim() === "Taehoon Kwon"),
+        pageWidth: document.documentElement.scrollWidth,
+        viewport: innerWidth,
+      };
     })()`);
-    assert.ok(header.brandRight < header.localeLeft && header.localeRight < header.menuLeft, "mobile header controls overlap");
-    assert.equal(header.pageWidth, header.viewport, "mobile header overflows");
+    assert.deepEqual(mobileNav.links.map((link) => link.label), ["Writing", "Scuba", "Products"]);
+    assert.deepEqual(mobileNav.links.map((link) => link.href), ["/archives", "/scuba", "/products"]);
+    assert.equal(mobileNav.hasMenuDisclosure, false, "mobile navigation must not use a hamburger menu");
+    assert.equal(mobileNav.hasBrand, false, "mobile navigation must not repeat the brand name");
+    assert.equal(mobileNav.pageWidth, mobileNav.viewport, "mobile navigation overflows");
 
-    await send("Page.navigate", { url: `${site}/en/about` });
-    await waitFor(async () => (await evaluate("location.pathname")) === "/en" && (await evaluate("document.querySelector('h1')?.textContent")) === "Taehoon (Theo) Kwon", "About redirect did not load root");
-    await send("Page.navigate", { url: `${site}/en` });
-    await waitFor(async () => (await evaluate("document.querySelector('h1')?.textContent")) === "Taehoon (Theo) Kwon", "root About page did not load");
-
-    await send("Page.navigate", { url: `${site}/en/products/font/yeomil-mono` });
-    await waitFor(async () => (await evaluate("document.querySelector('h1')?.textContent")) === "Yeomil Mono", "font page did not reload");
     await new Promise((resolve) => setTimeout(resolve, 800));
     await send("Browser.grantPermissions", { origin: site, permissions: ["clipboardReadWrite", "clipboardSanitizedWrite"] });
     await press(browser, "Copy command");
@@ -104,14 +101,14 @@ test("products navigation, About, and font command", async () => {
     await evaluate("document.querySelector('a[href^=\\\"/scuba/\\\"]')?.click()");
     await waitFor(async () => (await evaluate("location.pathname.startsWith('/scuba/')")) === true, "Scuba article navigation did not complete");
 
-    await send("Page.navigate", { url: `${site}/en/products/app/dockpinch` });
+    await send("Page.navigate", { url: `${site}/products/app/dockpinch` });
     await waitFor(async () => (await evaluate("document.querySelector('h1')?.textContent")) === "DockPinch", "DockPinch product page did not load");
     assert.equal(await evaluate("[...document.querySelectorAll('a')].some(x => x.textContent?.trim() === 'Support')"), true, "DockPinch support link missing");
     assert.equal(await evaluate("[...document.querySelectorAll('a')].some(x => x.textContent?.trim() === 'Privacy Policy')"), true, "DockPinch privacy link missing");
-    await send("Page.navigate", { url: `${site}/en/products/app/dockpinch/support` });
+    await send("Page.navigate", { url: `${site}/products/app/dockpinch/support` });
     await waitFor(async () => (await evaluate("document.querySelector('h1')?.textContent")) === "Support", "DockPinch support page did not load");
     assert.equal(await evaluate("document.body.textContent.includes('support@taehoonkwon.com')"), true, "DockPinch support email missing");
-    await send("Page.navigate", { url: `${site}/en/products/app/dockpinch/privacy` });
+    await send("Page.navigate", { url: `${site}/products/app/dockpinch/privacy` });
     await waitFor(async () => (await evaluate("document.querySelector('h1')?.textContent")) === "Privacy Policy", "DockPinch privacy page did not load");
   } finally {
     browser.close();

@@ -10,7 +10,7 @@ import { generateMeta } from "~/utils/seo";
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const lang = getLanguage(request, params.lang);
   const url = new URL(request.url);
-  const localized = getLocalizedPath(url.pathname, lang);
+  const localized = getLocalizedPath(url.pathname);
   if (localized) return redirect(localized + url.search);
   return { lang };
 }

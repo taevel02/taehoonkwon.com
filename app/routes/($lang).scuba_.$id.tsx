@@ -53,7 +53,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
   const url = new URL(request.url);
 
-  const redirectPath = getLocalizedPath(url.pathname, lang);
+  const redirectPath = getLocalizedPath(url.pathname);
   if (redirectPath) {
     return redirect(redirectPath + url.search);
   }
