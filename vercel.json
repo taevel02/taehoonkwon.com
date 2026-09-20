@@ -1,4 +1,9 @@
 {
-  "buildCommand": "pnpm run build",
-  "installCommand": "pnpm install --frozen-lockfile"
+  "redirects": [
+    { "source": "/en", "destination": "/", "permanent": true },
+    { "source": "/en/:path*", "destination": "/:path*", "permanent": true },
+    { "source": "/ko", "destination": "/", "permanent": true },
+    { "source": "/ko/:path*", "destination": "/:path*", "permanent": true },
+    { "source": "/set-language", "destination": "/", "permanent": true }
+  ]
 }

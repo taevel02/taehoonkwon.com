@@ -1,0 +1,1 @@
+export const GET = () => new Response(JSON.stringify({ name: "Taehoon Kwon", short_name: "Taehoon", start_url: "/", display: "standalone", background_color: "#ffffff", theme_color: "#ffffff", icons: [{ src: "/favicon.ico", sizes: "64x64", type: "image/x-icon" }] }), { headers: { "Content-Type": "application/manifest+json" } });

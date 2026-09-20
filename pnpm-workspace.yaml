@@ -13,5 +13,3 @@ peerDependencyRules:
     esbuild: "*"
     workbox-build: "*"
     workbox-window: "*"
-    react: "*"
-    react-dom: "*"
