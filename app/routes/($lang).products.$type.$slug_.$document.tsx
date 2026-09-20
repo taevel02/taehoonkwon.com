@@ -26,7 +26,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     throw new Response("Not Found", { status: 404 });
   }
   const url = new URL(request.url);
-  const localized = getLocalizedPath(url.pathname, lang);
+  const localized = getLocalizedPath(url.pathname);
   if (localized) return redirect(localized + url.search);
   return { lang, product, document };
 }
