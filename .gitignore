@@ -35,3 +35,5 @@ yarn-error.log*
 /app/generated/articles.json
 /public/generated
 v10
+
+/build
