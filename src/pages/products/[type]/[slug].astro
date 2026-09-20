@@ -59,17 +59,17 @@ if (!product) return Astro.redirect("/products");
   const sizeValue = document.querySelector("#font-size-value");
   sample?.addEventListener("input", () => { preview.textContent = sample.value || "한글과 English, 0123456789"; });
   size?.addEventListener("input", () => { preview.style.fontSize = `${size.value}px`; sizeValue.textContent = `${size.value}px`; });
+  const installCommand = "curl -fsSL https://raw.githubusercontent.com/taevel02/yeomil-mono/main/install.sh | bash";
   document.querySelector("#copy-command")?.addEventListener("click", async () => {
     const code = document.querySelector("#install-command");
-    const command = code?.textContent?.trim() ?? "";
     if (!code) return;
     try {
-      await navigator.clipboard.writeText(command);
+      await navigator.clipboard.writeText(installCommand);
       code.textContent = "복사됨";
-      window.setTimeout(() => { code.textContent = command; }, 1600);
+      window.setTimeout(() => { code.textContent = installCommand; }, 1600);
     } catch {
       code.textContent = "복사할 수 없습니다";
-      window.setTimeout(() => { code.textContent = command; }, 2200);
+      window.setTimeout(() => { code.textContent = installCommand; }, 2200);
     }
   });
 </script>}
