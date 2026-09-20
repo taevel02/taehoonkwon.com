@@ -9,12 +9,14 @@ const categories = [...new Set(articles.map((article) => article.data.category))
   {categories.length > 1 && <CategoryFilter categories={categories} listId="archives" />}
   <ul class="animate-fade-in" data-category-list="archives">
     {articles.map((article) => (
-      <li data-category-item={article.data.category} class="border-b-[0.1em] py-4 first:pt-0 last:border-0 last:pb-0">
-        <a href={`/archives/${article.data.id}`} class="group block">
+      <li data-category-item={article.data.category} class="flex min-h-40 flex-col border-b-[0.1em] py-4 first:pt-0 last:border-0 last:pb-0">
+        <a href={`/archives/${article.data.id}`} class="group flex h-full flex-col">
           <p class="mb-2 text-xs text-muted-foreground">{article.data.category}</p>
           <h2 class="text-xl group-hover:underline">{article.data.title}</h2>
-          {article.data.subtitle && <p class="mb-4 text-sm font-light">{article.data.subtitle}</p>}
-          <p class="text-xs text-muted-foreground">{formatDate(article.data.date)}</p>
+          <div class="min-h-6">
+            {article.data.subtitle && <p class="text-sm font-light">{article.data.subtitle}</p>}
+          </div>
+          <p class="mt-4 text-xs text-muted-foreground">{formatDate(article.data.date)}</p>
         </a>
       </li>
     ))}
