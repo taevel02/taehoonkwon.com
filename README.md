@@ -1,14 +1,13 @@
 # taehoonkwon.com
 
-Personal archive and blog built with Remix and Vite.
+Personal archive and blog built with Astro 7.3.3 and Vite.
 
 ## Features
 
-- **PWA**: Ready via `vite-plugin-pwa`.
-- **Performance**: Optimized for speed with local font hosting and local asset optimization.
+- **Static delivery**: Content Collections generate pages at build time for Vercel.
+- **Performance**: Local fonts, image optimization, and minimal client JavaScript.
 - **Modern Styling**: Tailwind CSS v4 with custom theme support.
-- **Dynamic Assets**: Automated RSS, Sitemap, and Metadata generation.
-- **SEO**: Dynamic Open Graph image generation via Satori.
+- **Publishing**: RSS, Sitemap, metadata, and Google Analytics 4.
 
 ## Getting Started
 
@@ -33,4 +32,10 @@ pnpm dev
 
 ```bash
 pnpm build
+```
+
+### Preview
+
+```bash
+pnpm preview
 ```

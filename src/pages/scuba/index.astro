@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getArticles, formatDate } from "../../lib/articles";
+const articles = await getArticles("scuba");
+---
+<BaseLayout title="Scuba · Taehoon Kwon" description="스쿠버 다이빙과 관련된 지식과 경험을 공유합니다.">
+  <header class="mb-8 border-b pb-5">
+    <h1 class="font-serif text-3xl font-medium">SCUBA DIVING</h1>
+    <p class="mt-2 text-muted-foreground">스쿠버 다이빙과 관련된 지식과 경험을 공유합니다.</p>
+  </header>
+  <ul class="animate-fade-in">
+    {articles.map((article) => (
+      <li class="border-b-[0.1em] py-4 first:pt-0 last:border-0 last:pb-0">
+        <a href={`/scuba/${article.data.id}`} class="group block">
+          <p class="mb-2 text-sm text-primary underline">{article.data.category}</p>
+          <h2 class="text-xl group-hover:underline">{article.data.title}</h2>
+          {article.data.subtitle && <p class="mb-4 text-sm font-light">{article.data.subtitle}</p>}
+          <p class="text-xs text-muted-foreground">{formatDate(article.data.date)}</p>
+        </a>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

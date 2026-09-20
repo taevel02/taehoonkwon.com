@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import { products } from "../../../../data/products";
+
+export function getStaticPaths() {
+  return products.filter((product) => product.support).map((product) => ({ params: { type: product.type, slug: product.slug }, props: { product } }));
+}
+const { product } = Astro.props;
+---
+<BaseLayout title={`Support · ${product.name}`}>
+  <a href={`/products/${product.type}/${product.slug}`} class="mb-8 inline-block text-sm text-muted-foreground hover:text-primary">← {product.name}</a>
+  <h1 class="text-3xl font-medium">Support</h1>
+  <p class="mt-4 leading-relaxed">{product.support.instructions.ko}</p>
+  <a href={`mailto:${product.support.email}`} class="mt-4 inline-block text-primary underline">{product.support.email}</a>
+  {product.support.sections?.map((section) => (
+    <section class="mt-10 border-t pt-6">
+      <h2 class="text-xl font-medium">{section.heading.ko}</h2>
+      <p class="mt-2 leading-relaxed text-muted-foreground">{section.body.ko}</p>
+    </section>
+  ))}
+</BaseLayout>

@@ -3,9 +3,9 @@ node_modules
 # pnpm
 pnpm-debug.log*
 
-# Remix/Vite
-/build
-/public/build
+# Astro/Vite
+/dist
+/.astro
 /.cache
 
 # Vercel

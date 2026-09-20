@@ -1,0 +1,43 @@
+---
+import "../styles/globals.css";
+import "../styles/article.css";
+import GlobalNavigationBar from "../components/GlobalNavigationBar.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+}
+
+const { title = "Taehoon Kwon", description = "글과 사랑, 그리고 행복을 추구합니다.", canonical = Astro.url.href } = Astro.props;
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="canonical" href={canonical} />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${Astro.site}og.png`} />
+    <title>{title}</title>
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=G-GHV52J2X34`}></script>
+    <script is:inline define:vars={{ gaId: "G-GHV52J2X34" }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", gaId);
+    </script>
+  </head>
+  <body>
+    <div class="container max-w-(--breakpoint-md) overflow-auto">
+      <GlobalNavigationBar />
+      <main><slot /></main>
+      <Footer />
+    </div>
+  </body>
+</html>
