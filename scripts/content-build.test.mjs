@@ -27,3 +27,21 @@ test("Korean article collections contain valid frontmatter", async () => {
     assert.match(source, /^category:\s*.+$/m);
   }
 });
+
+test("site surfaces keep the shared publishing behavior", async () => {
+  const productPage = await readFile(path.join(projectRoot, "src/pages/products/[type]/[slug].astro"), "utf8");
+  assert.match(productPage, /code\.textContent = "복사됨"/);
+  assert.doesNotMatch(productPage, /id="copy-status"/);
+
+  const archivesPage = await readFile(path.join(projectRoot, "src/pages/archives/index.astro"), "utf8");
+  const scubaPage = await readFile(path.join(projectRoot, "src/pages/scuba/index.astro"), "utf8");
+  assert.match(archivesPage, /CategoryFilter/);
+  assert.match(scubaPage, /CategoryFilter/);
+
+  const homePage = await readFile(path.join(projectRoot, "src/pages/index.astro"), "utf8");
+  assert.match(homePage, /바다를 곁에 두고/);
+  assert.match(homePage, /aria-hidden="true"/);
+
+  const layout = await readFile(path.join(projectRoot, "src/layouts/BaseLayout.astro"), "utf8");
+  assert.match(layout, /katex\/dist\/katex\.min\.css/);
+});

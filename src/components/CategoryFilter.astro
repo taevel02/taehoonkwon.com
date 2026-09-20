@@ -1,0 +1,40 @@
+---
+interface Props {
+  categories: string[];
+  listId: string;
+}
+
+const { categories, listId } = Astro.props;
+---
+<nav class="mb-6 flex flex-wrap items-center gap-2 text-sm" aria-label="카테고리 필터" data-category-filter={listId}>
+  <span class="mr-1 text-xs text-muted-foreground">분류</span>
+  <button type="button" data-category="all" class="rounded-full border border-foreground px-3 py-1 text-foreground">전체</button>
+  {categories.map((category) => (
+    <button type="button" data-category={category} class="rounded-full border border-border px-3 py-1 text-muted-foreground hover:border-foreground hover:text-foreground">{category}</button>
+  ))}
+</nav>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-category-filter]").forEach((filter) => {
+    const listId = filter.dataset.categoryFilter;
+    const list = listId ? document.querySelector<HTMLElement>(`[data-category-list="${listId}"]`) : null;
+    if (!list) return;
+    const items = [...list.querySelectorAll<HTMLElement>("[data-category-item]")];
+    const buttons = [...filter.querySelectorAll<HTMLButtonElement>("button[data-category]")];
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const selected = button.dataset.category;
+        items.forEach((item) => {
+          item.hidden = selected !== "all" && item.dataset.categoryItem !== selected;
+        });
+        buttons.forEach((candidate) => {
+          const active = candidate === button;
+          candidate.classList.toggle("border-foreground", active);
+          candidate.classList.toggle("text-foreground", active);
+          candidate.classList.toggle("border-border", !active);
+          candidate.classList.toggle("text-muted-foreground", !active);
+        });
+      });
+    });
+  });
+</script>

@@ -45,10 +45,9 @@ if (!product) return Astro.redirect("/products");
         <h2 class="text-xl font-medium">설치</h2>
         <p class="mt-2 text-sm text-muted-foreground">macOS·Linux 설치 명령</p>
         <div class="mt-3 flex flex-col gap-3 rounded border bg-muted/40 p-4 sm:flex-row sm:items-center">
-          <code id="install-command" class="min-w-0 flex-1 overflow-x-auto text-xs sm:text-sm">curl -fsSL https://raw.githubusercontent.com/taevel02/yeomil-mono/main/install.sh | bash</code>
+          <code id="install-command" class="min-w-0 flex-1 overflow-x-auto text-xs sm:text-sm" aria-live="polite">curl -fsSL https://raw.githubusercontent.com/taevel02/yeomil-mono/main/install.sh | bash</code>
           <button id="copy-command" type="button" class="min-h-11 shrink-0 rounded border px-4 text-sm active:scale-[.97]">명령 복사</button>
         </div>
-        <p id="copy-status" role="status" aria-live="polite" class="mt-2 text-sm"></p>
       </div>
     </section>
   )}
@@ -61,9 +60,16 @@ if (!product) return Astro.redirect("/products");
   sample?.addEventListener("input", () => { preview.textContent = sample.value || "한글과 English, 0123456789"; });
   size?.addEventListener("input", () => { preview.style.fontSize = `${size.value}px`; sizeValue.textContent = `${size.value}px`; });
   document.querySelector("#copy-command")?.addEventListener("click", async () => {
-    const command = document.querySelector("#install-command").textContent;
-    const status = document.querySelector("#copy-status");
-    try { await navigator.clipboard.writeText(command); status.textContent = "복사됨"; }
-    catch { status.textContent = "복사할 수 없습니다. 명령을 직접 선택해 복사하세요."; }
+    const code = document.querySelector("#install-command");
+    const command = code?.textContent?.trim() ?? "";
+    if (!code) return;
+    try {
+      await navigator.clipboard.writeText(command);
+      code.textContent = "복사됨";
+      window.setTimeout(() => { code.textContent = command; }, 1600);
+    } catch {
+      code.textContent = "복사할 수 없습니다";
+      window.setTimeout(() => { code.textContent = command; }, 2200);
+    }
   });
 </script>}

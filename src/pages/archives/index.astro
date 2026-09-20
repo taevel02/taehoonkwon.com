@@ -1,14 +1,17 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import CategoryFilter from "../../components/CategoryFilter.astro";
 import { getArticles, formatDate } from "../../lib/articles";
 const articles = await getArticles("archives");
+const categories = [...new Set(articles.map((article) => article.data.category))].sort();
 ---
 <BaseLayout title="Writing · Taehoon Kwon">
-  <ul class="animate-fade-in">
+  {categories.length > 1 && <CategoryFilter categories={categories} listId="archives" />}
+  <ul class="animate-fade-in" data-category-list="archives">
     {articles.map((article) => (
-      <li class="border-b-[0.1em] py-4 first:pt-0 last:border-0 last:pb-0">
+      <li data-category-item={article.data.category} class="border-b-[0.1em] py-4 first:pt-0 last:border-0 last:pb-0">
         <a href={`/archives/${article.data.id}`} class="group block">
-          <p class="mb-2 text-sm text-primary underline">{article.data.category}</p>
+          <p class="mb-2 text-xs text-muted-foreground">{article.data.category}</p>
           <h2 class="text-xl group-hover:underline">{article.data.title}</h2>
           {article.data.subtitle && <p class="mb-4 text-sm font-light">{article.data.subtitle}</p>}
           <p class="text-xs text-muted-foreground">{formatDate(article.data.date)}</p>
