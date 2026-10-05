@@ -11,6 +11,7 @@ export type Product = {
   description: Localized;
   features: Array<{ title: Localized; description: Localized }>;
   primaryLink: { href: string; label: Localized };
+  primaryLinkBadge?: { src: string; alt: Localized };
   secondaryLink?: { href: string; label: Localized };
   support?: {
     email: string;
@@ -48,8 +49,12 @@ export const products: Product[] = [
       },
     ],
     primaryLink: {
-      href: "https://github.com/taevel02/DockPinch",
-      label: { ko: "소스 코드", en: "Source code" },
+      href: "https://apps.apple.com/app/dockpinch/id6812942669",
+      label: { ko: "App Store에서 다운로드", en: "Download on the Mac App Store" },
+    },
+    primaryLinkBadge: {
+      src: "/assets/download-on-the-mac-app-store-badge-us-uk.svg",
+      alt: { ko: "Mac App Store에서 다운로드", en: "Download on the Mac App Store" },
     },
     support: {
       email: "support@taehoonkwon.com",
